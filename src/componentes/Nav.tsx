@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import './Nav.css'
 
 const SECCIONES = [
-  { id: 'evidencia', et: 'Evidencia' },
-  { id: 'trayectoria', et: 'Trayectoria' },
-  { id: 'proyectos', et: 'Proyectos' },
-  { id: 'stack', et: 'Stack' },
+  { id: 'experiencia', et: 'Experiencia' },
+  { id: 'trabajo', et: 'Portafolio' },
+  { id: 'habilidades', et: 'Herramientas' },
   { id: 'diseno', et: 'Diseño' },
   { id: 'contacto', et: 'Contacto' },
 ]

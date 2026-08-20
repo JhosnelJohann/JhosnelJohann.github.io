@@ -7,7 +7,7 @@ const ANCHOS = [
   { n: '390', w: 390 },
   { n: '1280', w: 1280 },
 ]
-const SECCIONES = ['inicio', 'evidencia', 'trayectoria', 'proyectos', 'stack', 'diseno', 'contacto']
+const SECCIONES = ['inicio', 'experiencia', 'trabajo', 'habilidades', 'diseno', 'contacto']
 
 const servidor = await createServer({ server: { port: 5199 }, logLevel: 'error' })
 await servidor.listen()
@@ -56,16 +56,18 @@ for (const a of ANCHOS) {
     if (d.scroll > d.cliente + 1) problemas.push(`${a.n}/${tema}: desborde ${d.scroll} > ${d.cliente}`)
     if (d.ocultos) problemas.push(`${a.n}/${tema}: ${d.ocultos} elementos siguen invisibles`)
 
-    const foto = await pag.evaluate(() => {
-      const i = document.querySelector('.retrato img')
-      return i ? i.naturalWidth > 0 : false
-    })
-    if (!foto) problemas.push(`${a.n}/${tema}: la FOTO no carga`)
-
-    const hojas = await pag.evaluate(() =>
-      [...document.querySelectorAll('.hoja-img img')].filter((i) => !i.naturalWidth).length,
-    )
-    if (hojas) problemas.push(`${a.n}/${tema}: ${hojas} hojas de diseño no cargan`)
+    const img = await pag.evaluate(() => ({
+      foto: (() => { const i = document.querySelector('.enc-foto img'); return !!i && i.naturalWidth > 0 })(),
+      hojas: [...document.querySelectorAll('.hoja-img img')].filter((i) => !i.naturalWidth).length,
+      capturas: [...document.querySelectorAll('.mini img')].filter((i) => !i.naturalWidth).length,
+      puestos: document.querySelectorAll('#experiencia .exp').length,
+      piezas: document.querySelectorAll('#trabajo .tj').length,
+    }))
+    if (!img.foto) problemas.push(`${a.n}/${tema}: la FOTO no carga`)
+    if (img.hojas) problemas.push(`${a.n}/${tema}: ${img.hojas} hojas de diseño no cargan`)
+    if (img.capturas) problemas.push(`${a.n}/${tema}: ${img.capturas} capturas no cargan`)
+    if (img.puestos !== 5) problemas.push(`${a.n}/${tema}: ${img.puestos} puestos, esperaba 5`)
+    if (img.piezas !== 11) problemas.push(`${a.n}/${tema}: ${img.piezas} piezas, esperaba 11`)
 
     if (errores.length) problemas.push(`${a.n}/${tema}: ${errores.join(' | ')}`)
 
@@ -79,15 +81,18 @@ for (const a of ANCHOS) {
       }
     }
 
-    if (a.n === '1280' && tema === 'dark') {
-      await pag.locator('#proyectos .tarjeta-btn').first().click()
+    if (a.n === '1280') {
+      await pag.locator('#trabajo .tj-btn').first().click()
       await pag.waitForTimeout(800)
-      await pag.screenshot({ path: '_revision/ficha.png' })
+      await pag.screenshot({ path: `_revision/ficha-${tema}.png` })
       await pag.keyboard.press('Escape')
       await pag.waitForTimeout(500)
-      await pag.locator('#diseno .hoja-btn').first().click()
-      await pag.waitForTimeout(800)
-      await pag.screenshot({ path: '_revision/visor.png' })
+      if (tema === 'light') {
+        await pag.locator('#diseno .hoja-btn').first().click()
+        await pag.waitForTimeout(800)
+        await pag.screenshot({ path: '_revision/visor.png' })
+        await pag.keyboard.press('Escape')
+      }
     }
 
     await ctx.close()

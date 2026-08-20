@@ -1,9 +1,8 @@
 import Nav from './componentes/Nav'
-import Hero from './componentes/Hero'
-import Proporcion from './componentes/Proporcion'
-import Trayectoria from './componentes/Trayectoria'
-import Proyectos from './componentes/Proyectos'
-import Stack from './componentes/Stack'
+import Encabezado from './componentes/Encabezado'
+import Experiencia from './componentes/Experiencia'
+import Trabajo from './componentes/Trabajo'
+import Habilidades from './componentes/Habilidades'
 import Diseno from './componentes/Diseno'
 import Contacto from './componentes/Contacto'
 
@@ -11,12 +10,11 @@ export default function App() {
   return (
     <>
       <Nav />
-      <main id="inicio">
-        <Hero />
-        <Proporcion />
-        <Trayectoria />
-        <Proyectos />
-        <Stack />
+      <main>
+        <Encabezado />
+        <Experiencia />
+        <Trabajo />
+        <Habilidades />
         <Diseno />
         <Contacto />
       </main>

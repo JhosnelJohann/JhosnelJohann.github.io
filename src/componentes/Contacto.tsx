@@ -5,18 +5,23 @@ export default function Contacto() {
   return (
     <section id="contacto" className="cont">
       <div className="env">
-        <p className="rotulo"><b>06</b> Formación y contacto</p>
+        <div className="cab-seccion">
+          <p className="cab-num mono">
+            <b>06</b> Formación y contacto
+          </p>
+          <h2 className="cab-titulo">Hablemos.</h2>
+        </div>
 
         <div className="cont-rejilla">
-          <div className="cont-formacion">
-            <h3 className="cont-sub mono">Formación</h3>
+          <div className="cont-izq">
+            <h3 className="cont-sub mono">Formación académica</h3>
             <ul className="estudios">
               {formacion.map((f) => (
                 <li key={f.titulo} className="estudio">
                   <p className="estudio-titulo">
                     {f.titulo}
-                    {f.estado === 'egresado' && <span className="sello mono">Egresado</span>}
-                    {f.estado === 'curso' && <span className="sello sello-curso mono">Cursando</span>}
+                    {f.estado === 'egresado' && <span className="et c-verde">Egresado</span>}
+                    {f.estado === 'curso' && <span className="et c-amarillo">Cursando</span>}
                   </p>
                   <p className="estudio-centro">{f.centro}</p>
                   <p className="mono estudio-años">{f.años}</p>
@@ -46,7 +51,6 @@ export default function Contacto() {
           </div>
 
           <div className="cont-caja">
-            <h2 className="cont-titulo">Hablemos.</h2>
             <p className="cont-texto">{perfil.disponibilidadLarga}</p>
 
             <div className="cont-botones">
@@ -59,7 +63,7 @@ export default function Contacto() {
                 WhatsApp · {perfil.telefono}
               </a>
               <a
-                className="btn btn-secundario"
+                className="btn btn-borde"
                 href={`https://instagram.com/${perfil.instagram}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,19 +78,23 @@ export default function Contacto() {
                 <dd>{perfil.ubicacion}</dd>
               </div>
               <div>
-                <dt className="mono">Disponibilidad</dt>
+                <dt className="mono">Modalidad</dt>
                 <dd>{perfil.disponibilidad}</dd>
               </div>
               <div>
                 <dt className="mono">Título</dt>
                 <dd>TSU en Informática · IUJO Barquisimeto</dd>
               </div>
+              <div>
+                <dt className="mono">Experiencia</dt>
+                <dd>Desde 2019 · siete años</dd>
+              </div>
             </dl>
 
             <p className="cont-verificar">
-              <b>Todo lo que dice esta página es comprobable.</b> Las afirmaciones sobre el trabajo
-              en Tu Agente de Inmigración se verifican contra la bitácora del servidor de
-              producción, y su antiguo empleador puede confirmarlas.
+              <b>Todo lo que digo aquí es comprobable.</b> Lo que afirmo sobre mi trabajo en Tu
+              Agente de Inmigración se verifica contra la bitácora del servidor de producción, y mi
+              antiguo empleador puede confirmarlo.
             </p>
           </div>
         </div>
@@ -94,12 +102,13 @@ export default function Contacto() {
 
       <footer className="pie">
         <div className="env pie-env">
-          <p className="mono">
-            © 2026 Jhosnel Laya · Barquisimeto, Venezuela
-          </p>
+          <p className="mono">© 2026 Jhosnel Laya · Barquisimeto, Venezuela</p>
           <p className="mono pie-nota">
-            Hecho con React y Vite. La paleta de esta página es la leyenda de color de sus propios
-            diagramas técnicos.
+            Esta página la hice yo, en React y Vite. El código está{' '}
+            <a href="https://github.com/JhosnelJohann/JhosnelJohann.github.io" target="_blank" rel="noopener noreferrer">
+              abierto en GitHub
+            </a>
+            .
           </p>
         </div>
       </footer>

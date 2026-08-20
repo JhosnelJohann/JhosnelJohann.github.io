@@ -72,11 +72,21 @@ export const marcas: Marca[] = [
   },
 ]
 
-/** El canal de YouTube que editaba. */
-export const youtube = {
-  handle: 'juanmanuelconchatuagente',
-  nombre: 'Juan Manuel Concha | Your Agent',
-  url: 'https://www.youtube.com/@juanmanuelconchatuagente',
-  descripcion:
-    'Además del formato vertical para Instagram, editaba el contenido del canal de YouTube de la marca.',
-}
+/** Los dos canales de la marca cuyo contenido editaba. */
+export const canales = [
+  {
+    red: 'YouTube' as const,
+    handle: 'juanmanuelconchatuagente',
+    nombre: 'Juan Manuel Concha | Your Agent',
+    url: 'https://www.youtube.com/@juanmanuelconchatuagente',
+    descripcion: 'El canal de la marca. Edité su contenido en formato largo.',
+  },
+  {
+    red: 'Instagram' as const,
+    handle: 'juanmanueltuagente',
+    nombre: 'Juan Manuel · Tu Agente de Inmigración',
+    url: 'https://instagram.com/juanmanueltuagente',
+    descripcion:
+      'La cuenta principal de la marca. Guion, edición vertical y publicación del contenido diario.',
+  },
+]

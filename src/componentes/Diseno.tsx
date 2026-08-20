@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { marcas, youtube, type Marca } from '../datos/marcas'
+import { marcas, canales, type Marca } from '../datos/marcas'
 import { useEnVista } from './utiles'
 import './Diseno.css'
 
@@ -93,14 +93,16 @@ export default function Diseno() {
   return (
     <section id="diseno" className="dis">
       <div className="env">
-        <p className="rotulo"><b>05</b> Diseño y audiovisual</p>
-        <h2 className="titulo-seccion">De donde viene, y no lo ha perdido.</h2>
-        <p className="entradilla">
-          La tentación de quien cambia de perfil es borrar el pasado. Sería un error: un
-          desarrollador que ha comprado anuncios con presupuesto real{' '}
-          <b>resuelve problemas que otro desarrollador ni siquiera identifica</b>. Estas son sus
-          propias hojas de muestra, recuperadas de su currículum anterior.
-        </p>
+        <div className="cab-seccion">
+          <p className="cab-num mono"><b>05</b> Diseño y audiovisual</p>
+          <h2 className="cab-titulo">De aquí vengo, y no lo he dejado.</h2>
+          <p className="cab-nota">
+            La tentación de quien cambia de perfil es borrar el pasado. Sería un error: un
+            desarrollador que ha comprado anuncios con presupuesto real{' '}
+            <b>resuelve problemas que otro desarrollador ni siquiera identifica</b>. Estas son mis
+            hojas de muestra de trabajo, una por marca.
+          </p>
+        </div>
 
         <ul className="hojas">
           {marcas.map((m, i) => (
@@ -108,41 +110,56 @@ export default function Diseno() {
           ))}
         </ul>
 
-        <a
-          className="youtube"
-          href={youtube.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className="youtube-icono" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="26" height="18">
-              <path
-                fill="currentColor"
-                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"
-              />
-            </svg>
-          </span>
-          <span className="youtube-txt">
-            <b>{youtube.nombre}</b>
-            <span>{youtube.descripcion}</span>
-          </span>
-          <span className="mono youtube-ir">@{youtube.handle} ↗</span>
-        </a>
+        <div className="canales">
+          <p className="canales-rotulo mono">Los dos canales cuyo contenido edité</p>
+          {canales.map((c) => (
+            <a
+              key={c.handle}
+              className={`canal canal-${c.red.toLowerCase()}`}
+              href={c.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="canal-icono" aria-hidden="true">
+                {c.red === 'YouTube' ? (
+                  <svg viewBox="0 0 24 24" width="24" height="17">
+                    <path
+                      fill="currentColor"
+                      d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path
+                      fill="currentColor"
+                      d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.42.7.82.92 1.4.17.42.37 1.06.42 2.25.06 1.28.07 1.66.07 4.88s-.01 3.6-.07 4.88c-.05 1.2-.25 1.83-.42 2.25-.22.58-.49.98-.91 1.4-.42.42-.82.69-1.4.91-.42.17-1.06.37-2.25.42-1.28.06-1.66.07-4.88.07s-3.6-.01-4.88-.07c-1.2-.05-1.83-.25-2.25-.42-.58-.22-.98-.49-1.4-.91-.42-.42-.69-.82-.91-1.4-.17-.42-.37-1.06-.42-2.25C2.21 15.6 2.2 15.22 2.2 12s.01-3.6.07-4.88c.05-1.2.25-1.83.42-2.25.22-.58.49-.98.91-1.4.42-.42.82-.69 1.4-.91.42-.17 1.06-.37 2.25-.42C8.4 2.21 8.78 2.2 12 2.2Zm0 5.2a4.6 4.6 0 1 0 0 9.2 4.6 4.6 0 0 0 0-9.2Zm0 7.6a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm5.9-7.8a1.08 1.08 0 1 1-2.15 0 1.08 1.08 0 0 1 2.15 0Z"
+                    />
+                  </svg>
+                )}
+              </span>
+              <span className="canal-txt">
+                <b>{c.nombre}</b>
+                <span>{c.descripcion}</span>
+              </span>
+              <span className="mono canal-ir">@{c.handle} ↗</span>
+            </a>
+          ))}
+        </div>
 
         <div className="marketing">
-          <h3 className="marketing-titulo">Tres decisiones de marketing que nadie le encargó</h3>
+          <h3 className="marketing-titulo">Tres decisiones de marketing que nadie me encargó</h3>
           <ol className="marketing-lista">
             <li>
-              <b>Detuvo una configuración que habría duplicado el conteo de conversiones.</b> Un
-              fallo que nunca se detecta, porque los números suben.
+              <b>Detuve una configuración que habría duplicado el conteo de conversiones.</b> Es un
+              fallo que casi nunca se detecta, porque los números suben.
             </li>
             <li>
-              <b>Integró las reseñas de Google dentro de un modal</b> en vez de enlazar fuera, para
-              no regalar el visitante que se acababa de pagar.
+              <b>Metí las reseñas de Google dentro de un modal</b> en vez de enlazar fuera, para no
+              regalar el visitante que la empresa se acababa de pagar.
             </li>
             <li>
-              <b>Implementó la persistencia de la atribución</b> a lo largo de ocho pasos de
-              formulario, para que la inversión publicitaria se pueda medir.
+              <b>Implementé la persistencia de la atribución</b> a lo largo de ocho pasos de
+              formulario, para que la inversión publicitaria se pueda medir de verdad.
             </li>
           </ol>
         </div>

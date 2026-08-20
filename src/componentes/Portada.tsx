@@ -221,7 +221,7 @@ const MOTIVOS: Record<string, () => React.JSX.Element> = {
 export default function Portada({ id, color }: { id: string; color: string }) {
   const Motivo = MOTIVOS[id] ?? Leyenda
   return (
-    <div className={`portada t-${color}`}>
+    <div className={`portada c-${color}`}>
       <Motivo />
     </div>
   )
