@@ -43,30 +43,43 @@ for (const a of ANCHOS) {
       alto: document.body.scrollHeight,
       ocultos: [...document.querySelectorAll('.revela')].filter(
         (e) => getComputedStyle(e).opacity === '0').length,
-      foto: (() => { const i = document.querySelector('.retrato img'); return !!i && i.naturalWidth > 0 })(),
-      hojas: [...document.querySelectorAll('.hoja-img img')].map((i) => i.naturalWidth > 0),
-      proyectos: document.querySelectorAll('#proyectos .tarjeta').length,
+      foto: (() => { const i = document.querySelector('.enc-foto img'); return !!i && i.naturalWidth > 0 })(),
+      hojas: [...document.querySelectorAll('.hoja-img img')].filter((i) => i.naturalWidth > 0).length,
+      capturas: [...document.querySelectorAll('.mini img')].filter((i) => i.naturalWidth > 0).length,
+      puestos: document.querySelectorAll('#experiencia .exp').length,
+      piezas: document.querySelectorAll('#trabajo .tj').length,
+      barras: document.querySelectorAll('#habilidades .hab').length,
       fondo: getComputedStyle(document.body).backgroundColor,
     }))
 
     if (d.scroll > d.cliente + 1) fallos.push(`${a.n}/${tema}: desborde ${d.scroll}>${d.cliente}`)
     if (d.ocultos) fallos.push(`${a.n}/${tema}: ${d.ocultos} elementos invisibles`)
     if (!d.foto) fallos.push(`${a.n}/${tema}: la FOTO no carga`)
-    if (d.hojas.filter(Boolean).length !== 7) fallos.push(`${a.n}/${tema}: solo ${d.hojas.filter(Boolean).length}/7 hojas`)
-    if (d.proyectos !== 9) fallos.push(`${a.n}/${tema}: ${d.proyectos} proyectos, esperaba 9`)
+    if (d.hojas !== 7) fallos.push(`${a.n}/${tema}: ${d.hojas}/7 hojas de diseño`)
+    if (d.capturas !== 6) fallos.push(`${a.n}/${tema}: ${d.capturas}/6 capturas`)
+    if (d.puestos !== 5) fallos.push(`${a.n}/${tema}: ${d.puestos} puestos, esperaba 5`)
+    if (d.piezas !== 11) fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba 11`)
     if (errores.length) fallos.push(`${a.n}/${tema}: JS -> ${errores.join(' | ')}`)
     if (rotos.length) fallos.push(`${a.n}/${tema}: recursos -> ${rotos.join(' | ')}`)
 
     await p.screenshot({ path: `_revision/vivo-${a.n}-${tema}.png`, fullPage: false })
-    console.log(`  ${a.n}px/${tema}  alto ${d.alto}  foto:${d.foto ? 'ok' : 'NO'}  hojas:${d.hojas.filter(Boolean).length}/7  proyectos:${d.proyectos}  fondo:${d.fondo}`)
+    console.log(`  ${a.n}px/${tema}  alto ${d.alto}  foto:${d.foto ? 'ok' : 'NO'}  hojas:${d.hojas}/7  capturas:${d.capturas}/6  puestos:${d.puestos}  piezas:${d.piezas}  barras:${d.barras}  fondo:${d.fondo}`)
     await ctx.close()
   }
 }
 
-// Enlaces externos: que todos apunten a algo real
+// Enlaces externos: que todos apunten a algo real, incluidos los de las fichas
 const ctx = await nav.newContext({ viewport: { width: 1280, height: 900 } })
 const p = await ctx.newPage()
 await p.goto(WEB, { waitUntil: 'networkidle' })
+await p.evaluate(async () => {
+  const alto = document.body.scrollHeight
+  for (let y = 0; y < alto; y += 500) {
+    window.scrollTo(0, y)
+    await new Promise((r) => setTimeout(r, 28))
+  }
+})
+await p.waitForTimeout(800)
 const enlaces = await p.evaluate(() =>
   [...document.querySelectorAll('a[href^="http"]')].map((a) => a.href))
 const unicos = [...new Set(enlaces)]

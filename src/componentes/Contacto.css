@@ -24,6 +24,35 @@
 
 .estudios { display: flex; flex-direction: column; gap: 16px; }
 
+/* Formación con retrato: la foto lleva el carnet del IUJO, así que va aquí. */
+.form-fila {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 186px;
+  gap: clamp(18px, 3vw, 30px);
+  align-items: start;
+}
+@media (max-width: 640px) {
+  .form-fila { grid-template-columns: 1fr; }
+  .form-foto { max-width: 240px; }
+}
+
+.form-foto { margin: 0; }
+.form-foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radio);
+  border: 1px solid var(--linea);
+  box-shadow: var(--sombra);
+}
+.form-foto figcaption {
+  margin-top: 9px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--tinta-3);
+  letter-spacing: .01em;
+}
+
 .estudio-titulo {
   display: flex;
   flex-wrap: wrap;

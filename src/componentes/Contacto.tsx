@@ -15,19 +15,36 @@ export default function Contacto() {
         <div className="cont-rejilla">
           <div className="cont-izq">
             <h3 className="cont-sub mono">Formación académica</h3>
-            <ul className="estudios">
-              {formacion.map((f) => (
-                <li key={f.titulo} className="estudio">
-                  <p className="estudio-titulo">
-                    {f.titulo}
-                    {f.estado === 'egresado' && <span className="et c-verde">Egresado</span>}
-                    {f.estado === 'curso' && <span className="et c-amarillo">Cursando</span>}
-                  </p>
-                  <p className="estudio-centro">{f.centro}</p>
-                  <p className="mono estudio-años">{f.años}</p>
-                </li>
-              ))}
-            </ul>
+
+            <div className="form-fila">
+              <ul className="estudios">
+                {formacion.map((f) => (
+                  <li key={f.titulo} className="estudio">
+                    <p className="estudio-titulo">
+                      {f.titulo}
+                      {f.estado === 'egresado' && <span className="et c-verde">Egresado</span>}
+                      {f.estado === 'curso' && <span className="et c-amarillo">Cursando</span>}
+                    </p>
+                    <p className="estudio-centro">{f.centro}</p>
+                    <p className="mono estudio-años">{f.años}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <figure className="form-foto">
+                <img
+                  src="jhosnel-iujo.jpg"
+                  alt="Jhosnel Laya durante su etapa de estudiante en el IUJO"
+                  loading="lazy"
+                  width={900}
+                  height={1125}
+                />
+                <figcaption className="mono">
+                  Etapa de estudiante en el IUJO, donde empecé a tomar mis primeros encargos de
+                  diseño y edición.
+                </figcaption>
+              </figure>
+            </div>
 
             <h3 className="cont-sub mono">Certificaciones</h3>
             <ul className="estudios">
