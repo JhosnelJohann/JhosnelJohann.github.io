@@ -315,6 +315,17 @@
   border-radius: var(--radio);
   background: var(--fondo-3);
 }
+
+/* Las capturas de las landings son de móvil: verticales y completas. */
+.fi-galeria-movil { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.fi-galeria-movil img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: top center;
+  border-radius: 9px;
+}
+
+.fi-futura { color: var(--azul); }
 .fi-galeria span {
   font-size: 11.8px;
   line-height: 1.42;

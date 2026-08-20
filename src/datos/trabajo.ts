@@ -22,6 +22,13 @@ export interface Pieza {
   categoria: Categoria
   /** URL publica. Si falta, no se enlaza. */
   url?: string
+  /**
+   * La URL existe pero todavia NO sirve: staging sin pasar a produccion, o
+   * certificado que no cubre el dominio. Se muestra como texto, no como
+   * enlace, para no mandar a nadie a un aviso de seguridad. El dia que
+   * funcione, se borra esta linea y ya queda enlazada.
+   */
+  pendiente?: boolean
   /** Etiqueta cuando no hay enlace. */
   restringido?: string
   /** Captura real en public/trabajo/. Si falta, se dibuja la portada. */
@@ -205,21 +212,27 @@ export const trabajo: Pieza[] = [
     id: 'medicare',
     titulo: 'Cuestionario Medicare',
     categoria: 'Landing de captación',
-    url: 'https://staging.juanmanueltuagente.com',
-    restringido: 'Campaña en pausa · se abre al reactivarla',
-    motivo: 'landings',
+    url: 'https://juanmanueltuagente.com',
+    pendiente: true,
+    restringido: 'Pendiente de pasar a producción',
+    captura: 'medicare',
+    galeria: [
+      { archivo: 'medicare-1', pie: 'Apertura: agente licenciado, dos minutos, sin compromiso' },
+      { archivo: 'medicare-3', pie: 'Pregunta 1 de 11 — condiciones de salud' },
+      { archivo: 'medicare-2', pie: 'Los tres pasos y el aviso legal obligatorio de Medicare' },
+    ],
     color: 'amarillo',
     año: '2026',
     gancho:
-      'Cuestionario de calificación de ocho pasos sobre un catálogo de 207 planes, con geocodificación de código postal a condado.',
+      'Cuestionario de once preguntas sobre un catálogo de 207 planes, con geocodificación de código postal a condado.',
     detalle: [
-      'Cuestionario de ocho pasos con lógica de calificación, 18 tablas y 207 planes cargados, y geocodificación de código postal a condado.',
+      'Once preguntas con lógica de calificación sobre 18 tablas y 207 planes cargados, y geocodificación de código postal a condado para saber qué aplica en cada área.',
       'La validación de código postal tiene tres estados, no dos: válido, inexistente y no verificable. En el tercero dejo pasar al usuario. Si el geocodificador se cae, el formulario no bloquea — la alternativa cómoda habría perdido leads en silencio.',
       'El avatar del cuestionario es un componente SVG que escribí a mano, unos 7 KB, donde cada pieza es un nodo animable y sin una sola petición externa.',
     ],
     cifras: [
       { n: '18', que: 'tablas · 207 planes' },
-      { n: '8', que: 'pasos' },
+      { n: '11', que: 'preguntas' },
       { n: '7 KB', que: 'el avatar SVG' },
     ],
     stack: ['Next.js', 'TypeScript', 'React', 'PostgreSQL', 'SVG', 'Meta CAPI'],
@@ -228,9 +241,16 @@ export const trabajo: Pieza[] = [
     id: 'manhattan',
     titulo: 'ManhattanLife',
     categoria: 'Landing de captación',
-    url: 'https://planes.juanmanueltuagente.com',
-    restringido: 'Campaña en pausa · se abre al reactivarla',
-    motivo: 'paula-feecorte',
+    url: 'https://juanmanueltuagente.com',
+    pendiente: true,
+    restringido: 'Pendiente de pasar a producción',
+    captura: 'manhattan',
+    galeria: [
+      { archivo: 'manhattan-1', pie: 'Apertura: «déjame conocer tu caso» antes de recomendar nada' },
+      { archivo: 'manhattan-3', pie: 'Licencia de Florida verificable — no una promesa' },
+      { archivo: 'manhattan-4', pie: 'Cuestionario de calificación, paso a paso' },
+      { archivo: 'manhattan-2', pie: 'Cómo funciona, en tres pasos' },
+    ],
     color: 'amarillo',
     año: '2026',
     gancho:

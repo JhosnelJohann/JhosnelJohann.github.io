@@ -56,14 +56,14 @@ for (const a of ANCHOS) {
     if (d.ocultos) fallos.push(`${a.n}/${tema}: ${d.ocultos} elementos invisibles`)
     if (!d.foto) fallos.push(`${a.n}/${tema}: la FOTO no carga`)
     if (d.hojas !== 7) fallos.push(`${a.n}/${tema}: ${d.hojas}/7 hojas de diseño`)
-    if (d.capturas !== 6) fallos.push(`${a.n}/${tema}: ${d.capturas}/6 capturas`)
+    if (d.capturas !== 8) fallos.push(`${a.n}/${tema}: ${d.capturas}/8 capturas`)
     if (d.puestos !== 5) fallos.push(`${a.n}/${tema}: ${d.puestos} puestos, esperaba 5`)
     if (d.piezas !== 12) fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba 12`)
     if (errores.length) fallos.push(`${a.n}/${tema}: JS -> ${errores.join(' | ')}`)
     if (rotos.length) fallos.push(`${a.n}/${tema}: recursos -> ${rotos.join(' | ')}`)
 
     await p.screenshot({ path: `_revision/vivo-${a.n}-${tema}.png`, fullPage: false })
-    console.log(`  ${a.n}px/${tema}  alto ${d.alto}  foto:${d.foto ? 'ok' : 'NO'}  hojas:${d.hojas}/7  capturas:${d.capturas}/6  puestos:${d.puestos}  piezas:${d.piezas}  barras:${d.barras}  fondo:${d.fondo}`)
+    console.log(`  ${a.n}px/${tema}  alto ${d.alto}  foto:${d.foto ? 'ok' : 'NO'}  hojas:${d.hojas}/7  capturas:${d.capturas}/8  puestos:${d.puestos}  piezas:${d.piezas}  barras:${d.barras}  fondo:${d.fondo}`)
     await ctx.close()
   }
 }

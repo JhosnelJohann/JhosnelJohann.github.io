@@ -6,6 +6,10 @@ import { useEnVista, useInclinacion } from '../efectos/movimiento'
 import './Trabajo.css'
 
 const dominio = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '')
+/** Solo se enlaza lo que un visitante puede abrir hoy sin tropezar. */
+const abrible = (p: Pieza) => !!p.url && !p.pendiente
+/** La galería del CRM vive en /crm; la de las landings, en /landings. */
+const carpeta = (p: Pieza) => (p.id === 'crm-tadi' ? 'crm' : 'landings')
 
 /**
  * La captura, presentada como un panel de navegador flotando en perspectiva.
@@ -21,7 +25,7 @@ function Miniatura({ p }: { p: Pieza }) {
             <span className="panel-punto" />
             <span className="panel-punto" />
             <span className="panel-url mono">
-              {p.url ? p.url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'acceso restringido'}
+              {abrible(p) ? dominio(p.url!) : p.restringido ?? 'acceso restringido'}
             </span>
           </div>
           <img
@@ -33,7 +37,7 @@ function Miniatura({ p }: { p: Pieza }) {
           />
           <span className="panel-brillo" aria-hidden="true" />
         </div>
-        {!p.url && <span className="mini-candado mono">🔒 {p.restringido}</span>}
+        {!abrible(p) && p.restringido && <span className="mini-candado mono">🔒 {p.restringido}</span>}
       </div>
     )
   }
@@ -81,7 +85,7 @@ function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
       </button>
 
       <div className="tj-pie">
-        {p.url ? (
+        {abrible(p) ? (
           <a
             className="tj-url mono"
             href={p.url}
@@ -89,7 +93,7 @@ function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
           >
-            {dominio(p.url)} ↗
+            {dominio(p.url!)} ↗
           </a>
         ) : (
           <span className="tj-url tj-url-off mono">{p.restringido}</span>
@@ -150,16 +154,19 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
           <h3 className="fi-titulo">{p.titulo}</h3>
           <p className="fi-gancho">{p.gancho}</p>
 
-          {p.url && (
+          {abrible(p) && (
             <div className="fi-acceso">
               <a className="btn btn-primario" href={p.url} target="_blank" rel="noopener noreferrer">
-                Visitar {dominio(p.url)} ↗
+                Visitar {dominio(p.url!)} ↗
               </a>
               {p.restringido && <span className="fi-nota-acceso mono">🔒 {p.restringido}</span>}
             </div>
           )}
-          {!p.url && p.restringido && (
-            <p className="fi-restringido mono">🔒 {p.restringido}</p>
+          {!abrible(p) && p.restringido && (
+            <p className="fi-restringido mono">
+              🔒 {p.restringido}
+              {p.url && <span className="fi-futura"> · {dominio(p.url)}</span>}
+            </p>
           )}
 
           <ul className="fi-cifras">
@@ -180,24 +187,25 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
           {p.galeria && (
             <>
               <h4 className="fi-sub mono">Por dentro</h4>
-              <ul className="fi-galeria">
+              <ul className={`fi-galeria ${carpeta(p) === 'landings' ? 'fi-galeria-movil' : ''}`}>
                 {p.galeria.map((g) => (
                   <li key={g.archivo}>
-                    <img
-                      src={`crm/${g.archivo}.jpg`}
-                      alt={g.pie}
-                      loading="lazy"
-                      width={1280}
-                      height={625}
-                    />
+                    <img src={`${carpeta(p)}/${g.archivo}.jpg`} alt={g.pie} loading="lazy" />
                     <span>{g.pie}</span>
                   </li>
                 ))}
               </ul>
-              <p className="fi-aviso mono">
-                Los datos personales de clientes y del equipo van difuminados a propósito. La
-                interfaz es la real.
-              </p>
+              {carpeta(p) === 'crm' ? (
+                <p className="fi-aviso mono">
+                  Los datos de clientes y del equipo van difuminados a propósito: son personas
+                  reales. La interfaz es la real.
+                </p>
+              ) : (
+                <p className="fi-aviso mono">
+                  Capturas en móvil, que es de donde llega el tráfico de anuncios y para donde está
+                  diseñada.
+                </p>
+              )}
             </>
           )}
 
@@ -219,7 +227,7 @@ export default function Trabajo() {
   const [filtro, setFiltro] = useState<Categoria | null>(null)
   const [abierto, setAbierto] = useState<Pieza | null>(null)
   const lista = filtro ? trabajo.filter((p) => p.categoria === filtro) : trabajo
-  const conEnlace = trabajo.filter((p) => p.url).length
+  const conEnlace = trabajo.filter(abrible).length
 
   return (
     <section id="trabajo" className="trab oscuro">
