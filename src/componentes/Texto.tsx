@@ -20,25 +20,36 @@ export function Letras({
   className?: string
 }) {
   if (quieto()) return <span className={className}>{texto}</span>
+
+  /* Cada palabra va dentro de su propia unidad indivisible. Sin esto el
+     navegador puede partir entre dos letras cualesquiera —«Jho / snel»—
+     porque cada letra es un bloque independiente. Se veía a 320 px. */
+  const palabras = texto.split(' ')
   let n = -1
+
   return (
     <span className={`cinetica ${className}`} aria-label={texto}>
-      {[...texto].map((c, i) => {
-        if (c !== ' ') n++
-        return c === ' ' ? (
-          <span key={i} className="cin-espacio" aria-hidden="true">
-            {' '}
-          </span>
-        ) : (
-          <span
-            key={i}
-            aria-hidden="true"
-            style={{ animationDelay: `${retardo + n * paso}s` }}
-          >
-            {c}
-          </span>
-        )
-      })}
+      {palabras.map((palabra, ip) => (
+        <span className="cin-palabra" key={ip}>
+          {[...palabra].map((c, i) => {
+            n++
+            return (
+              <span
+                key={i}
+                aria-hidden="true"
+                style={{ animationDelay: `${retardo + n * paso}s` }}
+              >
+                {c}
+              </span>
+            )
+          })}
+          {ip < palabras.length - 1 && (
+            <span className="cin-espacio" aria-hidden="true">
+              {' '}
+            </span>
+          )}
+        </span>
+      ))}
     </span>
   )
 }
@@ -56,12 +67,17 @@ export function Palabras({
   const { ref, dentro } = useEnVista<HTMLParagraphElement>()
   const partes = texto.split(' ')
 
+  /* El espacio va FUERA del span. Dentro de un `inline-block` el navegador
+     recorta el espacio final y las palabras salen pegadas: «Sieteañosentre».
+     Se veía en el móvil. */
   return (
     <p ref={ref} className={`palabras ${dentro ? 'dentro' : ''} ${className}`}>
-      {partes.map((p, i) => (
-        <span key={i} className="pal" style={{ transitionDelay: `${i * paso}s` }}>
-          {p}
-          {i < partes.length - 1 ? ' ' : ''}
+      {partes.map((palabra, i) => (
+        <span key={i}>
+          <span className="pal" style={{ transitionDelay: `${i * paso}s` }}>
+            {palabra}
+          </span>
+          {i < partes.length - 1 ? ' ' : ''}
         </span>
       ))}
     </p>
@@ -95,7 +111,7 @@ export function Rodillo({ valor, className = '' }: { valor: string; className?: 
         if (Number.isNaN(dig)) {
           return (
             <span key={i} className="rod-fijo" aria-hidden="true">
-              {c === ' ' ? ' ' : c}
+              {c === ' ' ? ' ' : c}
             </span>
           )
         }

@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
+import { perfil } from '../datos/perfil'
 import './Nav.css'
 
 const SECCIONES = [
-  { id: 'experiencia', et: 'Experiencia' },
-  { id: 'trabajo', et: 'Portafolio' },
-  { id: 'habilidades', et: 'Herramientas' },
-  { id: 'diseno', et: 'Diseño' },
-  { id: 'contacto', et: 'Contacto' },
+  { id: 'experiencia', et: 'Experiencia', n: '01' },
+  { id: 'trabajo', et: 'Portafolio', n: '02' },
+  { id: 'habilidades', et: 'Herramientas', n: '03' },
+  { id: 'diseno', et: 'Diseño', n: '04' },
+  { id: 'contacto', et: 'Contacto', n: '05' },
 ]
 
 type Tema = 'auto' | 'claro' | 'oscuro'
@@ -16,6 +17,8 @@ export default function Nav() {
   const [activa, setActiva] = useState('')
   const [progreso, setProgreso] = useState(0)
   const [tema, setTema] = useState<Tema>('auto')
+  const [abierto, setAbierto] = useState(false)
+  const botonMenu = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const alScroll = () => {
@@ -23,7 +26,6 @@ export default function Nav() {
       setPegado(y > 90)
       const alto = document.body.scrollHeight - window.innerHeight
       setProgreso(alto > 0 ? Math.min(1, y / alto) : 0)
-      // Arriba del todo no hay sección activa: aún estamos en la portada.
       if (y < 220) setActiva('')
     }
     alScroll()
@@ -51,16 +53,34 @@ export default function Nav() {
     else raiz.setAttribute('data-theme', tema === 'claro' ? 'light' : 'dark')
   }, [tema])
 
+  /* Menú abierto: se bloquea el fondo, cierra con Escape y al cerrar el foco
+     vuelve al botón, que es de donde salió. */
+  useEffect(() => {
+    if (!abierto) return
+    const antes = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setAbierto(false)
+    window.addEventListener('keydown', esc)
+    return () => {
+      document.body.style.overflow = antes
+      window.removeEventListener('keydown', esc)
+      botonMenu.current?.focus()
+    }
+  }, [abierto])
+
   const siguienteTema = () =>
     setTema((t) => (t === 'auto' ? 'claro' : t === 'claro' ? 'oscuro' : 'auto'))
+
+  const etiquetaTema =
+    tema === 'auto' ? 'automático' : tema === 'claro' ? 'claro' : 'oscuro'
 
   return (
     <>
       <div className="progreso" style={{ transform: `scaleX(${progreso})` }} aria-hidden="true" />
 
-      <nav className={`nav ${pegado ? 'nav-pegado' : ''}`}>
+      <nav className={`nav ${pegado ? 'nav-pegado' : ''} ${abierto ? 'nav-abierta' : ''}`}>
         <div className="env nav-env">
-          <a href="#inicio" className="nav-marca">
+          <a href="#inicio" className="nav-marca" onClick={() => setAbierto(false)}>
             <span className="nav-jl mono">JL</span>
             <span className="nav-nombre">Jhosnel Laya</span>
           </a>
@@ -68,10 +88,7 @@ export default function Nav() {
           <ul className="nav-lista">
             {SECCIONES.map((s) => (
               <li key={s.id}>
-                <a
-                  href={`#${s.id}`}
-                  className={`nav-enlace mono ${activa === s.id ? 'activo' : ''}`}
-                >
+                <a href={`#${s.id}`} className={`nav-enlace mono ${activa === s.id ? 'activo' : ''}`}>
                   {s.et}
                 </a>
               </li>
@@ -81,13 +98,66 @@ export default function Nav() {
           <button
             className="nav-tema mono"
             onClick={siguienteTema}
-            aria-label={`Tema: ${tema}. Cambiar.`}
-            title={`Tema: ${tema}`}
+            aria-label={`Tema ${etiquetaTema}. Cambiar.`}
+            title={`Tema: ${etiquetaTema}`}
           >
             {tema === 'auto' ? '◐' : tema === 'claro' ? '☀' : '☾'}
           </button>
+
+          <button
+            ref={botonMenu}
+            className="nav-hamburguesa"
+            onClick={() => setAbierto((v) => !v)}
+            aria-expanded={abierto}
+            aria-controls="menu-movil"
+            aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'}
+          >
+            <span className="nav-linea" />
+            <span className="nav-linea" />
+            <span className="nav-linea" />
+          </button>
         </div>
       </nav>
+
+      <div
+        id="menu-movil"
+        className={`mnu ${abierto ? 'mnu-visible' : ''}`}
+        hidden={!abierto}
+      >
+        <ul className="mnu-lista">
+          {SECCIONES.map((s, i) => (
+            <li key={s.id} style={{ transitionDelay: `${60 + i * 45}ms` }}>
+              <a href={`#${s.id}`} onClick={() => setAbierto(false)}>
+                <span className="mnu-n mono">{s.n}</span>
+                <span className="mnu-et">{s.et}</span>
+                <span className="mnu-flecha" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mnu-pie">
+          <a
+            className="btn btn-primario mnu-wa"
+            href={`https://wa.me/${perfil.telefonoWhatsApp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setAbierto(false)}
+          >
+            WhatsApp · {perfil.telefono}
+          </a>
+          <a
+            className="mnu-ig mono"
+            href={`https://instagram.com/${perfil.instagram}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setAbierto(false)}
+          >
+            @{perfil.instagram} ↗
+          </a>
+          <p className="mnu-nota mono">{perfil.ubicacion}</p>
+        </div>
+      </div>
     </>
   )
 }

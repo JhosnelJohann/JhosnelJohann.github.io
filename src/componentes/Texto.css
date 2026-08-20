@@ -1,6 +1,8 @@
 /* ─────────── Letra a letra ─────────── */
 /* La animación base vive en efectos.css (.cinetica). Aquí, el espacio. */
 
+/* La palabra entera es una unidad: el navegador no puede partirla por dentro */
+.cin-palabra { display: inline-block; white-space: nowrap }
 .cin-espacio { display: inline-block; width: .3em }
 
 /* ─────────── Palabra a palabra ─────────── */

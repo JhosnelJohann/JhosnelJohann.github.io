@@ -76,7 +76,11 @@ for (const a of ANCHOS) {
     if (img.hojas) problemas.push(`${a.n}/${tema}: ${img.hojas} hojas de diseño no cargan`)
     if (img.capturas) problemas.push(`${a.n}/${tema}: ${img.capturas} capturas no cargan`)
     if (img.puestos !== 5) problemas.push(`${a.n}/${tema}: ${img.puestos} puestos, esperaba 5`)
-    if (img.piezas !== 12) problemas.push(`${a.n}/${tema}: ${img.piezas} piezas, esperaba 11`)
+    // En móvil se muestran 6 de 12 hasta pulsar «ver los demás»
+    const esperadas = a.w <= 700 ? 6 : 12
+    if (img.piezas !== esperadas) {
+      problemas.push(`${a.n}/${tema}: ${img.piezas} piezas, esperaba ${esperadas}`)
+    }
 
     if (errores.length) problemas.push(`${a.n}/${tema}: ${errores.join(' | ')}`)
 

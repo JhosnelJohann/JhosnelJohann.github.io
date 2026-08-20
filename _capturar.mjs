@@ -14,14 +14,35 @@ const SITIOS = [
 
 mkdirSync('_capturas', { recursive: true })
 
+/* Dos formatos: el visitante de escritorio ve la web de escritorio y el de
+   móvil la ve como se vería en su propio teléfono. */
+const FORMATOS = [
+  {
+    sufijo: '',
+    viewport: { width: 1440, height: 900 },
+    movil: false,
+    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
+  },
+  {
+    sufijo: '-movil',
+    viewport: { width: 390, height: 844 },
+    movil: true,
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
+  },
+]
+
 const nav = await chromium.launch()
-const ctx = await nav.newContext({
-  viewport: { width: 1440, height: 900 },
-  deviceScaleFactor: 2,
-  ignoreHTTPSErrors: true,
-  userAgent:
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
-})
+
+for (const f of FORMATOS) {
+  console.log(`\n── ${f.movil ? 'móvil 390×844' : 'escritorio 1440×900'} ──`)
+  const ctx = await nav.newContext({
+    viewport: f.viewport,
+    deviceScaleFactor: 2,
+    ignoreHTTPSErrors: true,
+    isMobile: f.movil,
+    hasTouch: f.movil,
+    userAgent: f.ua,
+  })
 
 for (const s of SITIOS) {
   const p = await ctx.newPage()
@@ -45,14 +66,16 @@ for (const s of SITIOS) {
     })
     await p.waitForTimeout(500)
 
-    await p.screenshot({ path: `_capturas/${s.slug}.png` })
+    await p.screenshot({ path: `_capturas/${s.slug}${f.sufijo}.png` })
     const titulo = await p.title()
-    console.log(`  ${s.slug.padEnd(18)} OK   ${titulo.slice(0, 52)}`)
+    console.log(`  ${(s.slug + f.sufijo).padEnd(24)} OK   ${titulo.slice(0, 46)}`)
   } catch (e) {
-    console.log(`  ${s.slug.padEnd(18)} FALLO  ${String(e).slice(0, 90)}`)
+    console.log(`  ${(s.slug + f.sufijo).padEnd(24)} FALLO  ${String(e).slice(0, 84)}`)
   }
   await p.close()
 }
 
-await ctx.close()
+  await ctx.close()
+}
+
 await nav.close()

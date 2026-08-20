@@ -12,12 +12,12 @@
 .nav {
   position: fixed;
   inset: 2px 0 auto 0;
-  z-index: 55;
+  z-index: 70;
   transition: background .3s, border-color .3s, color .3s;
   border-bottom: 1px solid transparent;
-  /* Arriba del todo la barra flota sobre la portada, que SIEMPRE es oscura:
-     el texto tiene que ser claro aunque el resto de la página sea clara. */
+  /* Arriba del todo flota sobre la portada, que siempre es oscura */
   color: #eef2f9;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .nav-pegado {
@@ -28,79 +28,178 @@
   border-bottom-color: var(--linea);
 }
 
-.nav-env {
+/* Con el menú abierto, la barra adopta el fondo del panel */
+.nav-abierta { color: #eef2f9; background: transparent; border-bottom-color: transparent; }
+
+.nav-env { display: flex; align-items: center; gap: 14px; height: 60px; }
+
+.nav-marca {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 58px;
+  gap: 10px;
+  flex: none;
+  /* 44×44 aunque por debajo de 380 px solo se vea el cuadro «JL» */
+  min-height: 44px;
+  min-width: 44px;
 }
-
-.nav-marca { display: flex; align-items: center; gap: 10px; flex: none; }
 
 .nav-jl {
   display: grid;
   place-items: center;
-  width: 27px;
-  height: 27px;
+  width: 28px;
+  height: 28px;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .04em;
   color: #0a0d12;
   background: var(--amarillo);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-.nav-nombre {
-  color: inherit;
-  font-size: 14px;
-  font-weight: 750;
-  letter-spacing: -.02em;
-}
-@media (max-width: 560px) { .nav-nombre { display: none } }
+.nav-nombre { color: inherit; font-size: 14px; font-weight: 700; letter-spacing: -.02em; }
+@media (max-width: 380px) { .nav-nombre { display: none } }
 
-.nav-lista {
-  display: flex;
-  gap: 4px;
-  margin-left: auto;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.nav-lista::-webkit-scrollbar { display: none }
-@media (max-width: 780px) { .nav-lista { display: none } }
+.nav-lista { display: flex; gap: 4px; margin-left: auto; }
+@media (max-width: 860px) { .nav-lista { display: none } }
 
 .nav-enlace {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   color: inherit;
-  opacity: .72;
-  padding: 7px 11px;
+  opacity: .74;
+  padding: 0 11px;
   font-size: 11.5px;
   letter-spacing: .05em;
   border-radius: 3px;
   white-space: nowrap;
-  transition: color .16s, background .16s;
+  transition: opacity .16s, background .16s, color .16s;
 }
 .nav-enlace:hover { opacity: 1; background: color-mix(in srgb, currentColor 10%, transparent); }
 .nav-enlace.activo { opacity: 1; color: var(--azul); }
-.nav-enlace.activo::after {
-  content: '';
-  display: block;
-  height: 1.5px;
-  margin-top: 3px;
-  background: var(--azul);
+
+/* Botones de la barra: 44 px reales, aunque el icono sea pequeño */
+.nav-tema,
+.nav-hamburguesa {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  border-radius: 4px;
+  transition: color .16s, border-color .16s, opacity .16s, background .16s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .nav-tema {
-  color: inherit;
-  opacity: .8;
-  flex: none;
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
-  border-radius: 3px;
-  transition: color .16s, border-color .16s, opacity .16s;
+  font-size: 15px;
+  opacity: .82;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
 }
-.nav-tema:hover { color: var(--amarillo); border-color: var(--amarillo); }
-@media (max-width: 780px) { .nav-tema { margin-left: auto } }
+.nav-tema:hover { color: var(--amarillo); border-color: var(--amarillo); opacity: 1; }
+@media (max-width: 860px) { .nav-tema { margin-left: auto } }
+
+/* ─────────── Hamburguesa ─────────── */
+
+.nav-hamburguesa {
+  display: none;
+  gap: 5px;
+  align-content: center;
+  justify-items: center;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+@media (max-width: 860px) { .nav-hamburguesa { display: grid } }
+
+.nav-linea {
+  display: block;
+  width: 19px;
+  height: 1.8px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform .3s cubic-bezier(.16,1,.3,1), opacity .2s;
+}
+.nav-abierta .nav-linea:nth-child(1) { transform: translateY(6.8px) rotate(45deg) }
+.nav-abierta .nav-linea:nth-child(2) { opacity: 0 }
+.nav-abierta .nav-linea:nth-child(3) { transform: translateY(-6.8px) rotate(-45deg) }
+
+/* ─────────── Panel a pantalla completa ─────────── */
+
+.mnu {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  /* dvh, no vh: en móvil la barra del navegador aparece y desaparece */
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding:
+    calc(84px + env(safe-area-inset-top, 0px))
+    var(--gutter)
+    calc(28px + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(120% 80% at 78% 4%, #16294f 0%, transparent 58%),
+    radial-gradient(90% 60% at 8% 30%, #1d1a48 0%, transparent 62%),
+    #070a12;
+  color: #eef2f9;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility .3s;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.mnu[hidden] { display: flex }
+.mnu-visible { opacity: 1; visibility: visible }
+
+.mnu-lista { display: flex; flex-direction: column; }
+
+.mnu-lista li {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .42s cubic-bezier(.16,1,.3,1), transform .42s cubic-bezier(.16,1,.3,1);
+  border-bottom: 1px solid rgba(255, 255, 255, .09);
+}
+.mnu-visible .mnu-lista li { opacity: 1; transform: none }
+
+.mnu-lista a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  padding-block: 6px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.mnu-n { font-size: 11px; color: #6f7f9c; letter-spacing: .12em; width: 22px; flex: none; }
+
+.mnu-et {
+  font-family: var(--display);
+  font-size: clamp(24px, 7vw, 32px);
+  font-weight: 600;
+  letter-spacing: -.032em;
+}
+
+.mnu-flecha { margin-left: auto; color: #5d9bff; font-size: 18px; }
+
+.mnu-pie { display: flex; flex-direction: column; gap: 13px; padding-top: 26px; }
+.mnu-wa { width: 100%; min-height: 50px; font-size: 15px; }
+
+.mnu-ig {
+  align-self: flex-start;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #5d9bff;
+}
+
+.mnu-nota { font-size: 11.5px; color: #7d8ba6; letter-spacing: .04em; }
+
+@media (min-width: 861px) { .mnu { display: none } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mnu, .mnu-lista li, .nav-linea { transition: none }
+}

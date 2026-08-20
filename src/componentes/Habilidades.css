@@ -1,4 +1,4 @@
-.habs { background: var(--fondo-2); border-block: 1px solid var(--linea); }
+﻿.habs { background: var(--fondo-2); border-block: 1px solid var(--linea); }
 
 /* ─────────── Pestañas ─────────── */
 
@@ -12,6 +12,7 @@
 }
 
 .habs-pestana {
+  min-height: 46px;
   padding: 11px 20px;
   font-size: 14px;
   font-weight: 650;
@@ -58,6 +59,10 @@
 }
 
 .habs-grupo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: .18em;
@@ -66,6 +71,33 @@
   padding-bottom: 10px;
   margin-bottom: 16px;
   border-bottom: 1px solid var(--linea);
+  cursor: pointer;
+  list-style: none;
+}
+.habs-grupo::-webkit-details-marker { display: none }
+
+.habs-cuenta {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--tinta-3);
+  opacity: .7;
+  letter-spacing: .06em;
+}
+
+.habs-chevron {
+  font-size: 15px;
+  line-height: 0;
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1);
+}
+.habs-bloque[open] .habs-chevron { transform: rotate(180deg) }
+
+/* En escritorio no se pliega nada: los grupos van siempre abiertos y el
+   indicador desaparece. La altura mínima se mantiene: en una tableta esto
+   se sigue pulsando con el dedo. */
+@media (min-width: 861px) {
+  .habs-bloque > .habs-lista { display: flex !important }
+  .habs-grupo { cursor: default }
+  .habs-chevron, .habs-cuenta { display: none }
 }
 
 .habs-lista { display: flex; flex-direction: column; gap: 15px; }
@@ -125,7 +157,7 @@
 .hab-nivel.n-formacion { background: none; }
 
 .hab-nota {
-  font-size: 11.8px;
+  font-size: 12.6px;
   line-height: 1.48;
   color: var(--tinta-3);
 }

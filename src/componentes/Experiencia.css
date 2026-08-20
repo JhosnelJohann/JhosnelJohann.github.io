@@ -11,7 +11,10 @@
 .exp:last-child { border-bottom: 1px solid var(--linea); }
 
 @media (max-width: 720px) {
-  .exp { grid-template-columns: 1fr; gap: 14px; }
+  .exp { grid-template-columns: 1fr; gap: 12px; padding-block: 24px }
+  .exp-resumen { margin-top: 11px; font-size: 14.6px }
+  .exp-logros { margin-top: 13px; gap: 9px }
+  .exp-tools { margin-top: 14px }
 }
 
 /* ─────────── Columna del tiempo ─────────── */

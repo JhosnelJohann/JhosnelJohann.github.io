@@ -1,3 +1,8 @@
+﻿/* Botón de «ver los demás»: solo existe en móvil, donde 12 tarjetas seguidas
+   son varias pantallas antes de llegar a la sección siguiente. */
+.trab-mas { display: none; width: 100%; margin-top: 18px; min-height: 50px; }
+@media (max-width: 700px) { .trab-mas { display: inline-flex } }
+
 /* ─────────── Filtros ─────────── */
 
 .trab-filtros {
@@ -11,7 +16,8 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 7px 13px;
+  min-height: 44px;
+  padding: 7px 15px;
   font-size: 11.5px;
   letter-spacing: .04em;
   color: var(--tinta-3);
@@ -112,11 +118,20 @@
   white-space: nowrap;
 }
 
+.panel picture { display: block; height: calc(100% - 27px) }
 .panel img {
   width: 100%;
-  height: calc(100% - 27px);
+  height: 100%;
   object-fit: cover;
   object-position: top center;
+}
+
+/* En el teléfono la captura es vertical dentro de un lienzo 900×720: se ve
+   entera, sin recortar. */
+@media (max-width: 700px) {
+  .mini { aspect-ratio: 900 / 720; padding: 12px 12px 0 }
+  .panel img { object-fit: contain; object-position: center }
+  .panel { background: var(--fondo-3) }
 }
 
 /* Reflejo diagonal sobre el cristal del panel */
@@ -218,7 +233,10 @@
 }
 
 .tj-url {
-  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 11.5px;
   color: var(--azul);
   letter-spacing: .01em;
   overflow: hidden;
@@ -229,7 +247,7 @@
 .tj-url:hover { text-decoration: underline; }
 .tj-url-off { color: var(--tinta-3); }
 
-.tj-mas { font-size: 11px; color: var(--tinta-3); white-space: nowrap; transition: color .16s; }
+.tj-mas { min-height: 44px; padding-inline: 4px; font-size: 11.5px; color: var(--tinta-3); white-space: nowrap; transition: color .16s; }
 .tj-mas:hover { color: var(--tinta); }
 
 /* ─────────── Ficha ─────────── */
@@ -264,8 +282,9 @@
   top: 12px;
   right: 12px;
   z-index: 2;
-  width: 34px;
-  height: 34px;
+  /* 44 px: es lo que se pulsa con el dedo para salir de la ficha */
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   font-size: 14px;

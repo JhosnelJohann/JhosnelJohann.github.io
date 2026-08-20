@@ -28,13 +28,21 @@ function Miniatura({ p }: { p: Pieza }) {
               {abrible(p) ? dominio(p.url!) : p.restringido ?? 'acceso restringido'}
             </span>
           </div>
-          <img
-            src={`trabajo/${p.captura}.jpg`}
-            alt={`Captura de ${p.titulo}`}
-            loading="lazy"
-            width={1280}
-            height={800}
-          />
+          {/* En el teléfono se sirve la captura de móvil: la de escritorio
+              recortada a una franja no dice nada en una pantalla pequeña. */}
+          <picture>
+            <source
+              media="(max-width: 700px)"
+              srcSet={`trabajo/${p.captura}-movil.jpg`}
+            />
+            <img
+              src={`trabajo/${p.captura}.jpg`}
+              alt={`Captura de ${p.titulo}`}
+              loading="lazy"
+              width={1280}
+              height={800}
+            />
+          </picture>
           <span className="panel-brillo" aria-hidden="true" />
         </div>
         {!abrible(p) && p.restringido && <span className="mini-candado mono">🔒 {p.restringido}</span>}
@@ -223,10 +231,27 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
   )
 }
 
+/** En el teléfono se muestran de seis en seis: 12 tarjetas seguidas son
+ *  una travesía de varias pantallas antes de llegar a lo siguiente. */
+const TANDA = 6
+
 export default function Trabajo() {
   const [filtro, setFiltro] = useState<Categoria | null>(null)
   const [abierto, setAbierto] = useState<Pieza | null>(null)
-  const lista = filtro ? trabajo.filter((p) => p.categoria === filtro) : trabajo
+  const [todas, setTodas] = useState(false)
+  const [movil, setMovil] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 700px)')
+    const ver = () => setMovil(mq.matches)
+    ver()
+    mq.addEventListener('change', ver)
+    return () => mq.removeEventListener('change', ver)
+  }, [])
+
+  const filtrada = filtro ? trabajo.filter((p) => p.categoria === filtro) : trabajo
+  const recorta = movil && !todas && filtrada.length > TANDA
+  const lista = recorta ? filtrada.slice(0, TANDA) : filtrada
   const conEnlace = trabajo.filter(abrible).length
 
   return (
@@ -275,6 +300,12 @@ export default function Trabajo() {
             ))}
           </AnimatePresence>
         </motion.ul>
+
+        {recorta && (
+          <button className="btn btn-borde trab-mas" onClick={() => setTodas(true)}>
+            Ver los {filtrada.length - TANDA} proyectos restantes ↓
+          </button>
+        )}
       </div>
 
       <AnimatePresence>

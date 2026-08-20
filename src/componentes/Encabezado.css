@@ -48,6 +48,23 @@
   .enc-fila { grid-template-columns: 112px minmax(0, 1fr); gap: 18px; align-items: start }
 }
 
+/* Por debajo de 520 px la foto se apila encima: en dos columnas al nombre le
+   quedaban 168 px y se partía. */
+@media (max-width: 520px) {
+  .enc-fila {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 22px;
+  }
+  .enc-foto { width: 124px }
+  .enc-estado { justify-content: center }
+  .enc-nombre { text-align: center }
+  .enc-rol { justify-content: center }
+  .enc-sub { text-align: center }
+  .enc-datos { justify-content: center; text-align: center }
+}
+
 /* ─────────── Retrato con aro luminoso ─────────── */
 
 .enc-foto { margin: 0; position: relative; display: grid; place-items: center }
@@ -147,6 +164,27 @@
 .enc-barra { color: var(--tinta-3); font-weight: 400 }
 .enc-rol-2 { color: var(--azul) }
 
+/* En estrecho el cargo va en dos líneas limpias: la barra suelta en su propio
+   renglón parecía un error de maquetación. */
+@media (max-width: 700px) {
+  .enc-rol { flex-direction: column; align-items: center; gap: 5px }
+  .enc-barra { display: none }
+  .enc-rol-1::after {
+    content: '';
+    display: block;
+    width: 26px;
+    height: 2px;
+    margin: 7px auto 2px;
+    background: currentColor;
+    opacity: .45;
+    border-radius: 2px;
+  }
+}
+@media (max-width: 700px) and (min-width: 521px) {
+  .enc-rol { align-items: flex-start }
+  .enc-rol-1::after { margin-inline: 0 }
+}
+
 .enc-sub {
   font-size: 11.6px;
   color: var(--tinta-3);
@@ -174,9 +212,12 @@
 .enc-datos dd { margin: 0; font-size: 14px; font-weight: 700; color: var(--tinta) }
 
 .enc-acciones { display: flex; flex-wrap: wrap; gap: 10px }
-@media (max-width: 470px) {
-  .enc-acciones { flex-direction: column; align-items: stretch }
-  .enc-acciones .btn { width: 100% }
+
+/* A partir de aquí los botones ocupan la fila entera: si no, el número de
+   teléfono se parte por la mitad. */
+@media (max-width: 620px) {
+  .enc-acciones { flex-direction: column; align-items: stretch; width: 100% }
+  .enc-acciones .btn { width: 100%; min-height: 50px; font-size: 14.5px }
 }
 
 /* ─────────── Resumen ─────────── */
@@ -284,4 +325,16 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bento-celda { opacity: 1; transform: none }
+}
+
+/* En el teléfono las celdas no necesitan 168 px de alto mínimo: la marca 3D
+   se hace más pequeña y el bloque respira igual ocupando bastante menos. */
+@media (max-width: 700px) {
+  .enc { padding-top: clamp(80px, 15vw, 104px); padding-bottom: 34px }
+  .bento { gap: 9px }
+  .bento-celda { min-height: 124px; padding: 16px 16px 17px; border-radius: 10px }
+  .bento-marca { transform: scale(.72); transform-origin: top right; opacity: .26 }
+  .enc-perfil { padding-block: 20px; margin-bottom: 22px }
+  .enc-datos { gap: 11px 24px; padding: 13px 0 }
+  .enc-sub { margin-bottom: 18px }
 }

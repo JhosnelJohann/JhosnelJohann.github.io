@@ -63,16 +63,22 @@ export default function Habilidades() {
         <div className={`habs-panel c-${panel.color}`} ref={ref}>
           <p className="habs-intro">{panel.intro}</p>
 
+          {/* <details> en vez de estado propio: en escritorio se fuerza abierto
+              por CSS y en el móvil el navegador ya sabe plegar y desplegar. */}
           <div className="habs-rejilla">
-            {panel.bloques.map((b) => (
-              <div key={b.grupo} className="habs-bloque">
-                <h3 className="habs-grupo mono">{b.grupo}</h3>
+            {panel.bloques.map((b, ib) => (
+              <details key={b.grupo} className="habs-bloque" open={ib === 0}>
+                <summary className="habs-grupo mono">
+                  <span>{b.grupo}</span>
+                  <span className="habs-cuenta">{b.items.length}</span>
+                  <span className="habs-chevron" aria-hidden="true">⌄</span>
+                </summary>
                 <ul className="habs-lista">
                   {b.items.map((h, i) => (
                     <Barra key={h.nombre} h={h} i={i} activo={dentro} />
                   ))}
                 </ul>
-              </div>
+              </details>
             ))}
           </div>
         </div>
