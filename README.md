@@ -59,6 +59,10 @@ GitHub Actions reconstruye y publica en cada `push` a `main` (`.github/workflows
 Para un repositorio de proyecto (no `usuario.github.io`), define la variable de repositorio
 `VITE_BASE` con el valor `/nombre-del-repo/`.
 
+## En línea
+
+**https://jhosneljohann.github.io**
+
 ## Contacto
 
 📞 [WhatsApp +58 414-5355728](https://wa.me/584145355728) ·
