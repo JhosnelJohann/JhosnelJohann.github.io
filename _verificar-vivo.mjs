@@ -56,9 +56,17 @@ for (const a of ANCHOS) {
     if (d.ocultos) fallos.push(`${a.n}/${tema}: ${d.ocultos} elementos invisibles`)
     if (!d.foto) fallos.push(`${a.n}/${tema}: la FOTO no carga`)
     if (d.hojas !== 7) fallos.push(`${a.n}/${tema}: ${d.hojas}/7 hojas de diseño`)
-    if (d.capturas !== 8) fallos.push(`${a.n}/${tema}: ${d.capturas}/8 capturas`)
+    // En móvil se muestran 6 de las 12 piezas hasta pulsar «ver los demás»,
+    // así que también hay 6 capturas en pantalla y no 8.
+    const piezasEsperadas = a.w <= 700 ? 6 : 12
+    const capturasEsperadas = a.w <= 700 ? 6 : 8
+    if (d.capturas !== capturasEsperadas) {
+      fallos.push(`${a.n}/${tema}: ${d.capturas}/${capturasEsperadas} capturas`)
+    }
     if (d.puestos !== 5) fallos.push(`${a.n}/${tema}: ${d.puestos} puestos, esperaba 5`)
-    if (d.piezas !== 12) fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba 12`)
+    if (d.piezas !== piezasEsperadas) {
+      fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba ${piezasEsperadas}`)
+    }
     if (errores.length) fallos.push(`${a.n}/${tema}: JS -> ${errores.join(' | ')}`)
     if (rotos.length) fallos.push(`${a.n}/${tema}: recursos -> ${rotos.join(' | ')}`)
 

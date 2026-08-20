@@ -1,4 +1,4 @@
-﻿import { perfil, formacion, certificaciones, idiomas } from '../datos/perfil'
+﻿import { perfil, formacion, certificaciones, idiomas, edad } from '../datos/perfil'
 import './Contacto.css'
 
 export default function Contacto() {
@@ -79,6 +79,9 @@ export default function Contacto() {
               >
                 WhatsApp · {perfil.telefono}
               </a>
+              <a className="btn btn-borde" href={`mailto:${perfil.correo}`}>
+                {perfil.correo}
+              </a>
               <a
                 className="btn btn-borde"
                 href={`https://instagram.com/${perfil.instagram}`}
@@ -91,8 +94,23 @@ export default function Contacto() {
 
             <dl className="cont-datos">
               <div>
+                <dt className="mono">Correo</dt>
+                <dd>
+                  <a className="cont-correo" href={`mailto:${perfil.correo}`}>
+                    {perfil.correo}
+                  </a>
+                </dd>
+              </div>
+              <div>
                 <dt className="mono">Ubicación</dt>
                 <dd>{perfil.ubicacion}</dd>
+              </div>
+              <div>
+                <dt className="mono">Fecha de nacimiento</dt>
+                <dd>
+                  <time dateTime={perfil.nacimiento}>{perfil.nacimientoTexto}</time>
+                  <span className="cont-edad"> · {edad()} años</span>
+                </dd>
               </div>
               <div>
                 <dt className="mono">Modalidad</dt>
@@ -104,7 +122,7 @@ export default function Contacto() {
               </div>
               <div>
                 <dt className="mono">Experiencia</dt>
-                <dd>Desde 2019 · siete años</dd>
+                <dd>Desde {perfil.experienciaDesde} · siete años</dd>
               </div>
             </dl>
 

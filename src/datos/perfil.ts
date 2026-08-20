@@ -13,8 +13,11 @@ export const perfil = {
     'Estoy disponible para trabajo remoto internacional, o presencial en el país donde resido.',
   telefono: '+58 414-5355728',
   telefonoWhatsApp: '584145355728',
+  correo: 'soyroas@gmail.com',
   instagram: 'jhosneljohann',
   experienciaDesde: 2019,
+  nacimiento: '2001-01-05',
+  nacimientoTexto: '5 de enero de 2001',
 
   resumen:
     'Siete años entre el diseño y el desarrollo, con un recorrido poco común: entré al sector desde ' +
@@ -33,6 +36,15 @@ export const perfil = {
     'Trabajo con evidencia: cada decisión queda registrada, cada cambio se prueba antes de salir, ' +
     'y lo que no puedo verificar lo declaro como no verificado.',
 } as const
+
+/** Edad a partir de la fecha de nacimiento: así no se queda desfasada. */
+export function edad(hoy = new Date()): number {
+  const n = new Date(perfil.nacimiento)
+  let a = hoy.getFullYear() - n.getFullYear()
+  const m = hoy.getMonth() - n.getMonth()
+  if (m < 0 || (m === 0 && hoy.getDate() < n.getDate())) a--
+  return a
+}
 
 /** Cifras de respaldo. Cada una es comprobable. */
 export const cifras = [

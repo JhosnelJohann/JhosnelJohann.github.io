@@ -113,6 +113,16 @@
 }
 .cont-datos dd { margin: 0; font-size: 13.8px; color: var(--tinta); font-weight: 600; }
 
+.cont-correo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--azul);
+  word-break: break-all;
+}
+.cont-correo:hover { text-decoration: underline; }
+.cont-edad { color: var(--tinta-3); font-weight: 400; }
+
 .cont-verificar {
   font-size: 13px;
   line-height: 1.6;

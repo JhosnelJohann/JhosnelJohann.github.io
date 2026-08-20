@@ -187,8 +187,9 @@
 .mnu-pie { display: flex; flex-direction: column; gap: 13px; padding-top: 26px; }
 .mnu-wa { width: 100%; min-height: 50px; font-size: 15px; }
 
+.mnu-enlaces { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+
 .mnu-ig {
-  align-self: flex-start;
   min-height: 44px;
   display: flex;
   align-items: center;

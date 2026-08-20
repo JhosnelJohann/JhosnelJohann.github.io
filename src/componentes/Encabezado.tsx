@@ -100,11 +100,11 @@ export default function Encabezado() {
                 <IconoLinea tipo="chispa" tam={16} latir={false} />
                 WhatsApp · {perfil.telefono}
               </Boton>
+              <Boton clase="btn btn-borde" href={`mailto:${perfil.correo}`}>
+                {perfil.correo}
+              </Boton>
               <Boton clase="btn btn-borde" href="#experiencia">
                 Ver mi experiencia
-              </Boton>
-              <Boton clase="btn btn-borde" href={`https://instagram.com/${perfil.instagram}`} externo>
-                @{perfil.instagram}
               </Boton>
             </div>
           </div>

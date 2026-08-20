@@ -146,15 +146,20 @@ export default function Nav() {
           >
             WhatsApp · {perfil.telefono}
           </a>
-          <a
-            className="mnu-ig mono"
-            href={`https://instagram.com/${perfil.instagram}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setAbierto(false)}
-          >
-            @{perfil.instagram} ↗
-          </a>
+          <div className="mnu-enlaces">
+            <a className="mnu-ig mono" href={`mailto:${perfil.correo}`} onClick={() => setAbierto(false)}>
+              {perfil.correo}
+            </a>
+            <a
+              className="mnu-ig mono"
+              href={`https://instagram.com/${perfil.instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setAbierto(false)}
+            >
+              @{perfil.instagram} ↗
+            </a>
+          </div>
           <p className="mnu-nota mono">{perfil.ubicacion}</p>
         </div>
       </div>
