@@ -1,0 +1,174 @@
+.dis { background: var(--fondo-2); border-block: 1px solid var(--linea); }
+.dis .entradilla { margin-bottom: clamp(38px, 5vw, 56px); }
+
+/* ─────────── Hojas de muestra ─────────── */
+
+.hojas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+  gap: 18px;
+}
+
+.hoja {
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  overflow: hidden;
+  transition: border-color .2s, transform .28s cubic-bezier(.16,1,.3,1);
+}
+.hoja:hover { transform: translateY(-4px); border-color: var(--linea-viva); }
+
+.hoja-btn { display: block; width: 100%; text-align: left; }
+
+.hoja-img { position: relative; overflow: hidden; background: #0a0a0a; }
+.hoja-img img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 900 / 1092;
+  object-fit: cover;
+  transition: transform .5s cubic-bezier(.16,1,.3,1), filter .3s;
+}
+.hoja:hover .hoja-img img { transform: scale(1.035); }
+
+.hoja-lupa {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #0a0d12;
+  background: var(--amarillo);
+  padding: 4px 9px;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .2s, transform .2s;
+}
+.hoja:hover .hoja-lupa, .hoja-btn:focus-visible .hoja-lupa { opacity: 1; transform: none; }
+
+.hoja-pie { padding: 14px 15px 15px; border-top: 1px solid var(--linea); }
+.hoja-nombre { font-size: 15px; font-weight: 700; letter-spacing: -.015em; }
+.hoja-sector { font-size: 12.5px; color: var(--tinta-3); margin-top: 2px; }
+.hoja-handle { font-size: 11px; color: var(--azul); margin-top: 7px; letter-spacing: .02em; }
+
+/* ─────────── Visor ─────────── */
+
+.visor-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: color-mix(in srgb, var(--fondo) 82%, #000);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(12px, 4vw, 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.visor {
+  position: relative;
+  width: min(680px, 100%);
+  background: var(--fondo);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+.visor > img { width: 100%; height: auto; display: block; }
+
+.visor-pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 14px;
+  border-top: 1px solid var(--linea);
+}
+.visor-nombre { font-size: 17px; font-weight: 750; letter-spacing: -.02em; }
+.visor-sector { font-size: 11px; color: var(--tinta-3); margin-top: 3px; letter-spacing: .05em; }
+.visor-enlace {
+  font-size: 12px;
+  color: var(--azul);
+  padding: 6px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  transition: border-color .16s, background .16s;
+}
+.visor-enlace:hover { border-color: var(--azul); background: var(--azul-tenue); }
+
+.visor-texto {
+  padding: 0 20px 20px;
+  font-size: 14.4px;
+  line-height: 1.62;
+  color: var(--tinta-2);
+}
+
+/* ─────────── YouTube ─────────── */
+
+.youtube {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding: 18px 22px;
+  border: 1px solid var(--linea);
+  border-left: 3px solid var(--rojo);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  transition: border-color .2s, transform .22s cubic-bezier(.16,1,.3,1);
+}
+.youtube:hover { transform: translateX(3px); border-color: var(--rojo); }
+
+.youtube-icono { color: var(--rojo); display: grid; place-items: center; flex: none; }
+.youtube-txt { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 220px; }
+.youtube-txt b { font-size: 15.5px; font-weight: 700; letter-spacing: -.015em; }
+.youtube-txt span { font-size: 13.2px; color: var(--tinta-3); }
+.youtube-ir { font-size: 11.5px; color: var(--rojo); letter-spacing: .03em; white-space: nowrap; }
+
+/* ─────────── Las tres decisiones ─────────── */
+
+.marketing {
+  margin-top: clamp(38px, 5vw, 58px);
+  padding-top: clamp(30px, 4vw, 44px);
+  border-top: 1px solid var(--linea);
+}
+
+.marketing-titulo {
+  font-size: clamp(19px, 2.4vw, 25px);
+  font-weight: 750;
+  margin-bottom: 20px;
+}
+
+.marketing-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
+  counter-reset: mk;
+  padding: 0;
+  list-style: none;
+}
+.marketing-lista li {
+  counter-increment: mk;
+  position: relative;
+  padding-top: 30px;
+  font-size: 14.4px;
+  line-height: 1.6;
+  color: var(--tinta-3);
+}
+.marketing-lista li::before {
+  content: '0' counter(mk);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--amarillo);
+}
+.marketing-lista b { color: var(--tinta); font-weight: 650; display: block; margin-bottom: 4px; }

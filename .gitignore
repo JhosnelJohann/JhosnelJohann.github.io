@@ -1,0 +1,9 @@
+node_modules
+dist
+_material
+_revision
+_culpable.mjs
+_publicar.py
+.DS_Store
+*.local
+.vite

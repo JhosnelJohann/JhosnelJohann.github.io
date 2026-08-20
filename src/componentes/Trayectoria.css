@@ -1,0 +1,134 @@
+.tray .entradilla { margin-bottom: clamp(48px, 7vw, 76px); }
+
+/* ─────────── Las tres etapas ─────────── */
+
+.etapas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
+  gap: clamp(24px, 3.4vw, 44px);
+  margin-bottom: clamp(64px, 9vw, 108px);
+}
+
+.etapa { display: flex; flex-direction: column; gap: 16px; }
+
+.etapa-marca { display: flex; align-items: center; gap: 12px; }
+.etapa-n {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1em;
+}
+.etapa-linea { flex: 1; height: 2px; background: currentColor; opacity: .32; }
+
+.etapa-periodo {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  margin-bottom: 8px;
+}
+
+.etapa-titulo {
+  font-size: clamp(20px, 2.3vw, 25px);
+  font-weight: 750;
+  margin-bottom: 12px;
+}
+
+.etapa-texto {
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--tinta-2);
+  margin-bottom: 14px;
+}
+
+.etapa-hito {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  padding-left: 13px;
+  border-left: 2px solid currentColor;
+}
+
+/* ─────────── Experiencia ─────────── */
+
+.empleos-titulo {
+  font-size: 13px;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--linea);
+  margin-bottom: 8px;
+}
+
+.empleos-lista { display: flex; flex-direction: column; }
+
+.empleo { padding: 28px 0; border-bottom: 1px solid var(--linea); }
+
+.empleo-cab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.empleo-rol {
+  font-size: clamp(17px, 2vw, 20px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.empleo-empresa { font-size: 14px; color: var(--tinta-2); margin-top: 3px; }
+.empleo-empresa span { color: var(--tinta-3); }
+
+.empleo-fechas {
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  color: var(--tinta-3);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+}
+
+.empleo-puntos { display: flex; flex-direction: column; gap: 9px; max-width: 76ch; }
+.empleo-puntos li {
+  position: relative;
+  padding-left: 19px;
+  font-size: 14.6px;
+  line-height: 1.6;
+  color: var(--tinta-2);
+}
+.empleo-puntos li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .68em;
+  width: 8px;
+  height: 1.5px;
+  background: var(--azul);
+}
+
+/* ─────────── Freelance ─────────── */
+
+.freelance { margin-top: 30px; }
+.freelance-rotulo {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  margin-bottom: 12px;
+}
+.freelance-lista { display: flex; flex-wrap: wrap; gap: 7px; }
+.freelance-lista li {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--tinta-2);
+  padding: 5px 11px;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: var(--fondo-2);
+}

@@ -1,0 +1,94 @@
+/* Las portadas heredan el color de la leyenda vía `currentColor`. */
+
+.portada {
+  position: relative;
+  aspect-ratio: 400 / 240;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, currentColor 7%, transparent), transparent 62%),
+    var(--fondo-3);
+  border-bottom: 1px solid var(--linea);
+  overflow: hidden;
+}
+
+.portada::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: .35;
+}
+
+.port-svg { position: relative; width: 100%; height: 100%; display: block; }
+
+/* — Texto dentro de la portada — */
+.p-et {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  fill: var(--tinta-2);
+}
+.p-centro { text-anchor: middle; }
+.p-mini {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  fill: var(--tinta-3);
+}
+.p-pie {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  fill: currentColor;
+  opacity: .82;
+}
+.p-signo {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--fondo);
+}
+
+/* — Formas — */
+.p-caja { fill: var(--fondo-2); stroke: var(--linea); stroke-width: 1; }
+.p-aislada { stroke: currentColor; stroke-dasharray: 4 3; }
+.p-vacia { fill: none; stroke-dasharray: 4 3; opacity: .5; }
+
+.p-hilo { stroke: var(--linea-viva); stroke-width: 1.5; }
+.p-ok { stroke: var(--verde); }
+.p-mal { stroke: var(--rojo); }
+.p-sello { stroke: none; }
+.p-ok-f { fill: var(--verde); }
+.p-mal-f { fill: var(--rojo); }
+
+.p-regla { stroke: var(--linea); stroke-width: 1; }
+
+.p-arista { stroke: var(--linea-viva); stroke-width: 1; }
+.p-nodo { fill: var(--fondo-2); stroke: currentColor; stroke-width: 1.6; }
+.p-entrada { fill: currentColor; }
+.p-final { fill: var(--rojo); stroke: var(--rojo); }
+
+.p-celda { fill: var(--linea); }
+.p-celda-viva { fill: currentColor; }
+
+.p-lomo { fill: var(--linea); }
+.p-lomo-viva { fill: currentColor; }
+
+.p-barra { fill: var(--linea); }
+.p-barra-fin { fill: currentColor; }
+
+.p-muestra { stroke: none; }
+.m-verde { fill: var(--verde) }
+.m-rojo { fill: var(--rojo) }
+.m-amarillo { fill: var(--amarillo) }
+.m-azul { fill: var(--azul) }
+.m-gris { fill: var(--gris) }
+
+.p-pieza { fill: var(--linea); }
+.p-pieza-0 { fill: color-mix(in srgb, var(--rojo) 46%, var(--linea)); }
+.p-pieza-1 { fill: color-mix(in srgb, var(--azul) 46%, var(--linea)); }
+.p-pieza-2 { fill: color-mix(in srgb, var(--amarillo) 46%, var(--linea)); }
+.p-pieza-3 { fill: color-mix(in srgb, var(--verde) 34%, var(--linea)); }

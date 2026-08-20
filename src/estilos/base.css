@@ -1,0 +1,205 @@
+/* ══════════════════════════════════════════════════════════════════
+   Jhosnel Laya — sistema de diseño
+
+   La paleta NO es decorativa: es la leyenda de color de sus propios 26
+   diagramas técnicos, donde cada color responde a una pregunta.
+       verde    camino feliz
+       rojo     fallo
+       amarillo espera / intervención humana
+       azul     sistema externo
+       gris     persistencia
+   Cada proyecto de la web lleva la franja del color de lo que es.
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* — Superficie (tema oscuro, que es el de origen) — */
+  --fondo:        #0a0d12;
+  --fondo-2:      #10141c;
+  --fondo-3:      #171d28;
+  --linea:        #222a37;
+  --linea-viva:   #33405280;
+
+  /* — Tinta — */
+  --tinta:        #eef2f8;
+  --tinta-2:      #b6c0d0;
+  --tinta-3:      #7d8899;
+
+  /* — La leyenda — */
+  --verde:        #35d07f;
+  --rojo:         #ff5f52;
+  --amarillo:     #ffc400;
+  --azul:         #4d8df5;
+  --gris:         #8792a3;
+
+  --azul-tenue:   #4d8df51f;
+  --amarillo-tenue: #ffc4001f;
+
+  /* — Tipografía — */
+  --display: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+
+  /* — Métrica — */
+  --ancho: 1220px;
+  --gutter: clamp(20px, 5vw, 56px);
+  --radio: 3px;
+
+  color-scheme: dark;
+}
+
+/* Tema claro: el visitante que lo pide explícitamente, o cuyo sistema lo pide */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --fondo:      #ffffff;
+    --fondo-2:    #f4f6fa;
+    --fondo-3:    #e9edf4;
+    --linea:      #dce2ec;
+    --linea-viva: #1257c92e;
+
+    --tinta:      #0d1117;
+    --tinta-2:    #38414f;
+    --tinta-3:    #626c7c;
+
+    --verde:      #169a5c;
+    --rojo:       #d92c20;
+    --amarillo:   #b07d00;
+    --azul:       #1257c9;
+    --gris:       #5f6a7a;
+
+    --azul-tenue: #1257c914;
+    --amarillo-tenue: #ffc40024;
+
+    color-scheme: light;
+  }
+}
+
+:root[data-theme='light'] {
+  --fondo:      #ffffff;
+  --fondo-2:    #f4f6fa;
+  --fondo-3:    #e9edf4;
+  --linea:      #dce2ec;
+  --linea-viva: #1257c92e;
+
+  --tinta:      #0d1117;
+  --tinta-2:    #38414f;
+  --tinta-3:    #626c7c;
+
+  --verde:      #169a5c;
+  --rojo:       #d92c20;
+  --amarillo:   #b07d00;
+  --azul:       #1257c9;
+  --gris:       #5f6a7a;
+
+  --azul-tenue: #1257c914;
+  --amarillo-tenue: #ffc40024;
+
+  color-scheme: light;
+}
+
+/* ─────────── Reinicio ─────────── */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.6;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; letter-spacing: -.035em; line-height: 1.03; }
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--amarillo); color: #0a0d12; }
+
+/* ─────────── Piezas compartidas ─────────── */
+
+.env {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 1;
+}
+
+/* Rótulo de sección: número + nombre, en mono */
+.rotulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  margin-bottom: 34px;
+}
+.rotulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--linea);
+}
+.rotulo b { color: var(--azul); font-weight: 600; }
+
+.titulo-seccion {
+  font-size: clamp(30px, 5.4vw, 54px);
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.entradilla {
+  color: var(--tinta-2);
+  font-size: clamp(15.5px, 1.6vw, 18px);
+  max-width: 62ch;
+  line-height: 1.62;
+}
+.entradilla b { color: var(--tinta); font-weight: 650; }
+
+section { padding-block: clamp(72px, 11vw, 130px); }
+
+/* Revelado al entrar en pantalla */
+.revela {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .72s cubic-bezier(.16, 1, .3, 1),
+              transform .72s cubic-bezier(.16, 1, .3, 1);
+}
+.revela.dentro { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .revela { opacity: 1; transform: none; }
+}

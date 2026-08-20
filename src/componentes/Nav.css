@@ -1,0 +1,99 @@
+.progreso {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--azul), var(--verde));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+.nav {
+  position: fixed;
+  inset: 2px 0 auto 0;
+  z-index: 55;
+  transition: background .3s, border-color .3s, backdrop-filter .3s;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-pegado {
+  background: color-mix(in srgb, var(--fondo) 84%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--linea);
+}
+
+.nav-env {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 58px;
+}
+
+.nav-marca { display: flex; align-items: center; gap: 10px; flex: none; }
+
+.nav-jl {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: #0a0d12;
+  background: var(--amarillo);
+  border-radius: 2px;
+}
+
+.nav-nombre {
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: -.02em;
+}
+@media (max-width: 560px) { .nav-nombre { display: none } }
+
+.nav-lista {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-lista::-webkit-scrollbar { display: none }
+@media (max-width: 780px) { .nav-lista { display: none } }
+
+.nav-enlace {
+  display: block;
+  padding: 7px 11px;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  color: var(--tinta-3);
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: color .16s, background .16s;
+}
+.nav-enlace:hover { color: var(--tinta); background: var(--fondo-2); }
+.nav-enlace.activo { color: var(--azul); }
+.nav-enlace.activo::after {
+  content: '';
+  display: block;
+  height: 1.5px;
+  margin-top: 3px;
+  background: var(--azul);
+}
+
+.nav-tema {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: var(--tinta-3);
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  transition: color .16s, border-color .16s;
+}
+.nav-tema:hover { color: var(--amarillo); border-color: var(--amarillo); }
+@media (max-width: 780px) { .nav-tema { margin-left: auto } }
