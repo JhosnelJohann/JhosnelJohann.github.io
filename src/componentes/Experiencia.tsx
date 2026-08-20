@@ -38,8 +38,11 @@ function Fila({ p, i }: { p: Puesto; i: number }) {
           <b>{p.empresa}</b>
           <span> · {p.lugar}</span>
         </p>
-        <p className="exp-fechas mono">
-          {p.desde} — {p.hasta}
+        <p className="exp-meta mono">
+          <span className="exp-fechas">
+            {p.desde} — {p.hasta}
+          </span>
+          <span className={`exp-modalidad m-${p.modalidad.toLowerCase()}`}>{p.modalidad}</span>
         </p>
 
         <p className="exp-resumen">{p.resumen}</p>

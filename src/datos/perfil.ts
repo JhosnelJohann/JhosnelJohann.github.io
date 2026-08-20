@@ -54,9 +54,13 @@ export const cifras = [
   { n: '9', que: 'sistemas construidos en producción', desde: '4 de ellos con IA' },
 ] as const
 
+/** Tal y como las clasifica su currículum original. */
+export type Modalidad = 'Presencial' | 'Semipresencial' | 'Remoto' | 'Freelance'
+
 export interface Puesto {
   rol: string
   empresa: string
+  modalidad: Modalidad
   lugar: string
   desde: string
   hasta: string
@@ -73,7 +77,10 @@ export const experiencia: Puesto[] = [
   {
     rol: 'Desarrollador Full-Stack y Especialista en Automatización',
     empresa: 'Tu Agente de Inmigración',
-    lugar: 'Florida, Estados Unidos · remoto',
+    /* Su currículum viejo lo agrupaba bajo «presencial», pero la empresa está
+       en Florida y él trabaja desde Barquisimeto: es remoto. */
+    modalidad: 'Remoto',
+    lugar: 'Florida, Estados Unidos',
     desde: 'Jul 2025',
     hasta: 'Ago 2026',
     año: '2025 — 2026',
@@ -99,7 +106,8 @@ export const experiencia: Puesto[] = [
   {
     rol: 'Diseñador Gráfico y Programador Web',
     empresa: 'Duralven C.A.',
-    lugar: 'Barquisimeto · semipresencial',
+    modalidad: 'Semipresencial',
+    lugar: 'Barquisimeto, Venezuela',
     desde: 'Mar 2022',
     hasta: 'Presente',
     año: '2022 — hoy',
@@ -118,7 +126,8 @@ export const experiencia: Puesto[] = [
   {
     rol: 'Community Manager y Digitalizador',
     empresa: 'RF Confecciones y Bordados C.A.',
-    lugar: 'Barquisimeto · presencial',
+    modalidad: 'Presencial',
+    lugar: 'Barquisimeto, Venezuela',
     desde: 'Mar 2021',
     hasta: 'Oct 2021',
     año: '2021',
@@ -134,7 +143,8 @@ export const experiencia: Puesto[] = [
   {
     rol: 'Asistente de Ventas Online y Community Manager',
     empresa: 'Kleos C.A.',
-    lugar: 'Barquisimeto · presencial',
+    modalidad: 'Presencial',
+    lugar: 'Barquisimeto, Venezuela',
     desde: 'Ago 2020',
     hasta: 'Mar 2021',
     año: '2020 — 2021',
@@ -150,6 +160,7 @@ export const experiencia: Puesto[] = [
   {
     rol: 'Diseñador Gráfico y Editor Audiovisual · autónomo',
     empresa: 'Ejercicio independiente',
+    modalidad: 'Freelance',
     lugar: 'Barquisimeto · siete marcas atendidas',
     desde: '2019',
     hasta: 'Presente',
