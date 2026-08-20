@@ -1,13 +1,13 @@
 ﻿import { useEffect, useRef, useState } from 'react'
-import { perfil } from '../datos/perfil'
+import { perfil, t } from '../contenido'
 import './Nav.css'
 
 const SECCIONES = [
-  { id: 'experiencia', et: 'Experiencia', n: '01' },
-  { id: 'trabajo', et: 'Portafolio', n: '02' },
-  { id: 'habilidades', et: 'Herramientas', n: '03' },
-  { id: 'diseno', et: 'Diseño', n: '04' },
-  { id: 'contacto', et: 'Contacto', n: '05' },
+  { id: 'experiencia', et: t.secciones.experiencia, n: '01' },
+  { id: 'trabajo', et: t.secciones.trabajo, n: '02' },
+  { id: 'habilidades', et: t.secciones.habilidades, n: '03' },
+  { id: 'diseno', et: t.secciones.diseno, n: '04' },
+  { id: 'contacto', et: t.secciones.contacto, n: '05' },
 ]
 
 type Tema = 'auto' | 'claro' | 'oscuro'
@@ -104,13 +104,22 @@ export default function Nav() {
             {tema === 'auto' ? '◐' : tema === 'claro' ? '☀' : '☾'}
           </button>
 
+          <a
+            className="nav-idioma mono"
+            href={t.irAOtroIdioma}
+            title={t.otroIdiomaTitulo}
+            hrefLang={t.otroIdioma.toLowerCase()}
+          >
+            {t.otroIdioma}
+          </a>
+
           <button
             ref={botonMenu}
             className="nav-hamburguesa"
             onClick={() => setAbierto((v) => !v)}
             aria-expanded={abierto}
             aria-controls="menu-movil"
-            aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={abierto ? t.cerrarMenu : t.abrirMenu}
           >
             <span className="nav-linea" />
             <span className="nav-linea" />
@@ -160,7 +169,14 @@ export default function Nav() {
               @{perfil.instagram} ↗
             </a>
           </div>
-          <p className="mnu-nota mono">{perfil.ubicacion}</p>
+          <div className="mnu-fila-idioma">
+            <p className="mnu-nota mono">{perfil.ubicacion}</p>
+            {/* El «EN» de la barra mide 44 px y compite con el tema y la
+                hamburguesa. Aquí va con su nombre completo y sitio propio. */}
+            <a className="mnu-idioma mono" href={t.irAOtroIdioma} hrefLang={t.otroIdioma.toLowerCase()}>
+              {t.otroIdiomaTitulo} ↗
+            </a>
+          </div>
         </div>
       </div>
     </>

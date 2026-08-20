@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -13,5 +14,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsInlineLimit: 2048,
+    rollupOptions: {
+      /* Dos paginas, un solo paquete: el espanol en la raiz y el ingles en
+         /en/. El idioma lo decide la direccion, no una preferencia guardada,
+         asi cada version se puede enlazar y indexar por separado. */
+      input: {
+        es: resolve(__dirname, 'index.html'),
+        en: resolve(__dirname, 'en/index.html'),
+      },
+    },
   },
 })

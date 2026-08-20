@@ -98,6 +98,27 @@
   opacity: .82;
   border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
 }
+
+/* Conmutador de idioma: enlace real a la otra dirección, no un botón que
+   cambia el texto. Así se puede compartir «el enlace en inglés». */
+.nav-idioma {
+  flex: none;
+  min-width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: inherit;
+  opacity: .82;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: 4px;
+  transition: color .16s, border-color .16s, opacity .16s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.nav-idioma:hover { color: var(--azul); border-color: var(--azul); opacity: 1; }
 .nav-tema:hover { color: var(--amarillo); border-color: var(--amarillo); opacity: 1; }
 @media (max-width: 860px) { .nav-tema { margin-left: auto } }
 
@@ -198,6 +219,24 @@
 }
 
 .mnu-nota { font-size: 11.5px; color: #7d8ba6; letter-spacing: .04em; }
+
+.mnu-fila-idioma {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.mnu-idioma {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 12.5px;
+  color: #5d9bff;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 
 @media (min-width: 861px) { .mnu { display: none } }
 

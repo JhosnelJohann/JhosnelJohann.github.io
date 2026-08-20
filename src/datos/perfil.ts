@@ -18,6 +18,7 @@ export const perfil = {
   experienciaDesde: 2019,
   nacimiento: '2001-01-05',
   nacimientoTexto: '5 de enero de 2001',
+  tituloCorto: 'TSU en Informática · IUJO Barquisimeto',
 
   resumen:
     'Siete años entre el diseño y el desarrollo, con un recorrido poco común: entré al sector desde ' +
@@ -109,17 +110,17 @@ export const experiencia: Puesto[] = [
     modalidad: 'Semipresencial',
     lugar: 'Barquisimeto, Venezuela',
     desde: 'Mar 2022',
-    hasta: 'Presente',
-    año: '2022 — hoy',
-    actual: true,
+    hasta: 'Jun 2026',
+    año: '2022 — 2026',
+    actual: false,
     tipo: 'Diseño',
     resumen:
-      'Llevo la identidad visual y la presencia digital de un distribuidor de repuestos ' +
-      'y accesorios automotrices.',
+      'Llevé la identidad visual y la presencia digital de un distribuidor de repuestos ' +
+      'y accesorios automotrices durante cuatro años.',
     logros: [
       'Diseñé la dirección de arte y el sistema gráfico de marca del catálogo completo: K&N, Fox, Nitto, Black Rhino, NOCO.',
-      'Desarrollo y mantengo el sitio web de la empresa.',
-      'Produzco las piezas de campaña para redes sociales y sigo sus resultados.',
+      'Desarrollé y mantuve el sitio web de la empresa.',
+      'Produje las piezas de campaña para redes sociales y seguí sus resultados.',
     ],
     herramientas: ['Photoshop', 'Illustrator', 'HTML', 'CSS', 'WordPress'],
   },

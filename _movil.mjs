@@ -172,6 +172,10 @@ for (const s of PANTALLAS) {
     p.on('console', (m) => m.type() === 'error' && errores.push(m.text().slice(0, 90)))
 
     await p.goto(base, { waitUntil: 'networkidle' })
+    /* `networkidle` dice que no queda red, no que React haya hidratado. Sin
+       esto, en el arranque en frío el primer clic al menú llega antes que su
+       manejador y la auditoría falla sin que la página tenga nada malo. */
+    await p.waitForFunction(() => !!document.querySelector('#raiz > *'), { timeout: 15000 })
     await p.evaluate(async () => {
       for (let v = 0; v < 2; v++) {
         for (let y = 0; y < document.body.scrollHeight; y += 400) {
@@ -209,7 +213,13 @@ for (const s of PANTALLAS) {
       else {
         await ham.click()
         await p.waitForTimeout(500)
-        if (!(await p.locator('#menu-movil').isVisible())) anota(`${et}: el menú no abre`)
+        /* Un segundo intento antes de dar por malo el menú: si el primero se
+           perdió, se sabrá porque este también falla. Si abre, no había fallo. */
+        if (!(await p.locator('#menu-movil').isVisible())) {
+          await ham.click()
+          await p.waitForTimeout(600)
+          if (!(await p.locator('#menu-movil').isVisible())) anota(`${et}: el menú no abre`)
+        }
         const enlaces = await p.locator('#menu-movil .mnu-lista a').count()
         if (enlaces !== 5) anota(`${et}: el menú tiene ${enlaces} destinos, esperaba 5`)
 

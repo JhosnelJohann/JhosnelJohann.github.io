@@ -1,3 +1,4 @@
+﻿import { t } from '../contenido'
 import './Cinta.css'
 
 const TECNOLOGIAS = [
@@ -22,7 +23,7 @@ export default function Cinta() {
 
   return (
     <div className="cinta-marco oscuro">
-      <div className="cinta" aria-label="Tecnologías que uso">
+      <div className="cinta" aria-label={t.cinta}>
         {pista('a')}
         {pista('b')}
       </div>

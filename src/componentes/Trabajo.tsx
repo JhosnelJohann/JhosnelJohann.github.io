@@ -1,7 +1,8 @@
 ﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { trabajo, categorias, type Categoria, type Pieza } from '../datos/trabajo'
+import { trabajo, categorias, t, con, img, etiquetaCategoria, type Categoria, type Pieza } from '../contenido'
 import Portada from './Portada'
+import Rico from './Rico'
 import { useEnVista, useInclinacion } from '../efectos/movimiento'
 import './Trabajo.css'
 
@@ -25,7 +26,7 @@ function Miniatura({ p }: { p: Pieza }) {
             <span className="panel-punto" />
             <span className="panel-punto" />
             <span className="panel-url mono">
-              {abrible(p) ? dominio(p.url!) : p.restringido ?? 'acceso restringido'}
+              {abrible(p) ? dominio(p.url!) : p.restringido ?? t.trab.accesoRestringido}
             </span>
           </div>
           {/* En el teléfono se sirve la captura de móvil: la de escritorio
@@ -33,11 +34,11 @@ function Miniatura({ p }: { p: Pieza }) {
           <picture>
             <source
               media="(max-width: 700px)"
-              srcSet={`trabajo/${p.captura}-movil.jpg`}
+              srcSet={img(`trabajo/${p.captura}-movil.jpg`)}
             />
             <img
-              src={`trabajo/${p.captura}.jpg`}
-              alt={`Captura de ${p.titulo}`}
+              src={img(`trabajo/${p.captura}.jpg`)}
+              alt={con(t.alt.captura, p.titulo)}
               loading="lazy"
               width={1280}
               height={800}
@@ -69,12 +70,12 @@ function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
       initial={false}
     >
       <div ref={tilt} className="tj-tilt tilt borde-vivo foco">
-      <button className="tj-btn" onClick={abrir} aria-label={`Ver detalle de ${p.titulo}`}>
+      <button className="tj-btn" onClick={abrir} aria-label={con(t.trab.verDetalle, p.titulo)}>
         <Miniatura p={p} />
 
         <div className="tj-cuerpo">
           <div className="tj-cab">
-            <span className="tj-cat mono">{p.categoria}</span>
+            <span className="tj-cat mono">{etiquetaCategoria(p.categoria)}</span>
             <span className="tj-año mono">{p.año}</span>
           </div>
 
@@ -107,7 +108,7 @@ function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
           <span className="tj-url tj-url-off mono">{p.restringido}</span>
         )}
         <button className="tj-mas mono" onClick={abrir}>
-          Detalle →
+          {t.trab.detalle}
         </button>
       </div>
       </div>
@@ -147,7 +148,7 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
         exit={{ opacity: 0, y: 14 }}
         transition={{ type: 'spring', stiffness: 320, damping: 32 }}
       >
-        <button className="fi-cerrar" onClick={cerrar} aria-label="Cerrar">
+        <button className="fi-cerrar" onClick={cerrar} aria-label={t.cerrar}>
           ✕
         </button>
 
@@ -155,7 +156,7 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
 
         <div className="fi-cuerpo">
           <div className="tj-cab">
-            <span className="tj-cat mono">{p.categoria}</span>
+            <span className="tj-cat mono">{etiquetaCategoria(p.categoria)}</span>
             <span className="tj-año mono">{p.año}</span>
           </div>
 
@@ -165,7 +166,7 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
           {abrible(p) && (
             <div className="fi-acceso">
               <a className="btn btn-primario" href={p.url} target="_blank" rel="noopener noreferrer">
-                Visitar {dominio(p.url!)} ↗
+                {t.trab.visitar} {dominio(p.url!)} ↗
               </a>
               {p.restringido && <span className="fi-nota-acceso mono">🔒 {p.restringido}</span>}
             </div>
@@ -186,38 +187,30 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
             ))}
           </ul>
 
-          {p.detalle.map((t) => (
-            <p key={t.slice(0, 24)} className="fi-parrafo">
-              {t}
+          {p.detalle.map((d) => (
+            <p key={d.slice(0, 24)} className="fi-parrafo">
+              {d}
             </p>
           ))}
 
           {p.galeria && (
             <>
-              <h4 className="fi-sub mono">Por dentro</h4>
+              <h4 className="fi-sub mono">{t.trab.porDentro}</h4>
               <ul className={`fi-galeria ${carpeta(p) === 'landings' ? 'fi-galeria-movil' : ''}`}>
                 {p.galeria.map((g) => (
                   <li key={g.archivo}>
-                    <img src={`${carpeta(p)}/${g.archivo}.jpg`} alt={g.pie} loading="lazy" />
+                    <img src={img(`${carpeta(p)}/${g.archivo}.jpg`)} alt={g.pie} loading="lazy" />
                     <span>{g.pie}</span>
                   </li>
                 ))}
               </ul>
-              {carpeta(p) === 'crm' ? (
-                <p className="fi-aviso mono">
-                  Los datos de clientes y del equipo van difuminados a propósito: son personas
-                  reales. La interfaz es la real.
-                </p>
-              ) : (
-                <p className="fi-aviso mono">
-                  Capturas en móvil, que es de donde llega el tráfico de anuncios y para donde está
-                  diseñada.
-                </p>
-              )}
+              <p className="fi-aviso mono">
+                {carpeta(p) === 'crm' ? t.trab.avisoCrm : t.trab.avisoMovil}
+              </p>
             </>
           )}
 
-          <h4 className="fi-sub mono">Con qué está hecho</h4>
+          <h4 className="fi-sub mono">{t.trab.conQue}</h4>
           <ul className="fi-stack">
             {p.stack.map((s) => (
               <li key={s} className="mono">
@@ -259,24 +252,20 @@ export default function Trabajo() {
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">
-            <b>03</b> Portafolio
+            <b>{t.trab.num}</b> {t.trab.rotulo}
           </p>
-          <h2 className="cab-titulo">Trabajo en producción</h2>
+          <h2 className="cab-titulo">{t.trab.titulo}</h2>
           <p className="cab-nota">
-            Doce sistemas que resolvieron un problema real de una empresa en marcha.{' '}
-            <b>{conEnlace} están en línea y puedes abrirlos ahora mismo</b> — sus miniaturas son
-            capturas reales, no interpretaciones. Los demás son sistemas internos: llevan portada
-            dibujada y van marcados como restringidos, porque publicar sus pantallas expondría datos
-            de clientes.
+            <Rico texto={con(t.trab.nota, conEnlace)} />
           </p>
         </div>
 
-        <div className="trab-filtros" role="group" aria-label="Filtrar por tipo">
+        <div className="trab-filtros" role="group" aria-label={t.trab.filtrar}>
           <button
             className={`trab-filtro mono ${!filtro ? 'activo' : ''}`}
             onClick={() => setFiltro(null)}
           >
-            Todo <span>{trabajo.length}</span>
+            {t.trab.todo} <span>{trabajo.length}</span>
           </button>
           {categorias.map((c) => {
             const n = trabajo.filter((p) => p.categoria === c).length
@@ -287,7 +276,7 @@ export default function Trabajo() {
                 className={`trab-filtro mono ${filtro === c ? 'activo' : ''}`}
                 onClick={() => setFiltro(filtro === c ? null : c)}
               >
-                {c} <span>{n}</span>
+                {etiquetaCategoria(c)} <span>{n}</span>
               </button>
             )
           })}
@@ -303,7 +292,7 @@ export default function Trabajo() {
 
         {recorta && (
           <button className="btn btn-borde trab-mas" onClick={() => setTodas(true)}>
-            Ver los {filtrada.length - TANDA} proyectos restantes ↓
+            {con(t.trab.verMas, filtrada.length - TANDA)}
           </button>
         )}
       </div>

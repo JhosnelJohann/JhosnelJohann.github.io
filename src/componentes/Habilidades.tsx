@@ -1,15 +1,19 @@
 ﻿import { useState } from 'react'
-import { paneles, ANCHO_NIVEL, type Habilidad } from '../datos/habilidades'
+import { paneles, ANCHO_NIVEL, t, type Habilidad } from '../contenido'
 import { useEnVista } from '../efectos/movimiento'
+import Rico from './Rico'
 import './Habilidades.css'
 
 function Barra({ h, i, activo }: { h: Habilidad; i: number; activo: boolean }) {
+  /* El nivel se guarda siempre con la clave en español —de ahí salen la clase
+     CSS y el ancho de la barra—; solo la etiqueta visible se traduce. */
+  const etiqueta = t.hab.niveles[h.nivel]
   return (
-    <li className="hab" title={h.nota ?? h.nivel}>
+    <li className="hab" title={h.nota ?? etiqueta}>
       <div className="hab-fila">
         <span className="hab-nombre">{h.nombre}</span>
         <span className={`hab-nivel mono n-${h.nivel.toLowerCase().replace('-', '')}`}>
-          {h.nivel}
+          {etiqueta}
         </span>
       </div>
       <div className="hab-pista">
@@ -36,13 +40,11 @@ export default function Habilidades() {
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">
-            <b>04</b> Herramientas
+            <b>{t.hab.num}</b> {t.hab.rotulo}
           </p>
-          <h2 className="cab-titulo">Lo que sé usar, y hasta dónde.</h2>
+          <h2 className="cab-titulo">{t.hab.titulo}</h2>
           <p className="cab-nota">
-            La barra representa <b>un nivel declarado, no un porcentaje inventado</b>. El nivel va
-            escrito al lado y cada uno está respaldado por trabajo real: «avanzado» significa que lo
-            diseñé, lo llevé a producción y resolví con ello fallos que no eran evidentes.
+            <Rico texto={t.hab.nota} />
           </p>
         </div>
 
@@ -84,9 +86,7 @@ export default function Habilidades() {
         </div>
 
         <p className="habs-pie">
-          <b>Java, JavaFX, PHP, C++ y C#</b> constan en mi TSU en Informática pero no los he usado
-          en producción, y por eso van marcados como formación. En una entrevista técnica prefiero
-          decirlo yo antes de que lo descubra quien me entrevista.
+          <Rico texto={t.hab.pie} />
         </p>
       </div>
     </section>

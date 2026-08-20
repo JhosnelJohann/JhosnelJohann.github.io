@@ -1,3 +1,4 @@
+import { t } from '../contenido'
 import './Portada.css'
 
 /**
@@ -13,8 +14,8 @@ function CRM() {
     { x: 26, y: 34, w: 104, et: 'frontend', p: ':3100' },
     { x: 148, y: 34, w: 104, et: 'api', p: ':4100' },
     { x: 270, y: 34, w: 104, et: 'ai', p: ':8100' },
-    { x: 26, y: 132, w: 104, et: 'email-worker', p: 'aislado' },
-    { x: 148, y: 132, w: 104, et: 'followup', p: 'aislado' },
+    { x: 26, y: 132, w: 104, et: 'email-worker', p: t.port.aislado },
+    { x: 148, y: 132, w: 104, et: 'followup', p: t.port.aislado },
     { x: 270, y: 132, w: 104, et: 'livekit', p: ':7880' },
   ]
   return (
@@ -31,7 +32,7 @@ function CRM() {
       ))}
       <line x1="130" y1="61" x2="148" y2="61" className="p-hilo" />
       <line x1="252" y1="61" x2="270" y2="61" className="p-hilo" />
-      <text x="26" y="212" className="p-pie">85 tablas · PostgreSQL 15</text>
+      <text x="26" y="212" className="p-pie">{t.port.crm}</text>
       <line x1="26" y1="196" x2="374" y2="196" className="p-regla" />
     </svg>
   )
@@ -40,14 +41,14 @@ function CRM() {
 /** Arnés: la comprobación en tres direcciones. */
 function Arnes() {
   const filas = [
-    { y: 52, a: 'caja', b: 'nodo', ok: true },
-    { y: 104, a: 'caja', b: '—', ok: false },
-    { y: 156, a: '—', b: 'nodo', ok: false },
+    { y: 52, a: t.port.caja, b: t.port.nodo, ok: true },
+    { y: 104, a: t.port.caja, b: '—', ok: false },
+    { y: 156, a: '—', b: t.port.nodo, ok: false },
   ]
   return (
     <svg viewBox={`0 0 ${V.w} ${V.h}`} className="port-svg" aria-hidden="true">
-      <text x="26" y="30" className="p-mini">DIAGRAMA</text>
-      <text x="286" y="30" className="p-mini">FLUJO</text>
+      <text x="26" y="30" className="p-mini">{t.port.diagrama}</text>
+      <text x="286" y="30" className="p-mini">{t.port.flujo}</text>
       {filas.map((f) => (
         <g key={f.y}>
           <rect x="26" y={f.y} width="92" height="34" rx="2"
@@ -63,7 +64,7 @@ function Arnes() {
           <text x="200" y={f.y + 21} className="p-signo">{f.ok ? '✓' : '✕'}</text>
         </g>
       ))}
-      <text x="26" y="216" className="p-pie">3 direcciones · sale ≠ 0 si divergen</text>
+      <text x="26" y="216" className="p-pie">{t.port.arnes}</text>
     </svg>
   )
 }
@@ -90,7 +91,7 @@ function Estados() {
         <circle key={i} cx={x} cy={y} r={i === 0 ? 9 : i === 12 ? 9 : 6}
           className={i === 0 ? 'p-nodo p-entrada' : i === 12 ? 'p-nodo p-final' : 'p-nodo'} />
       ))}
-      <text x="26" y="226" className="p-pie">13 pasos · 25 transiciones · en PostgreSQL</text>
+      <text x="26" y="226" className="p-pie">{t.port.estados}</text>
     </svg>
   )
 }
@@ -108,7 +109,7 @@ function Densidad() {
         <rect key={i} x={p.x} y={p.y} width="7" height="7" rx="1"
           className={p.act ? 'p-celda p-celda-viva' : 'p-celda'} />
       ))}
-      <text x="28" y="226" className="p-pie">186 nodos · 8 versiones en 2 días</text>
+      <text x="28" y="226" className="p-pie">{t.port.nodos}</text>
     </svg>
   )
 }
@@ -125,8 +126,8 @@ function Lomos() {
         )
       })}
       <line x1="26" y1="174" x2="374" y2="174" className="p-regla" />
-      <text x="26" y="204" className="p-pie">18 documentos · 231 fuentes citadas</text>
-      <text x="26" y="222" className="p-mini">5 afirmaciones refutadas antes de publicar</text>
+      <text x="26" y="204" className="p-pie">{t.port.docs}</text>
+      <text x="26" y="222" className="p-mini">{t.port.docsMini}</text>
     </svg>
   )
 }
@@ -143,7 +144,7 @@ function Capas() {
           <text x={40 + i * 9} y={56 + i * 42} className="p-et">{c}</text>
         </g>
       ))}
-      <text x="26" y="226" className="p-pie">22 dominios con certificado</text>
+      <text x="26" y="226" className="p-pie">{t.port.certs}</text>
     </svg>
   )
 }
@@ -162,7 +163,7 @@ function Embudo() {
           </g>
         )
       })}
-      <text x="26" y="226" className="p-pie">18 tablas · 207 planes · 3 estados de validación</text>
+      <text x="26" y="226" className="p-pie">{t.port.migracion}</text>
     </svg>
   )
 }
@@ -184,7 +185,7 @@ function Leyenda() {
           <text x="86" y={43 + i * 36} className="p-et">{x.t}</text>
         </g>
       ))}
-      <text x="26" y="226" className="p-pie">26 diagramas · el color responde a una pregunta</text>
+      <text x="26" y="226" className="p-pie">{t.port.diagramas}</text>
     </svg>
   )
 }
@@ -201,7 +202,7 @@ function Reticula() {
             className={`p-pieza p-pieza-${i % 4}`} />
         )
       })}
-      <text x="30" y="226" className="p-pie">7 marcas · dirección de arte y vídeo</text>
+      <text x="30" y="226" className="p-pie">{t.port.marcas}</text>
     </svg>
   )
 }

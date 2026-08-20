@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { perfil, cifras } from '../datos/perfil'
+import { perfil, cifras, img, t } from '../contenido'
 import { montarShader } from '../efectos/shader'
 import { useEnVista, useMagnetico } from '../efectos/movimiento'
 import { Letras, Palabras, Rodillo } from './Texto'
@@ -54,13 +54,13 @@ export default function Encabezado() {
         <div className="enc-fila">
           <figure className="enc-foto">
             <span className="enc-aro" aria-hidden="true" />
-            <img src="foto.jpg" alt="Jhosnel Laya" width={640} height={640} fetchPriority="high" />
+            <img src={img('foto.jpg')} alt={t.alt.foto} width={640} height={640} fetchPriority="high" />
           </figure>
 
           <div className="enc-texto">
             <p className="mono enc-estado">
               <span className="enc-punto" aria-hidden="true" />
-              Disponible para nuevos proyectos
+              {t.disponible}
             </p>
 
             {/* El nombre entra letra a letra. El apellido NO: lleva degradado
@@ -82,16 +82,18 @@ export default function Encabezado() {
 
             <dl className="enc-datos">
               <div>
-                <dt className="mono">Ubicación</dt>
+                <dt className="mono">{t.datos.ubicacion}</dt>
                 <dd>{perfil.ubicacion}</dd>
               </div>
               <div>
-                <dt className="mono">Modalidad</dt>
+                <dt className="mono">{t.datos.modalidad}</dt>
                 <dd>{perfil.disponibilidad}</dd>
               </div>
               <div>
-                <dt className="mono">Experiencia</dt>
-                <dd>Desde {perfil.experienciaDesde} · siete años</dd>
+                <dt className="mono">{t.datos.experiencia}</dt>
+                <dd>
+                  {t.datos.desde} {perfil.experienciaDesde} · {t.datos.sieteAños}
+                </dd>
               </div>
             </dl>
 
@@ -104,7 +106,7 @@ export default function Encabezado() {
                 {perfil.correo}
               </Boton>
               <Boton clase="btn btn-borde" href="#experiencia">
-                Ver mi experiencia
+                {t.verExperiencia}
               </Boton>
             </div>
           </div>

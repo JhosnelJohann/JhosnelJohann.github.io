@@ -1,4 +1,5 @@
-﻿import { perfil, formacion, certificaciones, idiomas, edad } from '../datos/perfil'
+﻿import { perfil, formacion, certificaciones, idiomas, edad, img, t } from '../contenido'
+import Rico from './Rico'
 import './Contacto.css'
 
 export default function Contacto() {
@@ -7,14 +8,14 @@ export default function Contacto() {
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">
-            <b>06</b> Formación y contacto
+            <b>{t.cont.num}</b> {t.cont.rotulo}
           </p>
-          <h2 className="cab-titulo">Hablemos.</h2>
+          <h2 className="cab-titulo">{t.cont.titulo}</h2>
         </div>
 
         <div className="cont-rejilla">
           <div className="cont-izq">
-            <h3 className="cont-sub mono">Formación académica</h3>
+            <h3 className="cont-sub mono">{t.cont.formacion}</h3>
 
             <div className="form-fila">
               <ul className="estudios">
@@ -22,8 +23,8 @@ export default function Contacto() {
                   <li key={f.titulo} className="estudio">
                     <p className="estudio-titulo">
                       {f.titulo}
-                      {f.estado === 'egresado' && <span className="et c-verde">Egresado</span>}
-                      {f.estado === 'curso' && <span className="et c-amarillo">Cursando</span>}
+                      {f.estado === 'egresado' && <span className="et c-verde">{t.cont.egresado}</span>}
+                      {f.estado === 'curso' && <span className="et c-amarillo">{t.cont.cursando}</span>}
                     </p>
                     <p className="estudio-centro">{f.centro}</p>
                     <p className="mono estudio-años">{f.años}</p>
@@ -33,20 +34,17 @@ export default function Contacto() {
 
               <figure className="form-foto">
                 <img
-                  src="jhosnel-iujo.jpg"
-                  alt="Jhosnel Laya durante su etapa de estudiante en el IUJO"
+                  src={img('jhosnel-iujo.jpg')}
+                  alt={t.alt.iujo}
                   loading="lazy"
                   width={900}
                   height={1125}
                 />
-                <figcaption className="mono">
-                  Etapa de estudiante en el IUJO, donde empecé a tomar mis primeros encargos de
-                  diseño y edición.
-                </figcaption>
+                <figcaption className="mono">{t.cont.pieFoto}</figcaption>
               </figure>
             </div>
 
-            <h3 className="cont-sub mono">Certificaciones</h3>
+            <h3 className="cont-sub mono">{t.cont.certificaciones}</h3>
             <ul className="estudios">
               {certificaciones.map((c) => (
                 <li key={c.titulo} className="estudio">
@@ -56,7 +54,7 @@ export default function Contacto() {
               ))}
             </ul>
 
-            <h3 className="cont-sub mono">Idiomas</h3>
+            <h3 className="cont-sub mono">{t.cont.idiomas}</h3>
             <ul className="idiomas">
               {idiomas.map((i) => (
                 <li key={i.idioma}>
@@ -94,7 +92,7 @@ export default function Contacto() {
 
             <dl className="cont-datos">
               <div>
-                <dt className="mono">Correo</dt>
+                <dt className="mono">{t.datos.correo}</dt>
                 <dd>
                   <a className="cont-correo" href={`mailto:${perfil.correo}`}>
                     {perfil.correo}
@@ -102,34 +100,34 @@ export default function Contacto() {
                 </dd>
               </div>
               <div>
-                <dt className="mono">Ubicación</dt>
+                <dt className="mono">{t.datos.ubicacion}</dt>
                 <dd>{perfil.ubicacion}</dd>
               </div>
               <div>
-                <dt className="mono">Fecha de nacimiento</dt>
+                <dt className="mono">{t.datos.nacimiento}</dt>
                 <dd>
                   <time dateTime={perfil.nacimiento}>{perfil.nacimientoTexto}</time>
-                  <span className="cont-edad"> · {edad()} años</span>
+                  <span className="cont-edad"> · {edad()} {t.datos.años}</span>
                 </dd>
               </div>
               <div>
-                <dt className="mono">Modalidad</dt>
+                <dt className="mono">{t.datos.modalidad}</dt>
                 <dd>{perfil.disponibilidad}</dd>
               </div>
               <div>
-                <dt className="mono">Título</dt>
-                <dd>TSU en Informática · IUJO Barquisimeto</dd>
+                <dt className="mono">{t.datos.titulo}</dt>
+                <dd>{perfil.tituloCorto}</dd>
               </div>
               <div>
-                <dt className="mono">Experiencia</dt>
-                <dd>Desde {perfil.experienciaDesde} · siete años</dd>
+                <dt className="mono">{t.datos.experiencia}</dt>
+                <dd>
+                  {t.datos.desde} {perfil.experienciaDesde} · {t.datos.sieteAños}
+                </dd>
               </div>
             </dl>
 
             <p className="cont-verificar">
-              <b>Todo lo que digo aquí es comprobable.</b> Lo que afirmo sobre mi trabajo en Tu
-              Agente de Inmigración se verifica contra la bitácora del servidor de producción, y mi
-              antiguo empleador puede confirmarlo.
+              <Rico texto={t.cont.verificar} />
             </p>
           </div>
         </div>
@@ -139,9 +137,9 @@ export default function Contacto() {
         <div className="env pie-env">
           <p className="mono">© 2026 Jhosnel Laya · Barquisimeto, Venezuela</p>
           <p className="mono pie-nota">
-            Esta página la hice yo, en React y Vite. El código está{' '}
+            {t.cont.pieCodigo}{' '}
             <a href="https://github.com/JhosnelJohann/JhosnelJohann.github.io" target="_blank" rel="noopener noreferrer">
-              abierto en GitHub
+              {t.cont.pieEnlace}
             </a>
             .
           </p>

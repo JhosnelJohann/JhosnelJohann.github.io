@@ -1,20 +1,7 @@
-﻿import { experiencia, type Puesto } from '../datos/perfil'
+﻿import { experiencia, t, type Puesto } from '../contenido'
 import { useEnVista } from '../efectos/movimiento'
+import Rico from './Rico'
 import './Experiencia.css'
-
-/** Convierte **negritas** y `código` del texto plano a marcado. */
-function Rico({ texto }: { texto: string }) {
-  const trozos = texto.split(/(\*\*[^*]+\*\*|`[^`]+`)/g)
-  return (
-    <>
-      {trozos.map((t, i) => {
-        if (t.startsWith('**') && t.endsWith('**')) return <b key={i}>{t.slice(2, -2)}</b>
-        if (t.startsWith('`') && t.endsWith('`')) return <code key={i}>{t.slice(1, -1)}</code>
-        return <span key={i}>{t}</span>
-      })}
-    </>
-  )
-}
 
 function Fila({ p, i }: { p: Puesto; i: number }) {
   const { ref, dentro } = useEnVista<HTMLLIElement>()
@@ -27,9 +14,9 @@ function Fila({ p, i }: { p: Puesto; i: number }) {
       <div className="exp-tiempo">
         <p className="exp-año mono">{p.año}</p>
         <span className={`et exp-tipo ${p.tipo === 'Desarrollo' ? 'c-azul' : p.tipo === 'Diseño' ? 'c-amarillo' : 'c-gris'}`}>
-          {p.tipo}
+          {t.exp.tipos[p.tipo]}
         </span>
-        {p.actual && <span className="exp-vivo mono">En curso</span>}
+        {p.actual && <span className="exp-vivo mono">{t.exp.enCurso}</span>}
       </div>
 
       <div className="exp-cuerpo">
@@ -42,7 +29,9 @@ function Fila({ p, i }: { p: Puesto; i: number }) {
           <span className="exp-fechas">
             {p.desde} — {p.hasta}
           </span>
-          <span className={`exp-modalidad m-${p.modalidad.toLowerCase()}`}>{p.modalidad}</span>
+          <span className={`exp-modalidad m-${p.modalidad.toLowerCase()}`}>
+            {t.exp.modalidades[p.modalidad]}
+          </span>
         </p>
 
         <p className="exp-resumen">{p.resumen}</p>
@@ -73,14 +62,11 @@ export default function Experiencia() {
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">
-            <b>02</b> Trayectoria
+            <b>{t.exp.num}</b> {t.exp.rotulo}
           </p>
-          <h2 className="cab-titulo">Experiencia laboral</h2>
+          <h2 className="cab-titulo">{t.exp.titulo}</h2>
           <p className="cab-nota">
-            Empecé en 2019 haciendo dirección de arte y edición de vídeo, y hoy construyo la
-            infraestructura que sostiene ese trabajo. <b>El salto no fue gradual</b>: de marketing a
-            administrar un servidor Linux hay una distancia que normalmente se cubre con un cambio
-            de puesto y un equipo alrededor. Yo la cubrí sobre la marcha, con producción funcionando.
+            <Rico texto={t.exp.nota} />
           </p>
         </div>
 

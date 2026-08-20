@@ -1,7 +1,8 @@
 ﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { marcas, canales, type Marca } from '../datos/marcas'
+import { marcas, canales, t, con, img, type Marca } from '../contenido'
 import { useEnVista } from '../efectos/movimiento'
+import Rico from './Rico'
 import './Diseno.css'
 
 function Hoja({ m, i, abrir }: { m: Marca; i: number; abrir: () => void }) {
@@ -15,13 +16,13 @@ function Hoja({ m, i, abrir }: { m: Marca; i: number; abrir: () => void }) {
       <button className="hoja-btn" onClick={abrir}>
         <div className="hoja-img">
           <img
-            src={`diseno/${m.slug}-mini.jpg`}
-            alt={`Piezas gráficas para ${m.nombre}`}
+            src={img(`diseno/${m.slug}-mini.jpg`)}
+            alt={con(t.alt.piezas, m.nombre)}
             loading="lazy"
             width={900}
             height={1092}
           />
-          <span className="hoja-lupa mono">Ampliar</span>
+          <span className="hoja-lupa mono">{t.dis.ampliar}</span>
         </div>
         <div className="hoja-pie">
           <p className="hoja-nombre">{m.nombre}</p>
@@ -58,15 +59,15 @@ function Visor({ m, cerrar }: { m: Marca; cerrar: () => void }) {
         className="visor"
         role="dialog"
         aria-modal="true"
-        aria-label={`Muestras de ${m.nombre}`}
+        aria-label={con(t.alt.muestras, m.nombre)}
         onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, y: 26, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 14 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
-        <button className="ficha-cerrar" onClick={cerrar} aria-label="Cerrar">✕</button>
-        <img src={`diseno/${m.slug}.jpg`} alt={`Hoja de muestras de ${m.nombre}`} />
+        <button className="ficha-cerrar" onClick={cerrar} aria-label={t.cerrar}>✕</button>
+        <img src={img(`diseno/${m.slug}.jpg`)} alt={con(t.alt.hoja, m.nombre)} />
         <div className="visor-pie">
           <div>
             <p className="visor-nombre">{m.nombre}</p>
@@ -94,13 +95,10 @@ export default function Diseno() {
     <section id="diseno" className="dis">
       <div className="env">
         <div className="cab-seccion">
-          <p className="cab-num mono"><b>05</b> Diseño y audiovisual</p>
-          <h2 className="cab-titulo">De aquí vengo, y no lo he dejado.</h2>
+          <p className="cab-num mono"><b>{t.dis.num}</b> {t.dis.rotulo}</p>
+          <h2 className="cab-titulo">{t.dis.titulo}</h2>
           <p className="cab-nota">
-            La tentación de quien cambia de perfil es borrar el pasado. Sería un error: un
-            desarrollador que ha comprado anuncios con presupuesto real{' '}
-            <b>resuelve problemas que otro desarrollador ni siquiera identifica</b>. Estas son mis
-            hojas de muestra de trabajo, una por marca.
+            <Rico texto={t.dis.nota} />
           </p>
         </div>
 
@@ -111,7 +109,7 @@ export default function Diseno() {
         </ul>
 
         <div className="canales">
-          <p className="canales-rotulo mono">Los dos canales cuyo contenido edité</p>
+          <p className="canales-rotulo mono">{t.dis.canales}</p>
           {canales.map((c) => (
             <a
               key={c.handle}
@@ -147,20 +145,13 @@ export default function Diseno() {
         </div>
 
         <div className="marketing">
-          <h3 className="marketing-titulo">Tres decisiones de marketing que nadie me encargó</h3>
+          <h3 className="marketing-titulo">{t.dis.marketingTitulo}</h3>
           <ol className="marketing-lista">
-            <li>
-              <b>Detuve una configuración que habría duplicado el conteo de conversiones.</b> Es un
-              fallo que casi nunca se detecta, porque los números suben.
-            </li>
-            <li>
-              <b>Metí las reseñas de Google dentro de un modal</b> en vez de enlazar fuera, para no
-              regalar el visitante que la empresa se acababa de pagar.
-            </li>
-            <li>
-              <b>Implementé la persistencia de la atribución</b> a lo largo de ocho pasos de
-              formulario, para que la inversión publicitaria se pueda medir de verdad.
-            </li>
+            {t.dis.marketing.map((m) => (
+              <li key={m.slice(0, 24)}>
+                <Rico texto={m} />
+              </li>
+            ))}
           </ol>
         </div>
       </div>
