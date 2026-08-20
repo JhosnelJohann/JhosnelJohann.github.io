@@ -151,9 +151,12 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
           <p className="fi-gancho">{p.gancho}</p>
 
           {p.url && (
-            <a className="btn btn-primario fi-visitar" href={p.url} target="_blank" rel="noopener noreferrer">
-              Visitar {dominio(p.url)} ↗
-            </a>
+            <div className="fi-acceso">
+              <a className="btn btn-primario" href={p.url} target="_blank" rel="noopener noreferrer">
+                Visitar {dominio(p.url)} ↗
+              </a>
+              {p.restringido && <span className="fi-nota-acceso mono">🔒 {p.restringido}</span>}
+            </div>
           )}
           {!p.url && p.restringido && (
             <p className="fi-restringido mono">🔒 {p.restringido}</p>
@@ -173,6 +176,30 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
               {t}
             </p>
           ))}
+
+          {p.galeria && (
+            <>
+              <h4 className="fi-sub mono">Por dentro</h4>
+              <ul className="fi-galeria">
+                {p.galeria.map((g) => (
+                  <li key={g.archivo}>
+                    <img
+                      src={`crm/${g.archivo}.jpg`}
+                      alt={g.pie}
+                      loading="lazy"
+                      width={1280}
+                      height={625}
+                    />
+                    <span>{g.pie}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="fi-aviso mono">
+                Los datos personales de clientes y del equipo van difuminados a propósito. La
+                interfaz es la real.
+              </p>
+            </>
+          )}
 
           <h4 className="fi-sub mono">Con qué está hecho</h4>
           <ul className="fi-stack">
@@ -203,7 +230,7 @@ export default function Trabajo() {
           </p>
           <h2 className="cab-titulo">Trabajo en producción</h2>
           <p className="cab-nota">
-            Once sistemas que resolvieron un problema real de una empresa en marcha.{' '}
+            Doce sistemas que resolvieron un problema real de una empresa en marcha.{' '}
             <b>{conEnlace} están en línea y puedes abrirlos ahora mismo</b> — sus miniaturas son
             capturas reales, no interpretaciones. Los demás son sistemas internos: llevan portada
             dibujada y van marcados como restringidos, porque publicar sus pantallas expondría datos

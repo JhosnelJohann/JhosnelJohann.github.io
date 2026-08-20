@@ -1,4 +1,4 @@
-// Auditoría contra el sitio publicado, no contra el servidor local.
+﻿// Auditoría contra el sitio publicado, no contra el servidor local.
 import { chromium } from 'playwright'
 
 const WEB = 'https://jhosneljohann.github.io/'
@@ -58,7 +58,7 @@ for (const a of ANCHOS) {
     if (d.hojas !== 7) fallos.push(`${a.n}/${tema}: ${d.hojas}/7 hojas de diseño`)
     if (d.capturas !== 6) fallos.push(`${a.n}/${tema}: ${d.capturas}/6 capturas`)
     if (d.puestos !== 5) fallos.push(`${a.n}/${tema}: ${d.puestos} puestos, esperaba 5`)
-    if (d.piezas !== 11) fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba 11`)
+    if (d.piezas !== 12) fallos.push(`${a.n}/${tema}: ${d.piezas} piezas, esperaba 12`)
     if (errores.length) fallos.push(`${a.n}/${tema}: JS -> ${errores.join(' | ')}`)
     if (rotos.length) fallos.push(`${a.n}/${tema}: recursos -> ${rotos.join(' | ')}`)
 
@@ -89,6 +89,9 @@ for (const u of unicos) {
     const r = await p.request.get(u, { timeout: 25000, maxRedirects: 5 })
     const est = r.status()
     console.log(`  ${est}  ${u}`)
+    // 401 esperado en las dos campañas en pausa: la propia página lo avisa.
+    const enPausa = u.includes('planes.juanmanueltuagente') || u.includes('staging.juanmanueltuagente')
+    if (est === 401 && enPausa) continue
     if (est >= 400 && est !== 429 && est !== 999) fallos.push(`enlace ${est}: ${u}`)
   } catch (e) {
     console.log(`  ???  ${u}  (${String(e).slice(0, 60)})`)

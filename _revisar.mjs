@@ -1,4 +1,4 @@
-// Auditoría visual: la misma que hace Jhosnel en sus landings — 320 / 390 / 1280.
+﻿// Auditoría visual: la misma que hace Jhosnel en sus landings — 320 / 390 / 1280.
 import { chromium } from 'playwright'
 import { preview } from 'vite'
 
@@ -71,7 +71,7 @@ for (const a of ANCHOS) {
     if (img.hojas) problemas.push(`${a.n}/${tema}: ${img.hojas} hojas de diseño no cargan`)
     if (img.capturas) problemas.push(`${a.n}/${tema}: ${img.capturas} capturas no cargan`)
     if (img.puestos !== 5) problemas.push(`${a.n}/${tema}: ${img.puestos} puestos, esperaba 5`)
-    if (img.piezas !== 11) problemas.push(`${a.n}/${tema}: ${img.piezas} piezas, esperaba 11`)
+    if (img.piezas !== 12) problemas.push(`${a.n}/${tema}: ${img.piezas} piezas, esperaba 11`)
 
     if (errores.length) problemas.push(`${a.n}/${tema}: ${errores.join(' | ')}`)
 
