@@ -68,7 +68,9 @@ export function useEnVista<T extends HTMLElement>(margen = '0px 0px -10% 0px') {
           obs.disconnect()
         }
       },
-      { rootMargin: margen, threshold: 0.06 },
+      /* threshold 0, no 0.06: un elemento más alto que la ventana nunca llega
+         a un 6 % de intersección y se quedaría invisible para siempre. */
+      { rootMargin: margen, threshold: 0 },
     )
     obs.observe(nodo)
     return () => obs.disconnect()

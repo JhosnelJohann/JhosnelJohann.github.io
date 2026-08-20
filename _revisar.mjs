@@ -21,11 +21,16 @@ const problemas = []
 
 /** Recorre la página entera para que se disparen todos los revelados. */
 async function recorrer(pag) {
+  // Dos pasadas: al cargarse las imágenes en diferido la página crece, y en
+  // una sola pasada el final se queda sin visitar.
   await pag.evaluate(async () => {
-    const alto = document.body.scrollHeight
-    for (let y = 0; y < alto; y += 400) {
-      window.scrollTo(0, y)
-      await new Promise((r) => setTimeout(r, 34))
+    for (let pasada = 0; pasada < 2; pasada++) {
+      const alto = document.body.scrollHeight
+      for (let y = 0; y < alto; y += 400) {
+        window.scrollTo(0, y)
+        await new Promise((r) => setTimeout(r, 30))
+      }
+      await new Promise((r) => setTimeout(r, 250))
     }
     window.scrollTo(0, 0)
     await new Promise((r) => setTimeout(r, 300))
