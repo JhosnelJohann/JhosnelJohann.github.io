@@ -1,0 +1,35 @@
+.cinta-marco {
+  position: relative;
+  border-block: 1px solid var(--linea);
+  padding-block: 15px;
+  overflow: hidden;
+}
+
+.cinta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-inline: 22px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  white-space: nowrap;
+  transition: color .2s;
+}
+.cinta-item:hover { color: var(--azul) }
+
+.cinta-punto {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--azul);
+  opacity: .55;
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinta-marco { padding-block: 12px }
+  .cinta-pista[aria-hidden='true'] { display: none }
+}

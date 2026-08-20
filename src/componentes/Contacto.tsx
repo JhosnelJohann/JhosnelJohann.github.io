@@ -1,9 +1,9 @@
-import { perfil, formacion, certificaciones, idiomas } from '../datos/perfil'
+﻿import { perfil, formacion, certificaciones, idiomas } from '../datos/perfil'
 import './Contacto.css'
 
 export default function Contacto() {
   return (
-    <section id="contacto" className="cont">
+    <section id="contacto" className="cont oscuro">
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">

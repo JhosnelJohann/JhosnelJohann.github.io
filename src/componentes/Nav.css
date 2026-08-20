@@ -1,4 +1,4 @@
-.progreso {
+﻿.progreso {
   position: fixed;
   inset: 0 0 auto 0;
   height: 2px;
@@ -13,14 +13,18 @@
   position: fixed;
   inset: 2px 0 auto 0;
   z-index: 55;
-  transition: background .3s, border-color .3s, backdrop-filter .3s;
+  transition: background .3s, border-color .3s, color .3s;
   border-bottom: 1px solid transparent;
+  /* Arriba del todo la barra flota sobre la portada, que SIEMPRE es oscura:
+     el texto tiene que ser claro aunque el resto de la página sea clara. */
+  color: #eef2f9;
 }
 
 .nav-pegado {
-  background: color-mix(in srgb, var(--fondo) 84%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: var(--tinta);
+  background: color-mix(in srgb, var(--fondo) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
   border-bottom-color: var(--linea);
 }
 
@@ -47,6 +51,7 @@
 }
 
 .nav-nombre {
+  color: inherit;
   font-size: 14px;
   font-weight: 750;
   letter-spacing: -.02em;
@@ -65,16 +70,17 @@
 
 .nav-enlace {
   display: block;
+  color: inherit;
+  opacity: .72;
   padding: 7px 11px;
   font-size: 11.5px;
   letter-spacing: .05em;
-  color: var(--tinta-3);
-  border-radius: 2px;
+  border-radius: 3px;
   white-space: nowrap;
   transition: color .16s, background .16s;
 }
-.nav-enlace:hover { color: var(--tinta); background: var(--fondo-2); }
-.nav-enlace.activo { color: var(--azul); }
+.nav-enlace:hover { opacity: 1; background: color-mix(in srgb, currentColor 10%, transparent); }
+.nav-enlace.activo { opacity: 1; color: var(--azul); }
 .nav-enlace.activo::after {
   content: '';
   display: block;
@@ -84,16 +90,17 @@
 }
 
 .nav-tema {
+  color: inherit;
+  opacity: .8;
   flex: none;
   width: 32px;
   height: 32px;
   display: grid;
   place-items: center;
   font-size: 14px;
-  color: var(--tinta-3);
-  border: 1px solid var(--linea);
-  border-radius: 2px;
-  transition: color .16s, border-color .16s;
+  border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+  border-radius: 3px;
+  transition: color .16s, border-color .16s, opacity .16s;
 }
 .nav-tema:hover { color: var(--amarillo); border-color: var(--amarillo); }
 @media (max-width: 780px) { .nav-tema { margin-left: auto } }

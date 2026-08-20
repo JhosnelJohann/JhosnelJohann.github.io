@@ -1,119 +1,126 @@
 /* ══════════════════════════════════════════════════════════════════
-   Jhosnel Laya — perfil profesional
+   Jhosnel Laya — sistema de diseño
 
-   Tema claro por defecto: es el registro de un informe corporativo, no
-   el de una pieza editorial. El oscuro sigue disponible.
+   DOS TEMPERATURAS, no dos temas. La página alterna a propósito:
+   oscuro donde hay espectáculo (portada, portafolio, cierre) y claro
+   donde hay que leer (experiencia, herramientas, diseño). El cambio
+   de temperatura marca el cambio de registro.
 
-   El azul de marca (#1257c9) domina. Los demás colores solo aparecen
-   como código de estado, heredados de la leyenda de sus 26 diagramas
-   técnicos: verde camino feliz, rojo fallo, amarillo espera, gris dato.
+   Tipografía: Clash Display (titulares, editorial de alto contraste),
+   Satoshi (texto) e IBM Plex Mono (datos y etiquetas).
    ══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* — Superficie — */
+  /* — Claro: donde se lee — */
   --fondo:      #ffffff;
-  --fondo-2:    #f7f8fb;
-  --fondo-3:    #eef1f6;
-  --linea:      #e2e6ee;
-  --linea-2:    #cbd2df;
+  --fondo-2:    #f6f7fb;
+  --fondo-3:    #edf0f6;
+  --linea:      #e3e7ef;
+  --linea-2:    #c8d0de;
 
-  /* — Tinta, con sesgo azul en los grises — */
-  --tinta:      #0f1522;
-  --tinta-2:    #3c4657;
-  --tinta-3:    #6b7688;
+  --tinta:      #0b101c;
+  --tinta-2:    #3a4457;
+  --tinta-3:    #69748a;
 
-  /* — Marca — */
   --azul:       #1257c9;
-  --azul-claro: #eaf0fd;
-  --azul-linea: #c3d5f6;
+  --azul-claro: #e9f0fd;
+  --azul-linea: #c0d3f6;
 
-  /* — Estado (la leyenda de sus diagramas) — */
-  --verde:      #12854f;
+  --verde:      #0f8a51;
   --rojo:       #c62a1f;
-  --amarillo:   #9a6a00;
-  --gris:       #66718a;
+  --amarillo:   #96660a;
+  --gris:       #64708a;
 
-  --sombra:     0 1px 2px rgba(15,21,34,.04), 0 10px 26px -14px rgba(15,21,34,.16);
-  --sombra-2:   0 2px 4px rgba(15,21,34,.05), 0 20px 44px -22px rgba(15,21,34,.26);
+  --sombra:     0 1px 2px rgba(11,16,28,.04), 0 12px 28px -16px rgba(11,16,28,.18);
+  --sombra-2:   0 2px 6px rgba(11,16,28,.06), 0 26px 56px -26px rgba(11,16,28,.3);
 
   /* — Tipografía — */
-  --display: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --display: 'Clash Display', 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --texto: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
 
   /* — Métrica — */
-  --ancho: 1140px;
-  --gutter: clamp(20px, 4.5vw, 48px);
-  --radio: 4px;
+  --ancho: 1180px;
+  --gutter: clamp(20px, 4.5vw, 52px);
+  --radio: 5px;
+  --radio-g: 14px;
 
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --fondo:      #0d1119;
-    --fondo-2:    #141a25;
-    --fondo-3:    #1c2330;
-    --linea:      #262e3d;
-    --linea-2:    #3a4457;
+/* ─── La temperatura oscura. Se aplica por sección, no por preferencia. ─── */
+.oscuro {
+  --fondo:      #070a12;
+  --fondo-2:    #0d121d;
+  --fondo-3:    #151c2b;
+  --linea:      #202a3d;
+  --linea-2:    #33405a;
 
-    --tinta:      #eef1f7;
-    --tinta-2:    #b3bccc;
-    --tinta-3:    #7f8a9d;
+  --tinta:      #f2f5fb;
+  --tinta-2:    #b9c3d6;
+  --tinta-3:    #8492ab;
 
-    --azul:       #4d8df5;
-    --azul-claro: #12203a;
-    --azul-linea: #2b4472;
+  --azul:       #5d9bff;
+  --azul-claro: #101d38;
+  --azul-linea: #2c4674;
 
-    --verde:      #35d07f;
-    --rojo:       #ff6257;
-    --amarillo:   #ffc400;
-    --gris:       #8792a3;
+  --verde:      #3ddc84;
+  --rojo:       #ff6b60;
+  --amarillo:   #ffc94d;
+  --gris:       #8e9ab4;
 
-    --sombra:     0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.6);
-    --sombra-2:   0 2px 4px rgba(0,0,0,.45), 0 20px 44px -22px rgba(0,0,0,.7);
-
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme='dark'] {
-  --fondo:      #0d1119;
-  --fondo-2:    #141a25;
-  --fondo-3:    #1c2330;
-  --linea:      #262e3d;
-  --linea-2:    #3a4457;
-
-  --tinta:      #eef1f7;
-  --tinta-2:    #b3bccc;
-  --tinta-3:    #7f8a9d;
-
-  --azul:       #4d8df5;
-  --azul-claro: #12203a;
-  --azul-linea: #2b4472;
-
-  --verde:      #35d07f;
-  --rojo:       #ff6257;
-  --amarillo:   #ffc400;
-  --gris:       #8792a3;
-
-  --sombra:     0 1px 2px rgba(0,0,0,.4), 0 10px 26px -14px rgba(0,0,0,.6);
-  --sombra-2:   0 2px 4px rgba(0,0,0,.45), 0 20px 44px -22px rgba(0,0,0,.7);
+  --sombra:     0 1px 2px rgba(0,0,0,.5), 0 12px 28px -16px rgba(0,0,0,.8);
+  --sombra-2:   0 2px 6px rgba(0,0,0,.5), 0 26px 56px -26px rgba(0,0,0,.9);
 
   color-scheme: dark;
+  background: var(--fondo);
+  color: var(--tinta);
 }
+
+/* Quien fuerza el tema oscuro desde el conmutador, lo oscurece todo. */
+:root[data-theme='dark'] body,
+:root[data-theme='dark'] section:not(.oscuro),
+:root[data-theme='dark'] .cinta-marco:not(.oscuro) {
+  --fondo:      #070a12;
+  --fondo-2:    #0d121d;
+  --fondo-3:    #151c2b;
+  --linea:      #202a3d;
+  --linea-2:    #33405a;
+  --tinta:      #f2f5fb;
+  --tinta-2:    #b9c3d6;
+  --tinta-3:    #8492ab;
+  --azul:       #5d9bff;
+  --azul-claro: #101d38;
+  --azul-linea: #2c4674;
+  --verde:      #3ddc84;
+  --rojo:       #ff6b60;
+  --amarillo:   #ffc94d;
+  --gris:       #8e9ab4;
+  color-scheme: dark;
+}
+:root[data-theme='dark'] section:not(.oscuro) { background: var(--fondo); color: var(--tinta); }
 
 /* ─────────── Reinicio ─────────── */
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 74px; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 76px;
+  /* `clip` en vez de `hidden`: recorta el desbordamiento lateral de la
+     marquesina y los halos SIN crear contenedor de scroll, así que
+     `position: sticky` sigue funcionando dentro. */
+  overflow-x: clip;
+}
+/* Sin Lenis (o sin JS) el ancla sigue funcionando */
+html.sin-lenis { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -121,7 +128,7 @@ body {
   margin: 0;
   background: var(--fondo);
   color: var(--tinta);
-  font-family: var(--display);
+  font-family: var(--texto);
   font-size: 16px;
   line-height: 1.6;
   font-synthesis-weight: none;
@@ -129,16 +136,23 @@ body {
   overflow-x: hidden;
 }
 
-/* height:auto es obligatorio: sin él, el atributo height del HTML gana y
-   deforma las imágenes que llevan aspect-ratio. */
 img, svg { display: block; max-width: 100%; height: auto; }
-h1, h2, h3, h4 { margin: 0; text-wrap: balance; letter-spacing: -.028em; line-height: 1.12; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  text-wrap: balance;
+  letter-spacing: -.022em;
+  line-height: 1.08;
+}
+
 p { margin: 0; text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 
-:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; border-radius: 2px; }
+:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; border-radius: 3px; }
 ::selection { background: var(--azul); color: #fff; }
 
 /* ─────────── Piezas compartidas ─────────── */
@@ -150,15 +164,12 @@ a { color: inherit; text-decoration: none; }
   padding-inline: var(--gutter);
 }
 
-.mono {
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-}
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 
-section { padding-block: clamp(52px, 7.5vw, 92px); }
+section { padding-block: clamp(58px, 8vw, 104px); position: relative; }
 
-/* Cabecera de sección: número + nombre. Registro de informe. */
-.cab-seccion { margin-bottom: clamp(26px, 3.6vw, 40px); }
+/* Cabecera de sección */
+.cab-seccion { margin-bottom: clamp(28px, 3.8vw, 44px); }
 
 .cab-num {
   display: inline-flex;
@@ -170,7 +181,7 @@ section { padding-block: clamp(52px, 7.5vw, 92px); }
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--tinta-3);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .cab-num b {
   color: var(--azul);
@@ -180,19 +191,19 @@ section { padding-block: clamp(52px, 7.5vw, 92px); }
 }
 
 .cab-titulo {
-  font-size: clamp(25px, 3.6vw, 38px);
-  font-weight: 800;
-  letter-spacing: -.035em;
+  font-size: clamp(29px, 4.4vw, 48px);
+  font-weight: 600;
+  letter-spacing: -.03em;
 }
 
 .cab-nota {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: clamp(15px, 1.5vw, 16.5px);
-  line-height: 1.62;
+  line-height: 1.64;
   color: var(--tinta-2);
   max-width: 68ch;
 }
-.cab-nota b { color: var(--tinta); font-weight: 650; }
+.cab-nota b { color: var(--tinta); font-weight: 700; }
 
 /* Botones */
 .btn {
@@ -200,26 +211,30 @@ section { padding-block: clamp(52px, 7.5vw, 92px); }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 20px;
+  padding: 12px 22px;
   border-radius: var(--radio);
+  font-family: var(--texto);
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: -.008em;
   text-align: center;
   max-width: 100%;
-  transition: background .16s, border-color .16s, color .16s, transform .16s;
+  transition: background .18s, border-color .18s, color .18s, box-shadow .18s;
+  will-change: transform;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn-primario { background: var(--azul); color: #fff; }
-.btn-primario:hover { background: color-mix(in srgb, var(--azul) 86%, #000); }
-.btn-borde {
-  border: 1px solid var(--linea-2);
-  color: var(--tinta);
-  background: var(--fondo);
+.btn-primario {
+  background: var(--azul);
+  color: #fff;
+  box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--azul) 70%, transparent);
 }
+.btn-primario:hover {
+  background: color-mix(in srgb, var(--azul) 88%, #fff);
+  box-shadow: 0 10px 28px -8px color-mix(in srgb, var(--azul) 80%, transparent);
+}
+.btn-borde { border: 1px solid var(--linea-2); color: var(--tinta); background: transparent; }
 .btn-borde:hover { border-color: var(--azul); color: var(--azul); }
 
-/* Etiquetas de estado, con el color de la leyenda */
+/* Etiquetas de estado */
 .et {
   display: inline-flex;
   align-items: center;
@@ -230,7 +245,7 @@ section { padding-block: clamp(52px, 7.5vw, 92px); }
   letter-spacing: .1em;
   text-transform: uppercase;
   padding: 3px 8px;
-  border-radius: 2px;
+  border-radius: 3px;
   border: 1px solid currentColor;
 }
 
@@ -240,11 +255,11 @@ section { padding-block: clamp(52px, 7.5vw, 92px); }
 .c-azul     { color: var(--azul) }
 .c-gris     { color: var(--gris) }
 
-/* Revelado suave al entrar en pantalla. Discreto a propósito. */
+/* Revelado al entrar en pantalla */
 .revela {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
+  transform: translateY(16px);
+  transition: opacity .62s cubic-bezier(.16,1,.3,1), transform .62s cubic-bezier(.16,1,.3,1);
 }
 .revela.dentro { opacity: 1; transform: none; }
 

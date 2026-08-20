@@ -1,23 +1,38 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { trabajo, categorias, type Categoria, type Pieza } from '../datos/trabajo'
 import Portada from './Portada'
-import { useEnVista } from './utiles'
+import { useEnVista, useInclinacion } from '../efectos/movimiento'
 import './Trabajo.css'
 
 const dominio = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '')
 
+/**
+ * La captura, presentada como un panel de navegador flotando en perspectiva.
+ * Es el tratamiento 3D aplicado a SU material, no a clipart de stock.
+ */
 function Miniatura({ p }: { p: Pieza }) {
   if (p.captura) {
     return (
       <div className="mini">
-        <img
-          src={`trabajo/${p.captura}.jpg`}
-          alt={`Captura de ${p.titulo}`}
-          loading="lazy"
-          width={1280}
-          height={800}
-        />
+        <div className="panel">
+          <div className="panel-barra" aria-hidden="true">
+            <span className="panel-punto" />
+            <span className="panel-punto" />
+            <span className="panel-punto" />
+            <span className="panel-url mono">
+              {p.url ? p.url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'acceso restringido'}
+            </span>
+          </div>
+          <img
+            src={`trabajo/${p.captura}.jpg`}
+            alt={`Captura de ${p.titulo}`}
+            loading="lazy"
+            width={1280}
+            height={800}
+          />
+          <span className="panel-brillo" aria-hidden="true" />
+        </div>
         {!p.url && <span className="mini-candado mono">🔒 {p.restringido}</span>}
       </div>
     )
@@ -32,14 +47,16 @@ function Miniatura({ p }: { p: Pieza }) {
 
 function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
   const { ref, dentro } = useEnVista<HTMLLIElement>()
+  const tilt = useInclinacion(7)
   return (
     <motion.li
       layout
       ref={ref}
-      className={`tj revela ${dentro ? 'dentro' : ''} c-${p.color}`}
+      className={`tj revela tilt-escena ${dentro ? 'dentro' : ''} c-${p.color}`}
       style={{ transitionDelay: `${Math.min(i, 5) * 60}ms` }}
       initial={false}
     >
+      <div ref={tilt} className="tj-tilt tilt borde-vivo foco">
       <button className="tj-btn" onClick={abrir} aria-label={`Ver detalle de ${p.titulo}`}>
         <Miniatura p={p} />
 
@@ -80,6 +97,7 @@ function Tarjeta({ p, i, abrir }: { p: Pieza; i: number; abrir: () => void }) {
         <button className="tj-mas mono" onClick={abrir}>
           Detalle →
         </button>
+      </div>
       </div>
     </motion.li>
   )
@@ -177,7 +195,7 @@ export default function Trabajo() {
   const conEnlace = trabajo.filter((p) => p.url).length
 
   return (
-    <section id="trabajo" className="trab">
+    <section id="trabajo" className="trab oscuro">
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono">

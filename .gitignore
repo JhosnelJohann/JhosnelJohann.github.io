@@ -8,3 +8,9 @@ _publicar.py
 .DS_Store
 *.local
 .vite
+_capturas
+_bisec.mjs
+_diag.mjs
+_prod.mjs
+_probar.mjs
+_capturar.mjs

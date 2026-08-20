@@ -1,0 +1,82 @@
+/* ─────────── Letra a letra ─────────── */
+/* La animación base vive en efectos.css (.cinetica). Aquí, el espacio. */
+
+.cin-espacio { display: inline-block; width: .3em }
+
+/* ─────────── Palabra a palabra ─────────── */
+
+.palabras .pal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.36em);
+  filter: blur(5px);
+  transition:
+    opacity .58s cubic-bezier(.16, 1, .3, 1),
+    transform .58s cubic-bezier(.16, 1, .3, 1),
+    filter .58s cubic-bezier(.16, 1, .3, 1);
+}
+.palabras.dentro .pal { opacity: 1; transform: none; filter: blur(0) }
+
+@media (prefers-reduced-motion: reduce) {
+  .palabras .pal { opacity: 1; transform: none; filter: none; transition: none }
+}
+
+/* ─────────── Barrido de brillo ─────────── */
+
+.brillo {
+  background: linear-gradient(
+    100deg,
+    var(--tinta) 0%,
+    var(--tinta) 38%,
+    color-mix(in srgb, var(--azul) 80%, #fff) 50%,
+    var(--tinta) 62%,
+    var(--tinta) 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brillar 5.5s ease-in-out infinite;
+}
+@keyframes brillar {
+  0%, 62%, 100% { background-position: 190% 0 }
+  86%           { background-position: -60% 0 }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brillo { animation: none; background: none; color: var(--tinta) }
+}
+
+/* ─────────── Rodillo de cifras ─────────── */
+
+.rodillo {
+  display: inline-flex;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+}
+
+.rod-fijo { display: inline-block }
+
+.rod-col {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
+.rod-tira {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  transition: transform 1.15s cubic-bezier(.2, .9, .2, 1);
+}
+.rod-tira > span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+.rodillo.dentro .rod-tira { transform: translateY(calc(var(--fin) * -1em)) }
+
+@media (prefers-reduced-motion: reduce) {
+  .rod-tira { transition: none }
+}

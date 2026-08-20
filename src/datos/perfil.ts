@@ -2,7 +2,10 @@
 
 export const perfil = {
   nombre: 'Jhosnel Laya',
-  rol: 'Desarrollador Full-Stack & Especialista en Automatización',
+  /* El orden importa: es de donde viene y es lo que lleva más años haciendo. */
+  rol: 'Diseñador Gráfico y Editor · Desarrollador Full-Stack & Especialista en Automatización',
+  rolLinea1: 'Diseñador Gráfico y Editor',
+  rolLinea2: 'Desarrollador Full-Stack & Especialista en Automatización',
   subtitulo: 'TSU en Informática · Bases de datos · Sistemas conversacionales con IA · Marketing técnico',
   ubicacion: 'Barquisimeto, Lara — Venezuela',
   disponibilidad: 'Remoto internacional o presencial',

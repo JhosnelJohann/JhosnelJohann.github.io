@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { marcas, canales, type Marca } from '../datos/marcas'
-import { useEnVista } from './utiles'
+import { useEnVista } from '../efectos/movimiento'
 import './Diseno.css'
 
 function Hoja({ m, i, abrir }: { m: Marca; i: number; abrir: () => void }) {

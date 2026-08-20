@@ -1,6 +1,6 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { paneles, ANCHO_NIVEL, type Habilidad } from '../datos/habilidades'
-import { useEnVista } from './utiles'
+import { useEnVista } from '../efectos/movimiento'
 import './Habilidades.css'
 
 function Barra({ h, i, activo }: { h: Habilidad; i: number; activo: boolean }) {

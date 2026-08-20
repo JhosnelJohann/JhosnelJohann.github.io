@@ -1,0 +1,191 @@
+/* ══════════════════════════════════════════════════════════════════
+   Efectos transversales.
+
+   Nota de rendimiento: `backdrop-filter` cuesta entre un 15 % y un 30 %
+   de fotogramas en dispositivos reales, así que solo se usa en la barra
+   de navegación y en los modales — nunca sobre algo que se anime al
+   hacer scroll.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ─────────── Grano ─────────── */
+/* Textura sutil sobre las zonas oscuras. Quita el aspecto plano y el
+   bandeado de los degradados. */
+.oscuro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Sin `mix-blend-mode`: combinado con `isolation: isolate` el grupo se
+     compone contra el blanco de la página y lava la sección entera. Basta
+     con ruido claro a muy baja opacidad. */
+  opacity: .17;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* OJO: no vale un `.oscuro > *` genérico — le pondría `position: relative` al
+   lienzo del shader y al velo, que tienen que ir absolutos. Se eleva solo el
+   contenido real. */
+.oscuro > .env,
+.oscuro > .cinta,
+.oscuro > footer { position: relative; z-index: 2; }
+
+/* ─────────── Vidrio contenido ─────────── */
+
+.vidrio {
+  background: color-mix(in srgb, var(--fondo-2) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--linea-2) 62%, transparent);
+}
+/* El desenfoque solo donde no hay animación */
+.vidrio-blur {
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+/* ─────────── Borde con gradiente animado ─────────── */
+
+@property --giro {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.borde-vivo {
+  position: relative;
+  isolation: isolate;
+}
+.borde-vivo::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--giro),
+    transparent 0deg,
+    var(--azul) 55deg,
+    #7b52ec 110deg,
+    var(--verde) 165deg,
+    transparent 240deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s;
+  animation: girar 7s linear infinite;
+}
+.borde-vivo:hover::after,
+.borde-vivo:focus-within::after { opacity: 1; }
+
+@keyframes girar { to { --giro: 360deg } }
+
+@media (prefers-reduced-motion: reduce) {
+  .borde-vivo::after { animation: none }
+}
+
+/* ─────────── Foco que sigue al cursor ─────────── */
+
+.foco {
+  position: relative;
+  overflow: hidden;
+}
+.foco::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--azul) 16%, transparent),
+    transparent 68%
+  );
+}
+.foco:hover::before { opacity: 1 }
+
+/* ─────────── Inclinación 3D ─────────── */
+
+.tilt-escena { perspective: 1100px; }
+.tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .42s cubic-bezier(.16, 1, .3, 1);
+  will-change: transform;
+}
+.tilt-hondo { transform: translateZ(38px); }
+
+/* ─────────── Tipografía cinética ─────────── */
+
+.cinetica { display: inline-block; }
+.cinetica span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.42em) rotateX(-58deg);
+  filter: blur(9px);
+  animation: entrar-letra .82s cubic-bezier(.18, 1, .28, 1) forwards;
+  transform-origin: 50% 100%;
+}
+@keyframes entrar-letra {
+  /* `filter: none` y no `blur(0)`: cualquier valor de filter crea un bloque
+     contenedor y rompe el `background-clip: text` del degradado del apellido. */
+  to { opacity: 1; transform: none; filter: none }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinetica span { opacity: 1; transform: none; filter: none; animation: none }
+}
+
+/* ─────────── Cinta / marquesina ─────────── */
+
+.cinta {
+  --vel: 44s;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+.cinta-pista {
+  display: flex;
+  flex: none;
+  gap: 0;
+  animation: desfilar var(--vel) linear infinite;
+}
+.cinta:hover .cinta-pista { animation-play-state: paused }
+
+@keyframes desfilar { to { transform: translateX(-100%) } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cinta-pista { animation: none }
+  .cinta { mask-image: none; -webkit-mask-image: none; overflow-x: auto }
+}
+
+/* ─────────── Resplandor de fondo ─────────── */
+
+.resplandor {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─────────── Regla luminosa entre secciones ─────────── */
+
+.regla-luz {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--azul) 55%, transparent),
+    transparent
+  );
+}

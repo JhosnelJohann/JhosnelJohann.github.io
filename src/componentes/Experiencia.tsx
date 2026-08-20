@@ -1,5 +1,5 @@
-import { experiencia, type Puesto } from '../datos/perfil'
-import { useEnVista } from './utiles'
+﻿import { experiencia, type Puesto } from '../datos/perfil'
+import { useEnVista } from '../efectos/movimiento'
 import './Experiencia.css'
 
 /** Convierte **negritas** y `código` del texto plano a marcado. */

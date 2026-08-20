@@ -1,6 +1,6 @@
 // Auditoría visual: la misma que hace Jhosnel en sus landings — 320 / 390 / 1280.
 import { chromium } from 'playwright'
-import { createServer } from 'vite'
+import { preview } from 'vite'
 
 const ANCHOS = [
   { n: '320', w: 320 },
@@ -9,10 +9,14 @@ const ANCHOS = [
 ]
 const SECCIONES = ['inicio', 'experiencia', 'trabajo', 'habilidades', 'diseno', 'contacto']
 
-const servidor = await createServer({ server: { port: 5199 }, logLevel: 'error' })
-await servidor.listen()
+// Se audita la COMPILACIÓN, no el modo desarrollo: en desarrollo React monta
+// los efectos dos veces y eso enmascara o inventa fallos que no existen en
+// producción, que es lo que ve el visitante.
+const servidor = await preview({ preview: { port: 5199 } })
 const base = 'http://localhost:5199/'
-const navegador = await chromium.launch()
+const navegador = await chromium.launch({
+  args: ['--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader', '--ignore-gpu-blocklist'],
+})
 const problemas = []
 
 /** Recorre la página entera para que se disparen todos los revelados. */
