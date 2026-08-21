@@ -16,7 +16,7 @@ export const ui = {
       experiencia: 'Experiencia',
       trabajo: 'Portafolio',
       habilidades: 'Herramientas',
-      diseno: 'Diseño',
+      diseno: 'Diseño y edición',
       contacto: 'Contacto',
     },
     datos: {
@@ -97,13 +97,25 @@ export const ui = {
       },
     },
     dis: {
-      num: '05',
-      rotulo: 'Diseño y audiovisual',
+      num: '01',
+      rotulo: 'Diseño y edición',
       titulo: 'De aquí vengo, y no lo he dejado.',
       nota:
         'La tentación de quien cambia de perfil es borrar el pasado. Sería un error: un ' +
         'desarrollador que ha comprado anuncios con presupuesto real **resuelve problemas que otro ' +
-        'desarrollador ni siquiera identifica**. Estas son mis hojas de muestra de trabajo, una por marca.',
+        'desarrollador ni siquiera identifica**.',
+      /* Las cifras de la franja. `valor` es lo que cuenta el contador; `texto`
+         lo que se muestra al terminar, para los que no son un número redondo. */
+      cifras: [
+        { valor: 10, texto: '10', que: 'piezas editadas' },
+        { valor: 11, texto: '11:30', que: 'de metraje' },
+        { valor: 4, texto: '4K', que: 'de origen' },
+        { valor: 7, texto: '7', que: 'marcas atendidas' },
+      ],
+      edicion: 'Edición',
+      disenoGrafico: 'Diseño gráfico',
+      calidad:
+        'Comprimidos a 1080 para que carguen rápido. **Los originales son 4K verticales y pesan 4,6 GB.**',
       ampliar: 'Ampliar',
       canales: 'Los dos canales cuyo contenido edité',
       marketingTitulo: 'Tres decisiones de marketing que nadie me encargó',
@@ -186,7 +198,7 @@ export const ui = {
       experiencia: 'Experience',
       trabajo: 'Portfolio',
       habilidades: 'Toolkit',
-      diseno: 'Design',
+      diseno: 'Design & editing',
       contacto: 'Contact',
     },
     datos: {
@@ -264,13 +276,23 @@ export const ui = {
       },
     },
     dis: {
-      num: '05',
-      rotulo: 'Design & video',
+      num: '01',
+      rotulo: 'Design & editing',
       titulo: 'This is where I come from, and I have not left it.',
       nota:
         'The temptation when you switch fields is to erase the past. That would be a mistake: a ' +
         'developer who has bought ads with a real budget **solves problems another developer would ' +
-        'not even spot**. These are my own work sample sheets, one per brand.',
+        'not even spot**.',
+      cifras: [
+        { valor: 10, texto: '10', que: 'pieces edited' },
+        { valor: 11, texto: '11:30', que: 'of footage' },
+        { valor: 4, texto: '4K', que: 'source' },
+        { valor: 7, texto: '7', que: 'brands served' },
+      ],
+      edicion: 'Editing',
+      disenoGrafico: 'Graphic design',
+      calidad:
+        'Compressed to 1080 so they load fast. **The originals are 4K vertical and weigh 4.6 GB.**',
       ampliar: 'Enlarge',
       canales: 'The two channels whose content I edited',
       marketingTitulo: 'Three marketing calls nobody asked me to make',

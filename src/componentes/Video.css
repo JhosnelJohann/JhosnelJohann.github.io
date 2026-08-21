@@ -1,30 +1,37 @@
 /* Portafolio de edición · tarjetas verticales 9:16 */
 
-.vids { margin-top: var(--e8); }
+.vids { margin-top: 0; }
 
-.vids-cab {
+/* La nota de calidad. No dice «esto es peor»: dice de dónde viene, que es
+   el dato que juega a favor. */
+.vids-calidad {
   display: flex;
-  flex-direction: column;
-  gap: var(--e2);
-  margin-bottom: var(--e5);
-  max-width: 62ch;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: var(--e4);
+  padding: 10px 13px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--tinta-3);
+  background: var(--fondo);
+  border: 1px solid var(--linea);
+  border-left: 2px solid var(--azul-linea);
+  border-radius: 0 var(--r2) var(--r2) 0;
+  max-width: 68ch;
 }
 
-.vids-titulo {
-  font-family: var(--display);
-  font-size: clamp(21px, 2.4vw, 30px);
-  font-weight: 600;
-  letter-spacing: -.03em;
-  text-wrap: balance;
-}
-
-.vids-nota { font-size: var(--t-sm); color: var(--tinta-suave); line-height: 1.6; }
+.vids-calidad b { color: var(--tinta-2); font-weight: 600; }
+.vids-calidad-i { flex: none; color: var(--azul); font-size: 13px; line-height: 1.4; }
+.vids-calidad-txt { flex: 1; min-width: 0; }
 
 /* La rejilla. En 9:16, cuatro columnas caben cómodas en escritorio */
+/* Hueco horizontal generoso: con tarjetas estrechas y rótulos en mayúsculas,
+   un hueco pequeño hace que las líneas de marca de columnas contiguas se lean
+   como un solo texto corrido. */
 .vids-rejilla {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: var(--e5) var(--e4);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--e6) var(--e5);
 }
 
 .vid { position: relative; display: flex; flex-direction: column; gap: var(--e3); }
@@ -79,8 +86,33 @@
   transition: transform .22s cubic-bezier(.16,1,.3,1), background .22s;
 }
 
-.vid-btn:hover .vid-play { transform: scale(1.09); background: #fff; }
+.vid-btn:hover .vid-play,
+.vid-btn:focus-visible .vid-play { transform: scale(1.09); background: #fff; }
 .vid-btn:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; }
+
+/* La portada se acerca un poco al pasar por encima. Solo `transform`: el
+   navegador lo resuelve en la tarjeta gráfica sin recalcular nada. */
+.vid-btn img { transition: transform .45s cubic-bezier(.16,1,.3,1); }
+.vid-btn:hover img,
+.vid-btn:focus-visible img { transform: scale(1.045); }
+
+/* El cursor de reproducción: una línea que avanza al pasar por encima, como
+   la cabeza lectora de un montador. */
+.vid-scrub {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--azul), var(--verde));
+  transition: transform 1.6s cubic-bezier(.22,.61,.36,1);
+  z-index: 2;
+}
+
+.vid-btn:hover .vid-scrub,
+.vid-btn:focus-visible .vid-scrub { transform: scaleX(1); }
 
 .vid-dur {
   position: absolute;
@@ -124,24 +156,13 @@
   min-height: calc(2 * 1.35em);          /* reserva sitio para las dos líneas */
 }
 
-.vid-marca { font-size: 10.5px; color: var(--azul); letter-spacing: .05em; }
-
-.vid-nota {
-  font-size: 12.5px;
-  color: var(--tinta-suave);
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.vid-marca {
+  font-size: 10.5px;
+  color: var(--azul);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  line-height: 1.4;
 }
-
-.vid-formato { font-size: 10px; color: var(--tinta-suave); opacity: .72; letter-spacing: .06em; }
-
-/* Que el formato quede siempre abajo, aunque la nota sea corta */
-.vid-pie { flex: 1 }
-.vid-formato { margin-top: auto; padding-top: 3px }
 
 /* Marca de cuál está sonando */
 .vid-activo {
@@ -159,10 +180,18 @@
 @media (max-width: 700px) {
   /* Dos columnas: una sola haría la sección larguísima, y en 9:16
      dos caben bien incluso a 320 px */
-  .vids-rejilla { grid-template-columns: repeat(2, 1fr); gap: var(--e4) var(--e3); }
-  .vid-nota { display: none }            /* el contexto largo estorba en móvil */
+  /* Hueco vertical amplio: si es corto, el rótulo de marca de una fila queda
+     pegado a la portada de la siguiente y parece que le pertenece. */
+  .vids-rejilla { grid-template-columns: repeat(2, 1fr); gap: var(--e6) var(--e3); }
   .vid-play { width: 48px; height: 48px }
-  .vids { margin-top: var(--e6) }
+  /* 12,5 px es el suelo de legibilidad en móvil de este proyecto. Estaba en
+     12 y la auditoría lo detectó. */
+  .vids-calidad { font-size: 12.5px; padding: 9px 11px }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vid-btn img, .vid-scrub { transition: none }
+  .vid-btn:hover img { transform: none }
 }
 
 @media (max-width: 380px) {

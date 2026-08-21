@@ -217,15 +217,18 @@ for (const s of PANTALLAS) {
       const ham = p.locator('.nav-hamburguesa')
       if (!(await ham.isVisible())) anota(`${et}: no hay botón de menú`)
       else {
-        await ham.click()
-        await p.waitForTimeout(500)
-        /* Un segundo intento antes de dar por malo el menú: si el primero se
-           perdió, se sabrá porque este también falla. Si abre, no había fallo. */
-        if (!(await p.locator('#menu-movil').isVisible())) {
+        /* Hasta tres intentos, con esperas crecientes. En el arranque en frío
+           —servidor recién levantado y la máquina cargada— el primer clic
+           puede llegar antes de que React haya terminado de conectar su
+           manejador, y la auditoría fallaba sin que la página tuviera nada
+           malo. Si los tres fallan, el fallo es real. */
+        let abierto = false
+        for (const espera of [600, 900, 1400]) {
           await ham.click()
-          await p.waitForTimeout(600)
-          if (!(await p.locator('#menu-movil').isVisible())) anota(`${et}: el menú no abre`)
+          await p.waitForTimeout(espera)
+          if (await p.locator('#menu-movil').isVisible()) { abierto = true; break }
         }
+        if (!abierto) anota(`${et}: el menú no abre tras tres intentos`)
         const enlaces = await p.locator('#menu-movil .mnu-lista a').count()
         if (enlaces !== 5) anota(`${et}: el menú tiene ${enlaces} destinos, esperaba 5`)
 

@@ -11,6 +11,10 @@ import { useScrollSuave } from './efectos/movimiento'
 /*
  * El recorrido alterna temperatura a propósito: oscuro donde hay espectáculo,
  * claro donde hay que leer. Cada cambio marca un cambio de registro.
+ *
+ * Portada y Diseño van seguidas y las dos en oscuro: forman un bloque visual
+ * de apertura —quién es y qué hace, enseñado, no contado— antes de que la
+ * página se abra en claro para lo que hay que leer.
  */
 export default function App() {
   useScrollSuave()
@@ -21,10 +25,10 @@ export default function App() {
       <main>
         <Encabezado />
         <Cinta />
+        <Diseno />
         <Experiencia />
         <Trabajo />
         <Habilidades />
-        <Diseno />
         <Contacto />
       </main>
     </>

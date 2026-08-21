@@ -2,11 +2,14 @@
 import { perfil, t } from '../contenido'
 import './Nav.css'
 
+/* El orden del menú es el orden real de la página. El id se queda en `diseno`
+   aunque la etiqueta ahora diga «Diseño y edición»: cambiarlo rompería
+   cualquier enlace que alguien tenga guardado. */
 const SECCIONES = [
-  { id: 'experiencia', et: t.secciones.experiencia, n: '01' },
-  { id: 'trabajo', et: t.secciones.trabajo, n: '02' },
-  { id: 'habilidades', et: t.secciones.habilidades, n: '03' },
-  { id: 'diseno', et: t.secciones.diseno, n: '04' },
+  { id: 'diseno', et: t.secciones.diseno, n: '01' },
+  { id: 'experiencia', et: t.secciones.experiencia, n: '02' },
+  { id: 'trabajo', et: t.secciones.trabajo, n: '03' },
+  { id: 'habilidades', et: t.secciones.habilidades, n: '04' },
   { id: 'contacto', et: t.secciones.contacto, n: '05' },
 ]
 

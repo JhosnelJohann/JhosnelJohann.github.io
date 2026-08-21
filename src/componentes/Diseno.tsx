@@ -1,7 +1,8 @@
 ﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { marcas, canales, t, con, img, type Marca } from '../contenido'
-import { useEnVista } from '../efectos/movimiento'
+import { useEnVista, useContador } from '../efectos/movimiento'
+import { IconoLinea, type Linea } from './Iconos'
 import Rico from './Rico'
 import Video from './Video'
 import './Diseno.css'
@@ -89,11 +90,43 @@ function Visor({ m, cerrar }: { m: Marca; cerrar: () => void }) {
   )
 }
 
+/** Una cifra de la franja: cuenta al entrar en pantalla y se queda. */
+function Cifra({ c, activo }: { c: { valor: number; texto: string; que: string }; activo: boolean }) {
+  const n = useContador(c.valor, activo, 1100)
+  /* Mientras cuenta se enseña el número; al llegar, el texto real —«11:30»,
+     «4K»— que no es un número redondo. */
+  const listo = n >= c.valor
+  return (
+    <li className="dcifra">
+      <b className="dcifra-n mono">{listo ? c.texto : n}</b>
+      <span className="dcifra-que">{c.que}</span>
+    </li>
+  )
+}
+
+/** Cabecera de subpanel, con icono que se dibuja solo. */
+function SubPanel({ icono, titulo, regla }: { icono: Linea; titulo: string; regla?: boolean }) {
+  return (
+    <div className="subp">
+      <h3 className="subp-titulo">
+        <span className="subp-icono" aria-hidden="true">
+          <IconoLinea tipo={icono} tam={22} />
+        </span>
+        {titulo}
+      </h3>
+      {/* La regla imita una línea de tiempo de montaje: se dibuja de
+          izquierda a derecha al entrar en pantalla. */}
+      {regla && <span className="subp-regla" aria-hidden="true" />}
+    </div>
+  )
+}
+
 export default function Diseno() {
   const [abierta, setAbierta] = useState<Marca | null>(null)
+  const { ref: refCifras, dentro } = useEnVista<HTMLUListElement>()
 
   return (
-    <section id="diseno" className="dis">
+    <section id="diseno" className="dis oscuro">
       <div className="env">
         <div className="cab-seccion">
           <p className="cab-num mono"><b>{t.dis.num}</b> {t.dis.rotulo}</p>
@@ -103,6 +136,16 @@ export default function Diseno() {
           </p>
         </div>
 
+        <ul className="dcifras" ref={refCifras}>
+          {t.dis.cifras.map((c) => (
+            <Cifra key={c.que} c={c} activo={dentro} />
+          ))}
+        </ul>
+
+        <SubPanel icono="camara" titulo={t.dis.edicion} regla />
+        <Video />
+
+        <SubPanel icono="pincel" titulo={t.dis.disenoGrafico} />
         <ul className="hojas">
           {marcas.map((m, i) => (
             <Hoja key={m.slug} m={m} i={i} abrir={() => setAbierta(m)} />
@@ -144,8 +187,6 @@ export default function Diseno() {
             </a>
           ))}
         </div>
-
-        <Video />
 
         <div className="marketing">
           <h3 className="marketing-titulo">{t.dis.marketingTitulo}</h3>

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { video, duracion, img, t, type PiezaVideo } from '../contenido'
 import { useEnVista } from '../efectos/movimiento'
+import Rico from './Rico'
 import './Video.css'
 
 /**
@@ -56,7 +57,15 @@ function Tarjeta({
             onPlay={() => reproducir(vid.current)}
           />
         ) : (
-          <button className="vid-btn" onClick={abrir} aria-label={`${t.video.reproducir}: ${p.titulo}`}>
+          /* La descripción larga no se pinta —satura una rejilla de diez— pero
+             no se tira: va al `aria-label` y al `title`, así que la tiene un
+             lector de pantalla y la ven los buscadores. */
+          <button
+            className="vid-btn"
+            onClick={abrir}
+            aria-label={`${t.video.reproducir}: ${p.titulo}. ${p.nota}`}
+            title={p.nota}
+          >
             <img
               src={img(`video/${p.archivo}.jpg`)}
               alt={p.titulo}
@@ -70,15 +79,19 @@ function Tarjeta({
               </svg>
             </span>
             <span className="vid-dur mono">{duracion(p.segundos)}</span>
+            {/* Barra de acento que avanza al pasar por encima, como el cursor
+                de reproducción de un montador. Puro adorno: aria-hidden. */}
+            <span className="vid-scrub" aria-hidden="true" />
           </button>
         )}
       </div>
 
       <div className="vid-pie">
         <p className="vid-titulo">{p.titulo}</p>
-        <p className="vid-marca mono">{p.marca}</p>
-        <p className="vid-nota">{p.nota}</p>
-        <p className="vid-formato mono">{p.formato}</p>
+        {/* Solo el nombre de la marca. El sector y el formato hacían que la
+            línea llenara los 215 px de la tarjeta y las de columnas contiguas
+            se leyeran como un texto corrido. */}
+        <p className="vid-marca mono">{p.marca.split(' · ')[0]}</p>
       </div>
       {activo && <span className="vid-activo" aria-hidden="true" />}
     </li>
@@ -101,10 +114,14 @@ export default function Video() {
 
   return (
     <div className="vids">
-      <div className="vids-cab">
-        <h3 className="vids-titulo">{t.video.titulo}</h3>
-        <p className="vids-nota">{t.video.nota}</p>
-      </div>
+      {/* El texto va dentro de su propio span: `Rico` devuelve varios
+          elementos, y sueltos dentro de un flex cada uno sería una columna. */}
+      <p className="vids-calidad">
+        <span className="vids-calidad-i" aria-hidden="true">ⓘ</span>
+        <span className="vids-calidad-txt">
+          <Rico texto={t.dis.calidad} />
+        </span>
+      </p>
 
       <ul className="vids-rejilla">
         {video.map((p, i) => (

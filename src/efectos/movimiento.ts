@@ -49,7 +49,53 @@ export function useScrollSuave() {
   }, [])
 }
 
-/** Revela un elemento cuando entra en pantalla. Una sola vez. */
+/* ── Red de seguridad para los revelados ──────────────────────────────────
+ *
+ * `IntersectionObserver` avisa cuando un elemento CRUZA el umbral. Si el
+ * usuario SALTA por encima de él —pulsa una entrada del menú, llega con un
+ * enlace con ancla, o el desplazamiento suave está desactivado— el elemento
+ * pasa de «debajo de la ventana» a «encima de la ventana» sin que haya un
+ * solo fotograma en el que intersecte, así que el aviso no llega nunca.
+ *
+ * Consecuencia real: 21 de 35 elementos se quedaban con `opacity: 0` para
+ * siempre. Contenido invisible, no una animación que falta.
+ *
+ * Esto lo resuelve con UN solo oyente de scroll compartido, no uno por
+ * elemento, que con 35 elementos provocaría recálculos de maquetación en
+ * cada fotograma. */
+type Aviso = () => void
+const enEspera = new Set<Aviso>()
+let cuadroRevision = 0
+
+function revisarTodos() {
+  cuadroRevision = 0
+  for (const avisar of [...enEspera]) avisar()
+}
+
+function programarRevision() {
+  if (cuadroRevision) return
+  cuadroRevision = requestAnimationFrame(revisarTodos)
+}
+
+function registrar(avisar: Aviso) {
+  if (enEspera.size === 0 && typeof window !== 'undefined') {
+    window.addEventListener('scroll', programarRevision, { passive: true })
+    window.addEventListener('resize', programarRevision, { passive: true })
+  }
+  enEspera.add(avisar)
+}
+
+function olvidar(avisar: Aviso) {
+  enEspera.delete(avisar)
+  if (enEspera.size === 0 && typeof window !== 'undefined') {
+    window.removeEventListener('scroll', programarRevision)
+    window.removeEventListener('resize', programarRevision)
+    cancelAnimationFrame(cuadroRevision)
+    cuadroRevision = 0
+  }
+}
+
+/** Revela un elemento cuando entra en pantalla —o cuando ya se ha pasado. */
 export function useEnVista<T extends HTMLElement>(margen = '0px 0px -10% 0px') {
   const ref = useRef<T>(null)
   const [dentro, setDentro] = useState(false)
@@ -61,19 +107,41 @@ export function useEnVista<T extends HTMLElement>(margen = '0px 0px -10% 0px') {
       setDentro(true)
       return
     }
+
+    let listo = false
+    const marcar = () => {
+      if (listo) return
+      listo = true
+      setDentro(true)
+      obs.disconnect()
+      olvidar(comprobar)
+    }
+
+    /** Ha entrado por abajo, o ya quedó por encima: en los dos casos se ve. */
+    const comprobar = () => {
+      const r = nodo.getBoundingClientRect()
+      if (r.top < window.innerHeight * 0.92 || r.bottom < 0) marcar()
+    }
+
     const obs = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setDentro(true)
-          obs.disconnect()
-        }
+        // `boundingClientRect.bottom < 0` cubre el aviso inicial de un
+        // elemento que ya nace por encima de la ventana.
+        if (e.isIntersecting || e.boundingClientRect.bottom < 0) marcar()
       },
       /* threshold 0, no 0.06: un elemento más alto que la ventana nunca llega
          a un 6 % de intersección y se quedaría invisible para siempre. */
       { rootMargin: margen, threshold: 0 },
     )
     obs.observe(nodo)
-    return () => obs.disconnect()
+
+    comprobar()                     // por si ya está visible al montar
+    if (!listo) registrar(comprobar)
+
+    return () => {
+      obs.disconnect()
+      olvidar(comprobar)
+    }
   }, [margen])
 
   return { ref, dentro }
