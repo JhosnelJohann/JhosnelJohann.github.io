@@ -51,10 +51,17 @@ if (!CAPTURAS.some((c) => fallos.some((f) => f.startsWith(c)))) {
   bien(`las ${CAPTURAS.length} capturas de flujos responden 200`)
 }
 
-// ── 2 · La página, y que un vídeo reproduzca de verdad ───────────────────
+/* ── 2 · La página, y que un vídeo reproduzca de verdad ───────────────────
+ *
+ * El sello es una cadena que SOLO existe en la versión nueva: sirve para
+ * distinguir «la web está publicada» de «la web publicada es la de antes».
+ * Al unificar la sección, el rótulo pasó de «Portafolio de edición» al
+ * subpanel «Edición», y este sello se quedó apuntando al texto viejo: daba
+ * fallo con la versión correcta delante. Ahora apunta a la nota de vista
+ * previa, que es lo último que se ha añadido. */
 for (const [et, ruta, sello] of [
-  ['español', '/', 'portafolio de edición'],
-  ['inglés', '/en/', 'editing portfolio'],
+  ['español', '/', 'vistas previas'],
+  ['inglés', '/en/', 'previews'],
 ]) {
   console.log(`\n${SITIO}${ruta}`)
   const pedidos = []

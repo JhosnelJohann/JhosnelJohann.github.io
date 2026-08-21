@@ -187,17 +187,6 @@ export default function Diseno() {
             </a>
           ))}
         </div>
-
-        <div className="marketing">
-          <h3 className="marketing-titulo">{t.dis.marketingTitulo}</h3>
-          <ol className="marketing-lista">
-            {t.dis.marketing.map((m) => (
-              <li key={m.slice(0, 24)}>
-                <Rico texto={m} />
-              </li>
-            ))}
-          </ol>
-        </div>
       </div>
 
       <AnimatePresence>

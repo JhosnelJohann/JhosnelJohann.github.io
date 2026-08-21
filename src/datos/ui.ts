@@ -26,7 +26,6 @@ export const ui = {
       correo: 'Correo',
       nacimiento: 'Fecha de nacimiento',
       titulo: 'Título',
-      años: 'años',
       desde: 'Desde',
       sieteAños: 'siete años',
     },
@@ -115,15 +114,10 @@ export const ui = {
       edicion: 'Edición',
       disenoGrafico: 'Diseño gráfico',
       calidad:
-        'Comprimidos a 1080 para que carguen rápido. **Los originales son 4K verticales y pesan 4,6 GB.**',
+        'Lo que se ve aquí son **vistas previas** comprimidas a 1080 para que carguen rápido. ' +
+        'Los originales son **4K verticales y pesan 4,6 GB**: cada pieza enlaza al suyo.',
       ampliar: 'Ampliar',
       canales: 'Los dos canales cuyo contenido edité',
-      marketingTitulo: 'Tres decisiones de marketing que nadie me encargó',
-      marketing: [
-        '**Detuve una configuración que habría duplicado el conteo de conversiones.** Es un fallo que casi nunca se detecta, porque los números suben.',
-        '**Metí las reseñas de Google dentro de un modal** en vez de enlazar fuera, para no regalar el visitante que la empresa se acababa de pagar.',
-        '**Implementé la persistencia de la atribución** a lo largo de ocho pasos de formulario, para que la inversión publicitaria se pueda medir de verdad.',
-      ],
     },
     video: {
       titulo: 'Portafolio de edición',
@@ -132,6 +126,8 @@ export const ui = {
         'medio. Son las piezas que recibieron inversión real en Meta Ads, y varias de ellas llevan ' +
         'a landings que también construí. Pulsa para verlas.',
       reproducir: 'Reproducir',
+      previa: 'Vista previa',
+      verOriginal: 'Original en 4K',
     },
     cont: {
       num: '06',
@@ -208,7 +204,6 @@ export const ui = {
       correo: 'Email',
       nacimiento: 'Date of birth',
       titulo: 'Degree',
-      años: 'years old',
       desde: 'Since',
       sieteAños: 'seven years',
     },
@@ -292,15 +287,10 @@ export const ui = {
       edicion: 'Editing',
       disenoGrafico: 'Graphic design',
       calidad:
-        'Compressed to 1080 so they load fast. **The originals are 4K vertical and weigh 4.6 GB.**',
+        'What you see here are **previews** compressed to 1080 so they load fast. The originals ' +
+        'are **4K vertical and weigh 4.6 GB** — every piece links to its own.',
       ampliar: 'Enlarge',
       canales: 'The two channels whose content I edited',
-      marketingTitulo: 'Three marketing calls nobody asked me to make',
-      marketing: [
-        '**I stopped a configuration that would have double-counted conversions.** It is a failure almost nobody catches, because the numbers go up.',
-        '**I put the Google reviews inside a modal** instead of linking away, so we would not hand back the visitor the company had just paid for.',
-        '**I implemented attribution persistence** across eight form steps, so the ad spend could actually be measured.',
-      ],
     },
     video: {
       titulo: 'Editing portfolio',
@@ -309,6 +299,8 @@ export const ui = {
         'are the pieces that carried real Meta Ads spend, and several of them point at landing ' +
         'pages I also built. Tap to watch.',
       reproducir: 'Play',
+      previa: 'Preview',
+      verOriginal: '4K original',
     },
     cont: {
       num: '06',

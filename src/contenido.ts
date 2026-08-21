@@ -60,14 +60,6 @@ export type { Puesto, Modalidad } from './datos/perfil'
 export const etiquetaCategoria = (c: Categoria): string =>
   en ? enTrabajo.etiquetaCategoria[c] : c
 
-/** Edad a partir de la fecha de nacimiento, para que no se quede desfasada. */
-export function edad(hoy = new Date()): number {
-  const n = new Date(perfil.nacimiento)
-  let a = hoy.getFullYear() - n.getFullYear()
-  const m = hoy.getMonth() - n.getMonth()
-  if (m < 0 || (m === 0 && hoy.getDate() < n.getDate())) a--
-  return a
-}
 
 /** Sustituye {n} en las plantillas de texto. */
 export const con = (plantilla: string, n: string | number) =>

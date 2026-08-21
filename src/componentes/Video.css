@@ -128,6 +128,25 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* El sello de «vista previa», arriba a la izquierda: el sitio donde no pisa
+   ni al botón central ni a la duración. */
+.vid-previa {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  z-index: 2;
+  padding: 3px 7px;
+  font-size: 9.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #dfe8f7;
+  background: rgba(6, 9, 15, .72);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 3px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 /* Un velo suave para que el botón blanco no compita con la imagen */
 .vid-btn::after {
   content: '';
@@ -164,6 +183,33 @@
   line-height: 1.4;
 }
 
+/* El enlace al original. Discreto en reposo y con color al acercarse: es un
+   destino secundario —lo principal es ver la pieza aquí mismo— pero tiene que
+   encontrarse sin buscarlo. */
+.vid-original {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 3px 0;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--tinta-3);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .18s, border-color .18s;
+  /* 24 px de alto real: por debajo de eso, en móvil se falla al pulsarlo */
+  min-height: 24px;
+}
+
+.vid-original svg { flex: none; transition: transform .18s }
+.vid-original:hover,
+.vid-original:focus-visible { color: var(--azul); border-bottom-color: var(--azul) }
+.vid-original:hover svg { transform: translate(1px, -1px) }
+.vid-original:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px }
+
 /* Marca de cuál está sonando */
 .vid-activo {
   position: absolute;
@@ -192,6 +238,7 @@
 @media (prefers-reduced-motion: reduce) {
   .vid-btn img, .vid-scrub { transition: none }
   .vid-btn:hover img { transform: none }
+  .vid-original svg, .vid-original:hover svg { transition: none; transform: none }
 }
 
 @media (max-width: 380px) {

@@ -1,4 +1,4 @@
-﻿import { perfil, formacion, certificaciones, idiomas, edad, img, t } from '../contenido'
+﻿import { perfil, formacion, certificaciones, idiomas, img, t } from '../contenido'
 import Rico from './Rico'
 import './Contacto.css'
 
@@ -105,9 +105,10 @@ export default function Contacto() {
               </div>
               <div>
                 <dt className="mono">{t.datos.nacimiento}</dt>
+                {/* Solo la fecha. La edad se deduce de ella, y ponerla escrita
+                    convierte un dato neutro en una etiqueta. */}
                 <dd>
                   <time dateTime={perfil.nacimiento}>{perfil.nacimientoTexto}</time>
-                  <span className="cont-edad"> · {edad()} {t.datos.años}</span>
                 </dd>
               </div>
               <div>

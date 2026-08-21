@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { video, duracion, img, t, type PiezaVideo } from '../contenido'
+import { enlaceOriginal } from '../datos/originales'
 import { useEnVista } from '../efectos/movimiento'
 import Rico from './Rico'
 import './Video.css'
@@ -26,6 +27,7 @@ function Tarjeta({
   const { ref, dentro } = useEnVista<HTMLLIElement>()
   const vid = useRef<HTMLVideoElement>(null)
   const [abierto, setAbierto] = useState(false)
+  const original = enlaceOriginal(p.archivo)
 
   function abrir() {
     setAbierto(true)
@@ -79,6 +81,10 @@ function Tarjeta({
               </svg>
             </span>
             <span className="vid-dur mono">{duracion(p.segundos)}</span>
+            {/* Que lo que se está viendo es una vista previa se dice sobre la
+                propia portada, no solo en una nota al principio de la rejilla:
+                quien llega directo a una tarjeta no ha leído la nota. */}
+            <span className="vid-previa mono">{t.video.previa}</span>
             {/* Barra de acento que avanza al pasar por encima, como el cursor
                 de reproducción de un montador. Puro adorno: aria-hidden. */}
             <span className="vid-scrub" aria-hidden="true" />
@@ -92,6 +98,31 @@ function Tarjeta({
             línea llenara los 215 px de la tarjeta y las de columnas contiguas
             se leyeran como un texto corrido. */}
         <p className="vid-marca mono">{p.marca.split(' · ')[0]}</p>
+
+        {/* Al original en Drive. Va en el pie y no sobre la portada porque la
+            portada entera ya ES un botón, y un enlace dentro de un botón es
+            HTML inválido: el navegador lo saca fuera y la tarjeta se rompe. */}
+        {original && (
+          <a
+            className="vid-original mono"
+            href={original}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${t.video.verOriginal}: ${p.titulo} (${p.formato})`}
+          >
+            <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14 4h6v6M20 4l-8.5 8.5M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
+              />
+            </svg>
+            {t.video.verOriginal}
+          </a>
+        )}
       </div>
       {activo && <span className="vid-activo" aria-hidden="true" />}
     </li>

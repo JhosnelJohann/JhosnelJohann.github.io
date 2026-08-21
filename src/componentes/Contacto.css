@@ -121,7 +121,6 @@
   word-break: break-all;
 }
 .cont-correo:hover { text-decoration: underline; }
-.cont-edad { color: var(--tinta-3); font-weight: 400; }
 
 .cont-verificar {
   font-size: 13px;

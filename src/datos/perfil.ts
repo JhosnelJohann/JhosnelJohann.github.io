@@ -38,15 +38,6 @@ export const perfil = {
     'y lo que no puedo verificar lo declaro como no verificado.',
 } as const
 
-/** Edad a partir de la fecha de nacimiento: así no se queda desfasada. */
-export function edad(hoy = new Date()): number {
-  const n = new Date(perfil.nacimiento)
-  let a = hoy.getFullYear() - n.getFullYear()
-  const m = hoy.getMonth() - n.getMonth()
-  if (m < 0 || (m === 0 && hoy.getDate() < n.getDate())) a--
-  return a
-}
-
 /** Cifras de respaldo. Cada una es comprobable. */
 export const cifras = [
   { n: '7', que: 'años de trayectoria profesional', desde: 'desde 2019' },

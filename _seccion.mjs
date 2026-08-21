@@ -9,7 +9,10 @@
  */
 import { chromium } from 'playwright'
 
-const base = 'http://localhost:5188'
+/* Sin argumento, la vista previa local. Con argumento, el sitio publicado:
+   `node _seccion.mjs https://jhosneljohann.github.io` — porque lo que importa
+   no es que funcione en mi máquina, sino en la URL que Jhosnel enseña. */
+const base = (process.argv[2] ?? 'http://localhost:5188').replace(/\/$/, '')
 const fallos = []
 const mal = (m) => { fallos.push(m); console.log('  FALLO  ' + m) }
 const bien = (m) => console.log('  ok     ' + m)
@@ -92,6 +95,24 @@ for (const ruta of ['/', '/en/']) {
   else bien(`subpaneles: ${cab.subpaneles.join(' · ')}`)
   if (!/4K|4,6 GB|4\.6 GB/.test(cab.calidad)) mal(`la nota de calidad no menciona el origen: «${cab.calidad}»`)
   else bien('nota de calidad presente y menciona el 4K de origen')
+  if (!/vista(s)? previa(s)?|preview/i.test(cab.calidad)) mal('la nota no dice que son vistas previas')
+  else bien('la nota dice que son vistas previas')
+
+  /* Cada pieza enlaza a SU original, no todas a la misma carpeta: un mapa mal
+     unido daría diez enlaces válidos apuntando al vídeo equivocado, y eso no
+     lo detecta un simple «¿el enlace existe?». Por eso se comprueba que los
+     diez destinos sean distintos. */
+  const orig = await p.evaluate(() => ({
+    sellos: document.querySelectorAll('.vid-previa').length,
+    enlaces: [...document.querySelectorAll('.vid-original')].map((a) => a.href),
+  }))
+  if (orig.sellos !== 10) mal(`${orig.sellos} sellos de vista previa, esperaba 10`)
+  else bien('las 10 portadas llevan sello de vista previa')
+  if (orig.enlaces.length !== 10) mal(`${orig.enlaces.length} enlaces al original, esperaba 10`)
+  else if (new Set(orig.enlaces).size !== 10) mal('hay enlaces al original repetidos')
+  else if (!orig.enlaces.every((u) => /^https:\/\/drive\.google\.com\/file\/d\/[\w-]{25,}\/view$/.test(u)))
+    mal('algún enlace al original no tiene forma de archivo de Drive')
+  else bien('10 enlaces a Drive, todos distintos')
 
   // 5 · Las cifras terminaron en su valor final
   const cifras = await p.evaluate(() =>
