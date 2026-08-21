@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { marcas, canales, t, con, img, type Marca } from '../contenido'
 import { useEnVista } from '../efectos/movimiento'
 import Rico from './Rico'
+import Video from './Video'
 import './Diseno.css'
 
 function Hoja({ m, i, abrir }: { m: Marca; i: number; abrir: () => void }) {
@@ -143,6 +144,8 @@ export default function Diseno() {
             </a>
           ))}
         </div>
+
+        <Video />
 
         <div className="marketing">
           <h3 className="marketing-titulo">{t.dis.marketingTitulo}</h3>

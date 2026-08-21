@@ -55,10 +55,11 @@ export const ui = {
       rotulo: 'Portafolio',
       titulo: 'Trabajo en producción',
       nota:
-        'Doce sistemas que resolvieron un problema real de una empresa en marcha. **{n} están en ' +
+        'Trece sistemas que resolvieron un problema real de una empresa en marcha. **{n} están en ' +
         'línea y puedes abrirlos ahora mismo** — sus miniaturas son capturas reales, no ' +
-        'interpretaciones. Los demás son sistemas internos: llevan portada dibujada y van marcados ' +
-        'como restringidos, porque publicar sus pantallas expondría datos de clientes.',
+        'interpretaciones. De los internos, los de automatización enseñan **el lienzo de sus flujos**, ' +
+        'que no muestra ni un contacto; los que operan sobre datos de clientes llevan portada ' +
+        'dibujada, porque publicar sus pantallas expondría a personas reales.',
       todo: 'Todo',
       detalle: 'Detalle →',
       verDetalle: 'Ver detalle de {n}',
@@ -72,6 +73,8 @@ export const ui = {
         'La interfaz es la real.',
       avisoMovil:
         'Capturas en móvil, que es de donde llega el tráfico de anuncios y para donde está diseñada.',
+      avisoFlujos:
+        'Son los lienzos de los flujos, no la operación: no aparece ningún contacto ni ninguna conversación.',
       accesoRestringido: 'acceso restringido',
     },
     hab: {
@@ -109,6 +112,14 @@ export const ui = {
         '**Metí las reseñas de Google dentro de un modal** en vez de enlazar fuera, para no regalar el visitante que la empresa se acababa de pagar.',
         '**Implementé la persistencia de la atribución** a lo largo de ocho pasos de formulario, para que la inversión publicitaria se pueda medir de verdad.',
       ],
+    },
+    video: {
+      titulo: 'Portafolio de edición',
+      nota:
+        'Diez creatividades publicitarias, todas verticales 9:16 en 4K, de 41 segundos a minuto y ' +
+        'medio. Son las piezas que recibieron inversión real en Meta Ads, y varias de ellas llevan ' +
+        'a landings que también construí. Pulsa para verlas.',
+      reproducir: 'Reproducir',
     },
     cont: {
       num: '06',
@@ -212,10 +223,11 @@ export const ui = {
       rotulo: 'Portfolio',
       titulo: 'Work in production',
       nota:
-        'Twelve systems that solved a real problem for a company already running. **{n} are live ' +
+        'Thirteen systems that solved a real problem for a company already running. **{n} are live ' +
         'and you can open them right now** — their thumbnails are real screenshots, not ' +
-        'illustrations. The rest are internal systems: they carry a drawn cover and a restricted ' +
-        'label, because publishing their screens would expose client data.',
+        'illustrations. Of the internal ones, the automation systems show **their flow canvases**, ' +
+        'which contain no contacts at all; the ones that operate on client data carry a drawn cover, ' +
+        'because publishing their screens would expose real people.',
       todo: 'All',
       detalle: 'Details →',
       verDetalle: 'See details for {n}',
@@ -228,6 +240,8 @@ export const ui = {
         'Client and team data is blurred on purpose: these are real people. The interface is the real one.',
       avisoMovil:
         'Mobile screenshots — that is where the ad traffic comes from, and what these pages are designed for.',
+      avisoFlujos:
+        'These are the flow canvases, not the live operation: no contact and no conversation appears.',
       accesoRestringido: 'restricted access',
     },
     hab: {
@@ -265,6 +279,14 @@ export const ui = {
         '**I put the Google reviews inside a modal** instead of linking away, so we would not hand back the visitor the company had just paid for.',
         '**I implemented attribution persistence** across eight form steps, so the ad spend could actually be measured.',
       ],
+    },
+    video: {
+      titulo: 'Editing portfolio',
+      nota:
+        'Ten ad creatives, all vertical 9:16 in 4K, from 41 seconds to a minute and a half. These ' +
+        'are the pieces that carried real Meta Ads spend, and several of them point at landing ' +
+        'pages I also built. Tap to watch.',
+      reproducir: 'Play',
     },
     cont: {
       num: '06',

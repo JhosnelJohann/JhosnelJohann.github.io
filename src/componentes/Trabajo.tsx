@@ -9,8 +9,13 @@ import './Trabajo.css'
 const dominio = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '')
 /** Solo se enlaza lo que un visitante puede abrir hoy sin tropezar. */
 const abrible = (p: Pieza) => !!p.url && !p.pendiente
-/** La galería del CRM vive en /crm; la de las landings, en /landings. */
-const carpeta = (p: Pieza) => (p.id === 'crm-tadi' ? 'crm' : 'landings')
+/** Cada familia de galería vive en su carpeta dentro de public/. */
+const CARPETAS: Record<string, string> = {
+  'crm-tadi': 'crm',
+  'paula-manhattan': 'n8n',
+  ghl: 'ghl',
+}
+const carpeta = (p: Pieza) => CARPETAS[p.id] ?? 'landings'
 
 /**
  * La captura, presentada como un panel de navegador flotando en perspectiva.
@@ -205,7 +210,14 @@ function Ficha({ p, cerrar }: { p: Pieza; cerrar: () => void }) {
                 ))}
               </ul>
               <p className="fi-aviso mono">
-                {carpeta(p) === 'crm' ? t.trab.avisoCrm : t.trab.avisoMovil}
+                {
+                  {
+                    crm: t.trab.avisoCrm,
+                    n8n: t.trab.avisoFlujos,
+                    ghl: t.trab.avisoFlujos,
+                    landings: t.trab.avisoMovil,
+                  }[carpeta(p)]
+                }
               </p>
             </>
           )}

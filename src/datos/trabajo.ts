@@ -171,7 +171,17 @@ export const trabajo: Pieza[] = [
     titulo: 'Asistentes de WhatsApp «Paula»',
     categoria: 'Automatización',
     restringido: 'Sistema interno · sin interfaz pública',
-    motivo: 'paula-manhattan',
+    /* Antes llevaba portada dibujada porque las capturas de la operación
+       exponían datos de clientes. Estas son lienzos de flujo: no muestran
+       ni un nombre ni una conversación. */
+    captura: 'n8n-setter',
+    galeria: [
+      { archivo: 'n8n-setter', pie: 'El agente con sus herramientas y las cinco salidas al CRM' },
+      { archivo: 'n8n-seguros-inbound', pie: 'Entrada, corte de cadencia, cortesía y aviso al operador' },
+      { archivo: 'n8n-paula-manhattan', pie: 'El conversacional de Manhattan, publicado' },
+      { archivo: 'n8n-seguimiento-scan', pie: 'La sonda de seguimiento, cada 15 minutos' },
+      { archivo: 'n8n-extra', pie: 'Uno de los flujos de apoyo' },
+    ],
     color: 'verde',
     año: '2026',
     gancho:
@@ -187,6 +197,38 @@ export const trabajo: Pieza[] = [
       { n: '37 + 8', que: 'pruebas, cero fallos' },
     ],
     stack: ['n8n', 'PostgreSQL', 'Vertex AI', 'Gemini 2.5', 'GoHighLevel'],
+  },
+  {
+    id: 'ghl',
+    titulo: 'Automatización en GoHighLevel',
+    categoria: 'Automatización',
+    restringido: 'CRM comercial · acceso restringido',
+    captura: 'ghl-sistema-ventas',
+    galeria: [
+      { archivo: 'ghl-sistema-ventas', pie: 'Sistema de ventas: tres disparadores y nueve ramas por etapa' },
+      { archivo: 'ghl-seguimientos', pie: 'Sistema de seguimientos, con limpieza previa en cada rama' },
+      { archivo: 'ghl-puente-n8n', pie: 'El puente a n8n, ya publicado y filtrado por etiqueta' },
+      { archivo: 'ghl-envio-api', pie: 'Envío del evento de conversión a la API de Meta' },
+      { archivo: 'ghl-membresia-bot', pie: 'De la landing de membresía al bot y al pipeline' },
+      { archivo: 'ghl-extra-1', pie: 'Otro de los flujos en producción' },
+      { archivo: 'ghl-extra-2', pie: 'Otro de los flujos en producción' },
+    ],
+    color: 'azul',
+    año: '2026',
+    gancho:
+      'La capa comercial que conecta los anuncios, los bots y el equipo humano. 22 endpoints usados y 12 flujos de n8n colgando de ella.',
+    detalle: [
+      'Las etiquetas del contacto no son categorías: son el motor. Alguien del equipo pone una etiqueta desde el panel y eso dispara un webhook que activa un plan de pagos, genera ocho cuotas y desbloquea el acceso a un curso. Es una interfaz de operación para gente que no toca código.',
+      'El puente hacia los bots tardó en encenderse por una asimetría difícil de ver: los mensajes salían por un proveedor externo y entraban como SMS de proveedor personalizado, no como WhatsApp, así que el disparador nunca se activaba. Se resolvió capturando un envío real en lugar de suponer la correspondencia entre el vocabulario de la interfaz y el de la API.',
+      'El disparador del puente estaba sin filtros y acumuló 1 197 ejecuciones de pago, muchas por mensajes que no había que procesar. Filtrarlo por etiqueta es la diferencia entre una integración y una factura.',
+      'Su límite de peticiones obligó a construir un portero propio en Node, Express y Redis, que encola y prioriza: lo que responde a un cliente pasa siempre; los sondeos esperan.',
+    ],
+    cifras: [
+      { n: '22', que: 'endpoints usados' },
+      { n: '12', que: 'flujos de n8n conectados' },
+      { n: '17', que: 'webhooks de entrada' },
+    ],
+    stack: ['GoHighLevel', 'n8n', 'Meta CAPI', 'Node.js', 'Redis', 'PostgreSQL'],
   },
   {
     id: 'arnes',

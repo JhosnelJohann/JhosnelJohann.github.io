@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Auditoría de móvil. No mide «se ve bien»: mide cosas comprobables.
  *
  * Falla —y por tanto no se publica— si encuentra:
@@ -19,12 +19,18 @@ import { preview } from 'vite'
    regresiones. Está puesto un 6 % por encima de lo que mide hoy, para que
    salte si alguien añade algo que dispare la página sin darse cuenta.
    La altura que hay es la que pide el contenido: cinco puestos con sus
-   logros, doce proyectos, 32 competencias y siete hojas de diseño. */
+   logros, trece proyectos, 32 competencias, siete hojas de diseño y el
+   portafolio de edición.
+
+   21-ago-2026 · SUBIDOS. El portafolio de vídeo añadió ~2 000 px a 320 px
+   (diez tarjetas verticales en dos columnas). Es contenido pedido, no una
+   regresión, así que los techos se recalculan sobre la medida nueva. Si
+   vuelven a saltar sin que se haya añadido una sección, hay un problema. */
 const PANTALLAS = [
-  { n: '320', w: 320, h: 690, techo: 19600 },
-  { n: '390', w: 390, h: 844, techo: 18300 },
-  { n: '414', w: 414, h: 896, techo: 17900 },
-  { n: '768', w: 768, h: 1024, techo: 15700 },
+  { n: '320', w: 320, h: 690, techo: 21400 },
+  { n: '390', w: 390, h: 844, techo: 20300 },
+  { n: '414', w: 414, h: 896, techo: 20100 },
+  { n: '768', w: 768, h: 1024, techo: 18500 },
 ]
 const MIN_TACTIL = 44
 const MIN_FUENTE = 12.5

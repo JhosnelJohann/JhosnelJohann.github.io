@@ -1,0 +1,174 @@
+/* Portafolio de edición · tarjetas verticales 9:16 */
+
+.vids { margin-top: var(--e8); }
+
+.vids-cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e2);
+  margin-bottom: var(--e5);
+  max-width: 62ch;
+}
+
+.vids-titulo {
+  font-family: var(--display);
+  font-size: clamp(21px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+
+.vids-nota { font-size: var(--t-sm); color: var(--tinta-suave); line-height: 1.6; }
+
+/* La rejilla. En 9:16, cuatro columnas caben cómodas en escritorio */
+.vids-rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--e5) var(--e4);
+}
+
+.vid { position: relative; display: flex; flex-direction: column; gap: var(--e3); }
+
+/* El marco mantiene el 9:16 tanto con la portada como con el vídeo */
+.vid-marco {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--r3);
+  overflow: hidden;
+  background: #0a0d14;
+  border: 1px solid var(--linea);
+}
+
+.vid-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.vid-btn img,
+.vid-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vid-video { object-fit: contain; background: #000; }
+
+/* El botón de reproducción: 56 px, muy por encima del mínimo táctil */
+.vid-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  padding-left: 3px;                 /* el triángulo pesa a la izquierda */
+  border-radius: 50%;
+  color: #0a0d12;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .35);
+  transition: transform .22s cubic-bezier(.16,1,.3,1), background .22s;
+}
+
+.vid-btn:hover .vid-play { transform: scale(1.09); background: #fff; }
+.vid-btn:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; }
+
+.vid-dur {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 3px 7px;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: #eef2f9;
+  background: rgba(6, 9, 15, .78);
+  border-radius: 3px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Un velo suave para que el botón blanco no compita con la imagen */
+.vid-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.10) 0%, transparent 32%, rgba(0,0,0,.42) 100%);
+  pointer-events: none;
+}
+
+/* ─────────── El pie ─────────── */
+
+.vid-pie { display: flex; flex-direction: column; gap: 3px; }
+
+/* Los títulos y las notas tienen longitudes distintas. Sin acotarlas, cada
+   tarjeta acaba a una altura y la rejilla deja de leerse como rejilla. */
+.vid-titulo {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: balance;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(2 * 1.35em);          /* reserva sitio para las dos líneas */
+}
+
+.vid-marca { font-size: 10.5px; color: var(--azul); letter-spacing: .05em; }
+
+.vid-nota {
+  font-size: 12.5px;
+  color: var(--tinta-suave);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vid-formato { font-size: 10px; color: var(--tinta-suave); opacity: .72; letter-spacing: .06em; }
+
+/* Que el formato quede siempre abajo, aunque la nota sea corta */
+.vid-pie { flex: 1 }
+.vid-formato { margin-top: auto; padding-top: 3px }
+
+/* Marca de cuál está sonando */
+.vid-activo {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--azul), var(--verde));
+}
+
+/* ─────────── Móvil ─────────── */
+
+@media (max-width: 700px) {
+  /* Dos columnas: una sola haría la sección larguísima, y en 9:16
+     dos caben bien incluso a 320 px */
+  .vids-rejilla { grid-template-columns: repeat(2, 1fr); gap: var(--e4) var(--e3); }
+  .vid-nota { display: none }            /* el contexto largo estorba en móvil */
+  .vid-play { width: 48px; height: 48px }
+  .vids { margin-top: var(--e6) }
+}
+
+@media (max-width: 380px) {
+  .vids-rejilla { gap: var(--e3) 10px }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vid-play, .vid-btn:hover .vid-play { transition: none; transform: none }
+}

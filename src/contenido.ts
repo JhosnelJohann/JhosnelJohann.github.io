@@ -11,10 +11,13 @@ import * as esTrabajo from './datos/trabajo'
 import * as esHabilidades from './datos/habilidades'
 import * as esMarcas from './datos/marcas'
 
+import * as esVideo from './datos/video'
+
 import * as enPerfil from './datos/en/perfil'
 import * as enTrabajo from './datos/en/trabajo'
 import * as enHabilidades from './datos/en/habilidades'
 import * as enMarcas from './datos/en/marcas'
+import * as enVideo from './datos/en/video'
 
 import { ui, type Idioma, type Textos } from './datos/ui'
 import type { Categoria } from './datos/trabajo'
@@ -42,6 +45,10 @@ export const categorias = en ? enTrabajo.categorias : esTrabajo.categorias
 export const paneles = en ? enHabilidades.paneles : esHabilidades.paneles
 export const marcas = en ? enMarcas.marcas : esMarcas.marcas
 export const canales = en ? enMarcas.canales : esMarcas.canales
+
+export const video = en ? enVideo.video : esVideo.video
+export { duracion, duracionTotal } from './datos/video'
+export type { Pieza as PiezaVideo } from './datos/video'
 
 export { ANCHO_NIVEL } from './datos/habilidades'
 export type { Habilidad, Nivel, Panel } from './datos/habilidades'
